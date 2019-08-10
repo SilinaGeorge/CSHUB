@@ -1,8 +1,37 @@
-<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css">
 
-<app-nav></app-nav>
+<!--menu bar-->
+<ng-sidebar-container style="position:absolute">
+
+    <!--side bar menu-->
+    <ng-sidebar [(opened)]="_opened" mode="push" position="left" style="margin-right:20px;">
+        <app-side-nav-menu></app-side-nav-menu>
+    </ng-sidebar>
+
+    <div ng-sidebar-content>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+            <!--hamburger side menu button-->
+            <button class="hamburger hamburger--collapse" type="button" (click)="_toggleOpened()">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+
+            <!--main menu-->
+            <a class="navbar-brand" routerLink="/">CSHUB</a>
+            <app-nav-menu></app-nav-menu> 
+        </nav>
+
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+
+</ng-sidebar-container>
 
 
-<section> 
-<router-outlet></router-outlet>
-</section>
+
+
