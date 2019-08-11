@@ -10,6 +10,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  Title: string = "CS HUB"
+
   private _opened: boolean = false;
 
   private _toggleOpened(): void {

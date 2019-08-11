@@ -10,6 +10,8 @@ import { SideNavMenuComponent } from './side-nav-menu/side-nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     HomeComponent,
     SignupComponent,
     NavMenuComponent,
+    LoginComponent,
   ],
   imports: [
     NgbModule,
