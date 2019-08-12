@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,6 +11,7 @@ export class AppComponent {
   Title: string = "CS HUB"
 
   private _opened: boolean = false;
+
 
   private _toggleOpened(): void {
     this._opened = !this._opened;

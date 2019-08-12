@@ -1,35 +1,56 @@
 <div class="card bg-light mb-3 shadow-sm" style="max-width: 40%; margin:auto; margin-top: 1em">
 
-        <div class="card-header">Sign Up for CS HUB</div>
-        <div class="card-body">
-                <form>
-                        <div class="form-group">
-                                <label for="firstName">First Name</label>
-                                <input type="text" class="form-control shadow-sm" id="firstName" required>
+    <div class="card-header">Sign up to CS HUB</div>
+    <div class="card-body">
+        <form [formGroup]="signupFormGroup">
 
-                                <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control shadow-sm" id="lastName" required>
-                        </div>
-
-                        <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control shadow-sm" id="email" required>
-                        </div>
-
-                        <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control shadow-sm" id="password" required>
-                        </div>
-
-                        <div class="form-group">
-                                <label for="password">Renter Password</label>
-                                <input type="password" class="form-control shadow-sm" id="renterPassword" required>
-                        </div>
-                        <div style="text-align: center;">
-                                <button type="submit" class="btn btn-primary shadow-sm">Sign Up</button>
-                        </div>
+            <mat-form-field style="margin-right:25%">
+                <input matInput type="text" placeholder="First Name" formControlName="firstname">
+                <mat-error *ngIf="firstname?.invalid">Please enter first name</mat-error>
+            </mat-form-field>
 
 
-                </form>
-        </div>
+            <mat-form-field>
+                <input matInput type="text" placeholder="Last Name" formControlName="lastname">
+                <mat-error *ngIf="lastname?.invalid">Please enter last name</mat-error>
+            </mat-form-field>
+
+            <div>
+                <mat-form-field style="margin-right:25%">
+                    <input matInput placeholder="Email" formControlName="email">
+                    <mat-error *ngIf="email?.invalid">Please enter a valid email</mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field>
+                    <input matInput type='password' placeholder="Password" minlength="6" formControlName="password"
+                        (input)="onPasswordInput()">
+                    <mat-error *ngIf="password?.invalid && password.touched">Please enter a valid password</mat-error>
+                    <mat-hint>6 characters or more</mat-hint>
+                </mat-form-field>
+
+
+                <mat-form-field>
+                    <input matInput type='password' placeholder="Verify password" minlength="6"
+                        formControlName="verifypassword" (input)="onPasswordInput()">
+                    <mat-error *ngIf="verifypassword?.invalid && verifypassword?.touched && verifypassword?.hasError('required')">Please enter a valid password
+                    </mat-error>
+                    <mat-error *ngIf="verifypassword?.invalid && !verifypassword?.hasError('required')">Passwords don't
+                        match</mat-error>
+                </mat-form-field>
+
+
+            </div>
+
+            <div style="text-align: center; margin-top:3em">
+                <button mat-raised-button [disabled]="signupFormGroup.invalid" class="btn btn-primary shadow-sm">Sign
+                    up</button>
+            </div>
+
+        </form>
+        <div><input type="image" style="width: 220px; height:68px" src="../../assets/fb_login.png"></div>
+        <div><input type="image" style="width: 200px; height:40px; margin-left:8px"
+                src="../../assets/google_signin.png"></div>
+
+    </div>
 </div>
