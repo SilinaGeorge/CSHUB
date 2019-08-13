@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+//import {Observable} from 'rxjs/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,10 @@ export class LoginService {
 
   url : string;
 
-  putUser(userData){
-    console.log("ere");
-    console.log(userData );
+  postUser(userData){;
     this.url ="http://localhost:4200/login";
     return this.http.post<any>(this.url, userData);
+    
+
   };
 }
