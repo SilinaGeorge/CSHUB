@@ -11,7 +11,7 @@ export class LoginService {
 
   url : string;
 
-  postUser(userData){;
+  postLoginUser(userData){;
     this.url ="http://localhost:4200/login";
     return this.http.post<any>(this.url, userData);
     

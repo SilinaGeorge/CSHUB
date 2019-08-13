@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms' 
-import { LoginService } from '../login.service'
+import { LoginService } from '../services/login.service'
 
 @Component({
   selector: 'app-login',
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
 
-     this._loginService.postUser(this.loginFormGroup.value)
+     this._loginService.postLoginUser(this.loginFormGroup.value)
     .subscribe(
       response => console.log("Success", response),
       error => console.log("error", error)

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms' 
+import { SignupService } from "../services/signup.service"
 
 @Component({
   selector: 'app-signup',
@@ -11,7 +12,7 @@ export class SignupComponent implements OnInit {
   signupFormGroup: FormGroup;
  
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder , private _signupService: SignupService) { }
 
   ngOnInit() {
 
@@ -69,7 +70,20 @@ export class SignupComponent implements OnInit {
     else
       this.verifypassword.setErrors(null);
   }
-  
+
+  onSubmit(){
+
+    console.log(this.signupFormGroup.value)
+    this._signupService.postSignupUser(
+      {firstname: this.signupFormGroup.get('firstname').value,
+        lastname: this.signupFormGroup.get('lastname').value,
+        email: this.signupFormGroup.get('email').value,
+        password: this.signupFormGroup.get('password').value})
+   .subscribe(
+     response => console.log("Success", response),
+     error => console.log("error", error)
+   ) ;
+  }
 
 }
 
@@ -80,4 +94,6 @@ export const passwordMatchValidator: ValidatorFn = (passFormGroup: FormGroup): V
   else
     return {passwordMismatch: true};
 };
+
+
 

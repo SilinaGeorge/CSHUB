@@ -18,9 +18,11 @@ import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
 
 
+
 import { MatCheckboxModule,MatInputModule, MatButtonModule, MatSelectModule, MatIconModule } from '@angular/material';
 
-import { LoginService } from './login.service'
+import { LoginService } from './services/login.service'
+import { SignupService } from "./services/signup.service"
 
 
 @NgModule({
@@ -49,7 +51,10 @@ import { LoginService } from './login.service'
     SidebarModule.forRoot(),
     
   ],
-  providers: [LoginService],
+  providers: [
+    LoginService, 
+    SignupService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

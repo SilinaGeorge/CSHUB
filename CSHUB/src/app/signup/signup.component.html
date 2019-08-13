@@ -2,7 +2,7 @@
 
     <div class="card-header">Sign up to CS HUB</div>
     <div class="card-body">
-        <form [formGroup]="signupFormGroup">
+        <form [formGroup]="signupFormGroup" (ngSubmit)="onSubmit()">
 
             <mat-form-field style="margin-right:25%">
                 <input matInput type="text" placeholder="First Name" formControlName="firstname">
