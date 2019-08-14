@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ParallaxScrollModule} from 'ng2-parallaxscroll';
 
 @Component({
   selector: 'app-home',

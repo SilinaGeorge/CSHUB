@@ -4,8 +4,8 @@ import {HttpClientModule} from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { SidebarModule } from 'ng-sidebar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,7 +19,7 @@ import { AboutComponent } from './about/about.component';
 
 
 
-import { MatCheckboxModule,MatInputModule, MatButtonModule, MatSelectModule, MatIconModule } from '@angular/material';
+import { MatCheckboxModule,MatInputModule, MatButtonModule, MatSelectModule, MatIconModule,  MatSidenavModule } from '@angular/material';
 
 import { LoginService } from './services/login.service'
 import { SignupService } from "./services/signup.service"
@@ -36,6 +36,8 @@ import { SignupService } from "./services/signup.service"
     AboutComponent,
   ],
   imports: [
+    MatSidenavModule,
+    ParallaxScrollModule,
     HttpClientModule,
     MatButtonModule,
     MatSelectModule,
@@ -47,9 +49,7 @@ import { SignupService } from "./services/signup.service"
     FormsModule,
     NgbModule,
     BrowserModule,
-    AppRoutingModule,
-    SidebarModule.forRoot(),
-    
+    AppRoutingModule,    
   ],
   providers: [
     LoginService, 

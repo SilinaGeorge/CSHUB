@@ -6,7 +6,16 @@
  * @link https://github.com/jonsuh/hamburgers
  */
 
+ .parallax-container {
+  height: 100%;
+  width: 100%;
+}
 
+.parallax-directive {
+  background-image: url(./../assets/buttons-contemporary-desktop-background-1157804.jpg);
+  height: 100%;
+  width: 100%;
+}
 
 
 
