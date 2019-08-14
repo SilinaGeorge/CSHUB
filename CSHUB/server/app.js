@@ -3,15 +3,12 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const crypto = require("crypto");
-const validator = require("validator");
+const {check, validationResult} = require('express-validator');
 const cookie = require("cookie");
 
 const app = express();
 
 const mongoDB = 'mongodb+srv://silina01:cSB42MnimhMneRSX@cshub-vtf1l.mongodb.net/test?retryWrites=true&w=majority' 
-
-
-
 
 // connect to our database
 mongoose.connect(mongoDB, { useNewUrlParser: true });
@@ -32,9 +29,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const dist = '../dist/CSHubProject';
 app.use(express.static(dist));
 
-
-
-
 // Create server to listen for connections
 const server = http.createServer(app);
 server.listen(port, () => console.log("listening on port " + port));
@@ -44,8 +38,23 @@ server.listen(port, () => console.log("listening on port " + port));
 // create session
 const session = require("express-session");
 
-const sanitizeFeild = function(field) {
-  return validator.escape(field);
+const MongoStore = require("connect-mongo")(session);
+app.use(
+  session({
+    secret: "SiEyHwWt5JGgFZOEamFp",
+    store: new MongoStore({
+      url: mongoDB,
+      ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+    }),
+    resave: false,
+    saveUninitialized: true,
+    cookie: { httpOnly: true, sameSite: true, secure: false }
+  })
+);
+
+const isAuthenticated = function(req, res, next) {
+  if (!req.session.id) return res.status(401).end("access denied");
+  next();
 };
 
 // helper functions to generate salt and hash for encryption
@@ -58,74 +67,85 @@ function generateHash(password, salt) {
   hash.update(password);
   return hash.digest("base64");
 }
-// ------------------------------
+// db models------------------------------
 
+//parse object id
+var ObjectId = require("mongodb").ObjectId;
 
-
-
-// checks -----------------------
-const checkAplha = function(input, req, res, next) {
-  if (!validator.isAlphanumeric(input)) return res.status(400).end("bad input");
-  next();
-};
+const Users = require("./models/users.js");
 
 
 // ------------------------------
 
 
-app.post("/login",(req, res, next) => {
+app.post("/login",[
+  check('email', 'Your email is not valid').not().isEmpty().trim().isEmail().normalizeEmail().isLength({ max: 50 }),
+  check('password', 'Your password must be between 6-18 characters').not().isEmpty().isLength({ min: 6, max:18 })
+],(req, res, next) => {
 
-  return res.status(200).json({
-    message: "Success",
- 
-});
-});
+  
+  // Finds the validation errors in this request and wraps them in an object with handy functions
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
 
+  const email = req.body.email;
+  const password = req.body.password;
 
-app.post("/signup",(req, res, next) => {
-
-  /* const firstname = sanitizeFeild(req.body.firstname);
-  const lastname = sanitizeFeild(req.body.lastname);
-  const email = sanitizeFeild(req.body.email);
-  const password = req.body.password; */
-
-     return res.status(200).json({
-      message: "Success",
-
+  Users.findById(email).exec(function (err, user) {
+    if (err) return res.status(500).json({ message: "Server Error" });
+    if (!user) return res.status(401).json({ message: "Invalid login" });
+    if (user.hash !== generateHash(password, user.salt))
+      return res.status(401).json({ message: "Invalid login" }); // invalid password
+    // start a session
+    req.session.id = user._id;
+    return res.status(200).json({
+      msg: "Success",
+      _id: user._id,
+      firstname: user.firstname,
+      lastname: user.lastname
+    });
   });
 
+ 
+});
 
- /*  findOne("users", { _id: email }, function(err, user) {
+
+app.post("/signup",[
+  check('firstname', 'first name is too long or not valid').not().isEmpty().isAlpha().trim().escape().isLength({ max: 50 }),
+  check('lastname', 'last name is too long or not valid').not().isEmpty().isAlpha().trim().escape().isLength({ max: 50 }),
+  check('email', 'Your email is not valid').not().isEmpty().trim().isEmail().normalizeEmail().isLength({ max: 50 }),
+  check('password', 'Your password must be between 6-18 characters').not().isEmpty().isLength({ min: 6, max:18 }),
+], (req, res, next) => {
+
+  // Finds the validation errors in this request and wraps them in an object with handy functions
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
+  const email = req.body.email;
+  const password = req.body.password;
+    
+  Users.findById(email).exec(function (err, user) {
     if (err) return res.status(500).json({ message: "Server Error" });
     if (user) {
-      return res.status(409).json({ message: "Email is already in use" });
+      return res.status(409).json({ message: "Email is already taken" });
     }
     const salt = generateSalt();
     const hash = generateHash(password, salt);
-    update(
-      "users",
-      { _id: email },
-      {
-        _id: email,
-        salt,
-        hash,
-        firstname,
-        lastname
-      },
-      { upsert: true },
-      function(err) {
-        if (err) return res.status(500).json({ message: "Server Error" });
-        // start a session
-        req.session.email = email;
-        return res.status(200).json({
-          message: "Success",
-          email,
-          firstname,
-          lastname
-        });
-      }
-    );
-  }); */
+
+    const newUser = new Users({ _id: email, firstname, lastname, hash, salt });
+
+    newUser.save(function(err) {
+      if (err) return res.status(500).json({ message: "Server Error" });
+      return res.json({ msg: "Success", _id: email, firstname, lastname });
+    });
+  });
+
 });
 
 

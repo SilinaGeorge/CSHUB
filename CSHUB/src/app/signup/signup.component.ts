@@ -45,18 +45,18 @@ export class SignupComponent implements OnInit {
   }
 
   get firstname(){
-    return this.signupFormGroup.get('firstname');
+    return this.signupFormGroup.get('firstname').value;
   }
   get lastname(){
-    return this.signupFormGroup.get('lastname');
+    return this.signupFormGroup.get('lastname').value;
   }
 
   get email(){
-    return this.signupFormGroup.get('email');
+    return this.signupFormGroup.get('email').value;
   } 
 
   get password(){
-    return this.signupFormGroup.get('password');
+    return this.signupFormGroup.get('password').value;
   }
 
   get verifypassword(){
@@ -75,15 +75,17 @@ export class SignupComponent implements OnInit {
 
     console.log(this.signupFormGroup.value)
     this._signupService.postSignupUser(
-      {firstname: this.signupFormGroup.get('firstname').value,
-        lastname: this.signupFormGroup.get('lastname').value,
-        email: this.signupFormGroup.get('email').value,
-        password: this.signupFormGroup.get('password').value})
+      {firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email,
+        password: this.password
+      })
    .subscribe(
      response => console.log("Success", response),
      error => console.log("error", error)
    ) ;
   }
+  
 
 }
 
