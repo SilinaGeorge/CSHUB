@@ -2,6 +2,9 @@
 
     <div class="card-header">Login into CS HUB</div>
     <div class="card-body">
+
+        <div id="serverErrors" style="color:red" [innerHTML]="errorHTML"> </div>
+
         <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
             <div>
                 <mat-form-field style="margin-right:25%">

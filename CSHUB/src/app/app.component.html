@@ -1,14 +1,18 @@
 <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
 
-<mat-drawer-container class="example-container" >
-        <mat-drawer mode="push" [(opened)]="_opened">
-            <app-side-nav-menu></app-side-nav-menu>
-        </mat-drawer>
-        <mat-drawer-content>
-    
-    
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    
+<mat-drawer-container>
+
+    <!-- side menu -->
+    <mat-drawer mode="push" [(opened)]="_opened">
+        <app-side-nav-menu></app-side-nav-menu>
+    </mat-drawer>
+
+    <mat-drawer-content style='min-height: 100vh'>
+
+        <!-- main menu: hide when scroll down, show whe scroll up -->
+        <ngx-headroom>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg" style="height:60px !important">
+
                 <!--hamburger side menu button-->
                 <button style="margin-right:2em" class="hamburger hamburger--collapse" type="button"
                     (click)="_toggleOpened()">
@@ -16,17 +20,17 @@
                         <span class="hamburger-inner"></span>
                     </span>
                 </button>
-    
+
                 <!--main menu-->
                 <a class="navbar-brand" routerLink="/">{{Title}}</a>
                 <app-nav-menu></app-nav-menu>
             </nav>
-    
-    
-    
-            <div>
-                <router-outlet></router-outlet>
-            </div>
-    
-        </mat-drawer-content>
-    </mat-drawer-container>
+        </ngx-headroom>
+
+
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+
+    </mat-drawer-content>
+</mat-drawer-container>

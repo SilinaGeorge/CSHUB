@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ParallaxScrollModule } from 'ng2-parallaxscroll';
+import { HeadroomModule } from '@ctrl/ngx-headroom';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,6 +37,7 @@ import { SignupService } from "./services/signup.service"
     AboutComponent,
   ],
   imports: [
+    HeadroomModule,
     MatSidenavModule,
     ParallaxScrollModule,
     HttpClientModule,

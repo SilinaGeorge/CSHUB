@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+
 
 
 @Component({
@@ -12,9 +13,10 @@ export class AppComponent {
 
   private _opened: boolean = false;
 
+ 
 
   private _toggleOpened(): void {
     this._opened = !this._opened;
   }
- 
+
 }

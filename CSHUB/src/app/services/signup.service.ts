@@ -16,7 +16,7 @@ export class SignupService {
   
 
   postSignupUser(userData){
-    this.url ="http://localhost:4200/signup";
+    this.url ="http://localhost:4200/users/signup";
     return this.http.post<any>(this.url, userData);
     
 

@@ -12,7 +12,7 @@ export class LoginService {
   url : string;
 
   postLoginUser(userData){;
-    this.url ="http://localhost:4200/login";
+    this.url ="http://localhost:4200/users/login";
     return this.http.post<any>(this.url, userData);
     
 
