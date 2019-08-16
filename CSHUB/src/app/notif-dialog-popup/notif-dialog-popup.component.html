@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Email Reminder</h2>
+<mat-dialog-content>
+    An email will be sent to you reminding you to study/job hunt
+
+    <input mdc-datetime-picker="" date="true" time="true" type="text" id="datetime"
+placeholder="Date" show-todays-date="" minutes="true" min-date="date" show-icon="true"
+ng-model="dateTime" class=" dtp-no-msclear dtp-input md-input">
+</mat-dialog-content>
+<mat-dialog-actions>
+        <button mat-raised-button mat-dialog-close mat-dialog-close="false"  class="btn btn-primary shadow-sm" (click)="okClick()">Ok</button>
+        <button  mat-dialog-close mat-dialog-close="true"  class="btn btn-danger">Cancel</button>
+</mat-dialog-actions>

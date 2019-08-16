@@ -22,6 +22,36 @@ const errorFormatter = ({msg}) => {
   return `${msg}`;
 };
 
+/* var schedule = require('node-schedule');
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'hotmail',
+  auth: {
+    user: 'silina_george@hotmail.com',
+    pass: 'In7878,./'
+  }
+});
+
+var mailOptions = {
+  from: 'silina_george@hotmail.com',
+  to: 'silina_george@hotmail.com',
+  subject: 'CSHUB: Time to Get Crackng',
+  text: 'Visit --insert prod link-- and start ur studying and job hunt./n This is an automated email,please do not reply back'
+};
+
+var date = new Date(2019, 7, 15, 23, 40, 0);
+ 
+var j = schedule.scheduleJob(date, function(){
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}); */
+ 
 // user login api call
 router.post("/login",[
     check('email', 'Your email is not valid').not().isEmpty().trim().isEmail().normalizeEmail().isLength({ max: 50 }),
@@ -32,6 +62,7 @@ router.post("/login",[
     const result = validationResult(req).formatWith(errorFormatter);
     if (!result.isEmpty()) {
       return res.status(401).json({ msg: result.array() });
+      
     }
 
     const email = req.body.email;

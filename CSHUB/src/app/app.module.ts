@@ -20,10 +20,13 @@ import { AboutComponent } from './about/about.component';
 
 
 
-import { MatCheckboxModule,MatInputModule, MatButtonModule, MatSelectModule, MatIconModule,  MatSidenavModule } from '@angular/material';
+import { MatCheckboxModule,MatInputModule, MatButtonModule, MatSelectModule, MatIconModule,  MatSidenavModule, MatDialogModule } from '@angular/material';
 
-import { LoginService } from './services/login.service'
-import { SignupService } from "./services/signup.service"
+import { LoginService } from './services/login.service';
+import { SignupService } from "./services/signup.service";
+import { NotificationComponent } from './notification/notification.component';
+import { NotifDialogPopupComponent } from './notif-dialog-popup/notif-dialog-popup.component';
+
 
 
 @NgModule({
@@ -35,8 +38,11 @@ import { SignupService } from "./services/signup.service"
     NavMenuComponent,
     LoginComponent,
     AboutComponent,
+    NotificationComponent,
+    NotifDialogPopupComponent,
   ],
   imports: [
+    MatDialogModule,
     HeadroomModule,
     MatSidenavModule,
     ParallaxScrollModule,
@@ -57,6 +63,7 @@ import { SignupService } from "./services/signup.service"
     LoginService, 
     SignupService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[NotifDialogPopupComponent],
 })
 export class AppModule { }
