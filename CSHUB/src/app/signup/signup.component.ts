@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms' 
-import { SignupService } from "../services/signup.service"
+import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms'
+import { SignupService } from "../services/signup.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -10,13 +11,14 @@ import { SignupService } from "../services/signup.service"
 export class SignupComponent implements OnInit {
 
   signupFormGroup: FormGroup;
- 
+  errorHTML: string;
 
-  constructor(private fb: FormBuilder , private _signupService: SignupService) { }
+
+  constructor(private fb: FormBuilder, private _signupService: SignupService, private router: Router) { }
 
   ngOnInit() {
 
-    this.signupFormGroup= this.fb.group({
+    this.signupFormGroup = this.fb.group({
 
       firstname: ['', [
         Validators.required,
@@ -41,51 +43,61 @@ export class SignupComponent implements OnInit {
         Validators.required
       ]]
 
-    }, {validator: passwordMatchValidator});
+    }, { validator: passwordMatchValidator });
   }
 
-  get firstname(){
+  get firstname() {
     return this.signupFormGroup.get('firstname').value;
   }
-  get lastname(){
+  get lastname() {
     return this.signupFormGroup.get('lastname').value;
   }
 
-  get email(){
+  get email() {
     return this.signupFormGroup.get('email').value;
-  } 
+  }
 
-  get password(){
+  get password() {
     return this.signupFormGroup.get('password').value;
   }
 
-  get verifypassword(){
+  get verifypassword() {
     return this.signupFormGroup.get('verifypassword');
-  } 
+  }
 
   // check to see if passwords match on every input
   onPasswordInput() {
     if (this.signupFormGroup.hasError('passwordMismatch'))
-      this.verifypassword.setErrors([{'passwordMismatch': true}]);
+      this.verifypassword.setErrors([{ 'passwordMismatch': true }]);
     else
       this.verifypassword.setErrors(null);
   }
 
-  onSubmit(){
+  onSubmit() {
 
-    console.log(this.signupFormGroup.value)
-    this._signupService.postSignupUser(
-      {firstname: this.firstname,
-        lastname: this.lastname,
-        email: this.email,
-        password: this.password
-      })
-   .subscribe(
-     response => console.log("Success", response),
-     error => console.log("error", error)
-   ) ;
+    this._signupService.postSignupUser({
+      firstname: this.firstname,
+      lastname: this.lastname,
+      email: this.email,
+      password: this.password
+    })
+      .subscribe(
+        response => this.router.navigateByUrl('/'),
+        error => {
+          this.errorHTML = ''
+          if ('msg' in error.error) {
+            if (Array.isArray(error.error.msg)) {
+
+              error.error.msg.forEach(element => {
+                this.errorHTML += `<li>${element}</li>`
+
+              });
+            }
+            else this.errorHTML = `<li>${error.error.msg}</li>`
+          }
+        });
   }
-  
+
 
 }
 
@@ -94,7 +106,7 @@ export const passwordMatchValidator: ValidatorFn = (passFormGroup: FormGroup): V
   if (passFormGroup.get('password').value === passFormGroup.get('verifypassword').value)
     return null;
   else
-    return {passwordMismatch: true};
+    return { passwordMismatch: true };
 };
 
 

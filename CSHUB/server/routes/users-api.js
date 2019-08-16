@@ -39,9 +39,9 @@ router.post("/login",[
   
     Users.findById(email).exec(function (err, user) {
       if (err) return res.status(500).json({ msg: "Server Error" });
-      if (!user) return res.status(401).json({ msg: "Invalid login" });
+      if (!user) return res.status(401).json({ msg: "Email is not correct" });
       if (user.hash !== generateHash(password, user.salt))
-        return res.status(401).json({ msg: "Invalid login" }); // invalid password
+        return res.status(401).json({ msg: "Password is not correct" }); // invalid password
       // start a session
       req.session.id = user._id;
       return res.status(200).json({
@@ -55,8 +55,8 @@ router.post("/login",[
   
   // user signup api call
   router.post("/signup",[
-    check('firstname', 'first name is too long or contains invalid characters (alpha only)').not().isEmpty().isAlpha().trim().escape().isLength({ max: 50 }),
-    check('lastname', 'last name is too long or contains invalid characters (alpha only) ').not().isEmpty().isAlpha().trim().escape().isLength({ max: 50 }),
+    check('firstname', 'First name is too long or contains invalid characters (alpha only)').not().isEmpty().isAlpha().trim().escape().isLength({ max: 50 }),
+    check('lastname', 'Last name is too long or contains invalid characters (alpha only) ').not().isEmpty().isAlpha().trim().escape().isLength({ max: 50 }),
     check('email', 'Your email is not valid').not().isEmpty().trim().isEmail().normalizeEmail().isLength({ max: 50 }),
     check('password', 'Your password must be between 6-18 characters').not().isEmpty().isLength({ min: 6, max:18 }),
   ], (req, res, next) => {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { LoginService } from '../services/login.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,16 +11,15 @@ import { LoginService } from '../services/login.service'
 export class LoginComponent implements OnInit {
 
   loginFormGroup: FormGroup;
-  errorHTML :string;
-
-
-  constructor(private fb: FormBuilder, private _loginService: LoginService) { }
+  errorHTML: string;
+ 
+  constructor(private fb: FormBuilder, private _loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
     this.loginFormGroup = this.fb.group({
       email: ['', [
         Validators.required,
-        //Validators.email
+        Validators.email
       ]],
 
       password: ['', [
@@ -38,24 +38,23 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-
     this._loginService.postLoginUser(this.loginFormGroup.value)
       .subscribe(
+        response => this.router.navigateByUrl('/'),
         error => {
-          console.log(error.msg)
           this.errorHTML = ''
-          if ('msg' in error) {
-            if (Array.isArray(error.msg)) {
+          if ('msg' in error.error) {
+            if (Array.isArray(error.error.msg)) {
 
-              this.errorHTML += `<li>${error}</li>`
+              error.error.msg.forEach(element => {
+                this.errorHTML += `<li>${element}</li>`
+
+              });
             }
-            else this.errorHTML =  `<li>${error}</li>`
-
-            
-            
+            else this.errorHTML = `<li>${error.error.msg}</li>`
           }
         });
   }
 
 }
- 
+
