@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatSnackBar } from '@angular/material'
+import * as moment from 'moment';
 
 
 @Component({
@@ -25,7 +27,7 @@ export class NotifDialogPopupComponent implements OnInit {
 
   errorHTML ="";
 
-  constructor(private fb: FormBuilder){}
+  constructor(private fb: FormBuilder, private _snackbar: MatSnackBar){}
 
   ngOnInit() {
 
@@ -80,12 +82,22 @@ export class NotifDialogPopupComponent implements OnInit {
     
   }
   catch(ex){
-    this.errorHTML = `An error as occured.`
+    this.errorHTML = `An error as occured.`;
 
   }
 
   console.log(this.dateTime)
   // api call node-schedule
+
+  
+  //snack bar show
+  this._snackbar.open("Email Reminder Created:" + moment(this.dateTime).format(("dddd, MMMM Do YYYY, h:mm:ss a")),
+  'Undo',
+  { duration: 5000 });
+
+
+  moment(this.dateTime).format('MM/DD/YYYY hh:mm');
+
 
   }
 

@@ -7,11 +7,11 @@
         <form [formGroup]="notifFormGroup" (ngSubmit)="okClick()" style="padding-bottom:10vh;padding-right: 10vh"> 
             <mat-dialog-content>
             
-                <div id="errors" style="color:red; margin-bottom: 2px" [innerHTML]="errorHTML"> </div>
+                <div id="errors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"> </div>
             
-                <p style="margin-bottom: 2px">An email will be sent to you reminding you to study/job hunt</p>
+                <p style="margin-bottom: 1em">An email will be sent to you reminding you to study/job hunt</p>
             
-                <div></div>
+                <div style="margin-bottom: 1em"></div>
             
                 
               <mat-form-field>
@@ -20,7 +20,7 @@
                         <mat-datepicker #datePicker disabled="false"></mat-datepicker>
               </mat-form-field>
             
-              <div style="margin-bottom: 2px"></div>
+              <div ></div>
             
               <mat-form-field style="width:5em">
                     <mat-label>Hour</mat-label>
@@ -137,7 +137,7 @@
 
         <div class="example-container mat-elevation-z8">
 
-            <mat-table #table [dataSource]="dataSource" >
+            <mat-table #table [dataSource]="dataSource" matSort>
           
               <!-- Checkbox Column -->
               <ng-container matColumnDef="Select">
@@ -146,6 +146,7 @@
                                 [checked]="selection.hasValue() && isAllSelected()"
                                 [indeterminate]="selection.hasValue() && !isAllSelected()">
                   </mat-checkbox>
+
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row">
                   <mat-checkbox (click)="$event.stopPropagation()"
@@ -154,10 +155,12 @@
                   </mat-checkbox>
                 </mat-cell>
               </ng-container>
+
+              
           
               <!-- Date Column -->
               <ng-container matColumnDef="Date">
-                <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.Date}} </mat-cell>
               </ng-container>
           

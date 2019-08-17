@@ -50,7 +50,7 @@
     "nodemailer": "^6.3.0",
     "open-iconic": "^1.1.1",
     "popper.js": "^1.15.0",
-    "rxjs": "~6.4.0",
+    "rxjs": "^6.4.0",
     "save": "^2.4.0",
     "tslib": "^1.10.0",
     "validator": "^11.1.0",

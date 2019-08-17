@@ -7,6 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
+import { NgxTimerModule } from 'ngx-timer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { AboutComponent } from './about/about.component';
 
 
 import { 
+  MatSnackBarModule,
   MatTabsModule,
   MatNativeDateModule,
   MatDatepickerModule,
@@ -39,6 +41,7 @@ import { LoginService } from './services/login.service';
 import { SignupService } from "./services/signup.service";
 import { NotificationComponent } from './notification/notification.component';
 import { NotifDialogPopupComponent } from './notif-dialog-popup/notif-dialog-popup.component';
+import { TimerComponent } from './timer/timer.component';
 
 
 
@@ -53,8 +56,11 @@ import { NotifDialogPopupComponent } from './notif-dialog-popup/notif-dialog-pop
     AboutComponent,
     NotificationComponent,
     NotifDialogPopupComponent,
+    TimerComponent,
   ],
   imports: [
+    MatSnackBarModule,
+    NgxTimerModule,
     MatTableModule,
     MatTabsModule,
     DateTimePickerModule,
