@@ -8,7 +8,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SideNavMenuComponent } from './side-nav-menu/side-nav-menu.component';
@@ -20,7 +19,21 @@ import { AboutComponent } from './about/about.component';
 
 
 
-import { MatCheckboxModule,MatInputModule, MatButtonModule, MatSelectModule, MatIconModule,  MatSidenavModule, MatDialogModule } from '@angular/material';
+import { 
+  MatTabsModule,
+  MatNativeDateModule,
+  MatDatepickerModule,
+  MatCheckboxModule,
+  MatInputModule,
+   MatButtonModule, 
+   MatSelectModule, 
+   MatIconModule,  
+   MatSidenavModule, 
+   MatDialogModule,
+   MatTableModule,
+  } from '@angular/material';
+  
+   import { DateTimePickerModule} from 'ngx-datetime-picker';
 
 import { LoginService } from './services/login.service';
 import { SignupService } from "./services/signup.service";
@@ -42,6 +55,11 @@ import { NotifDialogPopupComponent } from './notif-dialog-popup/notif-dialog-pop
     NotifDialogPopupComponent,
   ],
   imports: [
+    MatTableModule,
+    MatTabsModule,
+    DateTimePickerModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatDialogModule,
     HeadroomModule,
     MatSidenavModule,

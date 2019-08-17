@@ -1,12 +1,194 @@
 <h2 mat-dialog-title>Email Reminder</h2>
-<mat-dialog-content>
-    An email will be sent to you reminding you to study/job hunt
 
-    <input mdc-datetime-picker="" date="true" time="true" type="text" id="datetime"
-placeholder="Date" show-todays-date="" minutes="true" min-date="date" show-icon="true"
-ng-model="dateTime" class=" dtp-no-msclear dtp-input md-input">
-</mat-dialog-content>
-<mat-dialog-actions>
-        <button mat-raised-button mat-dialog-close mat-dialog-close="false"  class="btn btn-primary shadow-sm" (click)="okClick()">Ok</button>
-        <button  mat-dialog-close mat-dialog-close="true"  class="btn btn-danger">Cancel</button>
-</mat-dialog-actions>
+<mat-tab-group style="overflow-y: auto; max-height: 70vh">
+
+    <mat-tab label="Send Notification">
+
+        <form [formGroup]="notifFormGroup" (ngSubmit)="okClick()" style="padding-bottom:10vh;padding-right: 10vh"> 
+            <mat-dialog-content>
+            
+                <div id="errors" style="color:red; margin-bottom: 2px" [innerHTML]="errorHTML"> </div>
+            
+                <p style="margin-bottom: 2px">An email will be sent to you reminding you to study/job hunt</p>
+            
+                <div></div>
+            
+                
+              <mat-form-field>
+                        <input matInput formControlName="dateTime" [matDatepicker]="datePicker" [min]="minDate" placeholder="Choose a date">
+                        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datePicker disabled="false"></mat-datepicker>
+              </mat-form-field>
+            
+              <div style="margin-bottom: 2px"></div>
+            
+              <mat-form-field style="width:5em">
+                    <mat-label>Hour</mat-label>
+                    <select matNativeControl required value="0"   formControlName="hour">
+                      <option value="0" selected='active'>12</option>
+                      <option value="1">01</option>
+                      <option value="2">02</option>
+                      <option value="3">03</option>
+                      <option value="4">04</option>
+                      <option value="5">05</option>
+                      <option value="6">06</option>
+                      <option value="7">07</option>
+                      <option value="8">08</option>
+                      <option value="9">09</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      
+                    </select>
+                    <mat-error></mat-error>
+              </mat-form-field>
+              :
+            
+              <mat-form-field style="width:5em;">
+                    <mat-label>Minute</mat-label>
+                    <select matNativeControl required placeholder="0" formControlName="minute">  
+                      <option value="0" selected="true">00</option>
+                      <option value="1">01</option>
+                      <option value="2">02</option>
+                      <option value="3">03</option>
+                      <option value="4">04</option>
+                      <option value="5">05</option>
+                      <option value="6">06</option>
+                      <option value="7">07</option>
+                      <option value="8">08</option>
+                      <option value="9">09</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                      <option value="23">23</option>
+                      <option value="24">24</option>
+                      <option value="25">25</option>
+                      <option value="26">26</option>
+                      <option value="27">27</option>
+                      <option value="28">28</option>
+                      <option value="29">29</option>
+                      <option value="30">30</option>
+                      <option value="31">31</option>
+                      <option value="32">32</option>
+                      <option value="33">33</option>
+                      <option value="34">34</option>
+                      <option value="35">35</option>
+                      <option value="36">36</option>
+                      <option value="37">37</option>
+                      <option value="38">38</option>
+                      <option value="39">39</option>
+                      <option value="40">40</option>
+                      <option value="41">41</option>
+                      <option value="42">42</option>
+                      <option value="43">43</option>
+                      <option value="44">44</option>
+                      <option value="45">45</option>
+                      <option value="46">46</option>
+                      <option value="47">47</option>
+                      <option value="48">48</option>
+                      <option value="49">49</option>
+                      <option value="50">50</option>
+                      <option value="51">51</option>
+                      <option value="52">52</option>
+                      <option value="53">53</option>
+                      <option value="54">54</option>
+                      <option value="55">55</option>
+                      <option value="56">56</option>
+                      <option value="57">57</option>
+                      <option value="58">58</option>
+                      <option value="59">59</option>
+                    </select>
+                    <mat-error></mat-error>
+              </mat-form-field>
+            
+              <mat-form-field style="width:5em; margin-left: 10px">
+                    <mat-label>AM/PM</mat-label>
+                    <select matNativeControl formControlName="ampm"  required >
+                      <option value="AM" selected="true">AM</option>
+                      <option value="PM">PM</option>
+                    </select>
+                    <mat-error></mat-error>
+              </mat-form-field>
+            
+            
+            </mat-dialog-content>
+            <div style="text-align: center;">
+            <mat-dialog-actions style="text-align: center;">
+                    <button type='submit' mat-raised-button mat-dialog-close mat-dialog-close="false" [disabled]="notifFormGroup.invalid"  class="btn btn-primary shadow-sm" (click)="okClick()">Ok</button>
+                    <button  mat-dialog-close mat-dialog-close="true"  class="btn btn-danger">Cancel</button>
+            </mat-dialog-actions>
+            
+            </div>
+            </form>
+    </mat-tab>
+
+    <!--tab 2: manage notifications-->
+    <mat-tab label="Manage Notifications" >
+
+
+        <div class="example-container mat-elevation-z8">
+
+            <mat-table #table [dataSource]="dataSource" >
+          
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="Select">
+                <mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                  </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)">
+                  </mat-checkbox>
+                </mat-cell>
+              </ng-container>
+          
+              <!-- Date Column -->
+              <ng-container matColumnDef="Date">
+                <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.Date}} </mat-cell>
+              </ng-container>
+          
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"
+                       (click)="selection.toggle(row)">
+              </mat-row>
+
+    
+
+            </mat-table>
+
+            <button mat-raised-button class="btn btn-primary" (click)="removeSelectedRows()">
+                Remove Selected Rows
+              </button>
+  
+        
+          <button  mat-dialog-close mat-dialog-close="true"  class="btn btn-danger">Exit</button>
+  
+          
+          
+
+
+      </div>
+
+    </mat-tab>
+
+  </mat-tab-group>
+
+
+
+
+
+
