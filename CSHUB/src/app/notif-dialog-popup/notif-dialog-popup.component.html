@@ -12,6 +12,8 @@
                 <p style="margin-bottom: 1em">An email will be sent to you reminding you to study/job hunt</p>
             
                 <div style="margin-bottom: 1em"></div>
+
+                
             
                 
               <mat-form-field>
@@ -141,11 +143,12 @@
           
               <!-- Checkbox Column -->
               <ng-container matColumnDef="Select">
-                <mat-header-cell *matHeaderCellDef>
+                <mat-header-cell *matHeaderCellDef> 
                   <mat-checkbox (change)="$event ? masterToggle() : null"
                                 [checked]="selection.hasValue() && isAllSelected()"
                                 [indeterminate]="selection.hasValue() && !isAllSelected()">
                   </mat-checkbox>
+                  <p>Delete</p>
 
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row">
@@ -153,6 +156,8 @@
                                 (change)="$event ? selection.toggle(row) : null"
                                 [checked]="selection.isSelected(row)">
                   </mat-checkbox>
+
+
                 </mat-cell>
               </ng-container>
 
@@ -174,7 +179,7 @@
             </mat-table>
 
             <button mat-raised-button class="btn btn-primary" (click)="removeSelectedRows()">
-                Remove Selected Rows
+                Delete Selected Rows
               </button>
   
         

@@ -7,7 +7,7 @@
             <app-side-nav-menu></app-side-nav-menu>
         </mat-drawer>
     
-        <mat-drawer-content style='min-height: 100vh'>
+        <mat-drawer-content style='min-height: 100vh;min-width: 100vw'>
     
             <!-- main menu: hide when scroll down, show whe scroll up -->
             <ngx-headroom>
@@ -27,7 +27,12 @@
                 </nav>
             </ngx-headroom>
 
-    
+            <app-timer></app-timer>
+
+
+
+            <app-spotify-popup></app-spotify-popup>
+
     
              <div>
                 <router-outlet></router-outlet>
@@ -35,3 +40,5 @@
     
         </mat-drawer-content>
     </mat-drawer-container>
+
+    

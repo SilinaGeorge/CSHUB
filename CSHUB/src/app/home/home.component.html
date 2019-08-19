@@ -1,31 +1,5 @@
-<div parallax [config]="{axis: 'Y', speed: -.3}" class="parallax-directive">
+<!-- <div parallax [config]="{axis: 'Y', speed: -.3}" class="parallax-directive">
 
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators">
-                                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                  <div class="carousel-item active">
-                                   dsfdsfdsfdsfds
-                                  </div>
-                                  <div class="carousel-item">
-                                    sfdsfdsfdsfds
-                                  </div>
-                                  <div class="carousel-item">
-                                    djfsdskfjldsfdsfds
-                                  </div>
-                                </div>
-                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="sr-only">Next</span>
-                                </a>
-                              </div>
         <div style="padding-bottom:60vh; background: transparent !important;"></div>
 
 
@@ -63,4 +37,53 @@
                 </div>
         </div>
 
-</div>
+</div> -->
+
+
+
+
+<ngb-carousel #carousel interval="1000" showNavigationArrows="false" 
+
+pauseOnHover="false">
+    <ng-template ngbSlide >
+      <div class="carousel-caption">
+        <h3>My slide {{i + 1}} title</h3>
+      </div>
+        <div >
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxpIRD1OlRKKK5W_g_7I7HMvq9xsMGgnjjWn7WxqiZJvM-1Pg4" style="width:100vw;height:95vh">
+        </div>
+     
+    </ng-template>
+    <ng-template ngbSlide >
+        <div class="carousel-caption">
+          <h3>My slide {{i + 1}} title</h3>
+        </div>
+          <div >
+            <img src="https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-038.jpg" style="width:100vw;height:95vh">
+          </div>
+       
+      </ng-template>
+
+      <ng-template ngbSlide >
+          <div class="carousel-caption">
+            <h3>My slide {{i + 1}} title</h3>
+          </div>
+            <div >
+              <img src="https://images.wallpaperscraft.com/image/purple_white_background_stains_abstract_65537_1920x1080.jpg" style="width:100vw;height:95vh" >
+            </div>
+       
+        </ng-template>
+
+        <ng-template ngbSlide >
+            <div class="carousel-caption">
+              <h3>My slide {{i + 1}} title</h3>
+            </div>
+              <div >
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeFH1Jg4GuGz1CxoGKlcqny0O996ibBbvdk165-v_8Blk4NrIH" style="width:100vw;height:95vh" >
+              </div>
+         
+          </ng-template>
+  </ngb-carousel>
+
+
+

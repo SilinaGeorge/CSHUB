@@ -91,9 +91,9 @@ export class NotifDialogPopupComponent implements OnInit {
 
   
   //snack bar show
-  this._snackbar.open("Email Reminder Created:" + moment(this.dateTime).format(("dddd, MMMM Do YYYY, h:mm:ss a")),
-  'Undo',
-  { duration: 5000 });
+  this._snackbar.open("Email Reminder Created: " + moment(this.dateTime).format(("dddd, MMMM Do YYYY, h:mm a")),
+  'Ok',
+  { duration: 6000 });
 
 
   moment(this.dateTime).format('MM/DD/YYYY hh:mm');
@@ -139,17 +139,5 @@ const ELEMENT_DATA: Element[] = [
   {Date: new Date()},
   {Date: new Date()},
   {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
-  {Date: new Date()},
+
 ];
