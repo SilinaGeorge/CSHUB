@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 
+
 @Component({
   selector: 'app-spotify',
   templateUrl: './spotify.component.html',
@@ -11,9 +12,10 @@ export class SpotifyComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
-  openDialog(){
+  openModal(){
     var spotifypopup = document.getElementById("spotify");
     if (spotifypopup.style.display === "none") {
       spotifypopup.style.display = "block";

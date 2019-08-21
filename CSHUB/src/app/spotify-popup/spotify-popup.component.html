@@ -1,19 +1,31 @@
 <div id="spotify" class="modal" style="display:none" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Play Spotify Public Album/Playlist</h5>
-              <button type="button" class="close" (click)="close()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+                <h5 class="modal-title">Play Spotify Public Album/Playlist</h5>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                <iframe
+                    [src] ="srcUrl" width="300" height="380"
+                    frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+            <div id="errors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"> </div>
+
+                <form [formGroup]="spotifyFormGroup" (ngSubmit)="onUpload()">
+                    <mat-form-field>
+                        <input matInput type="url" placeholder="playlist/album link" minlength="6"
+                            formControlName="spotifyurl">
+                        <mat-error>Please enter a valid spotify public album/playlist link
+                        </mat-error>
+                    </mat-form-field>
+                    <button type="submit" [disabled]="spotifyFormGroup.invalid" class="btn btn-primary">Upload</button>
+                </form>
+                <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
