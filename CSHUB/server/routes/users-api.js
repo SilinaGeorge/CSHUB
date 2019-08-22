@@ -54,7 +54,7 @@ var j = schedule.scheduleJob(date, function(){
  
 // user login api call
 router.post("/login",[
-    check('email', 'Your email is not valid').not().isEmpty().trim().isEmail().normalizeEmail().isLength({ max: 50 }),
+    check('_id', 'Your email is not valid').not().isEmpty().trim().isEmail().normalizeEmail().isLength({ max: 50 }),
     check('password', 'Your password must be between 6-18 characters').not().isEmpty().isLength({ min: 6, max:18 })
   ],(req, res, next) => {
   
@@ -65,10 +65,10 @@ router.post("/login",[
       
     }
 
-    const email = req.body.email;
+    const _id = req.body._id;
     const password = req.body.password;
   
-    Users.findById(email).exec(function (err, user) {
+    Users.findById(_id).exec(function (err, user) {
       if (err) return res.status(500).json({ msg: "Server Error" });
       if (!user) return res.status(401).json({ msg: "Email is not correct" });
       if (user.hash !== generateHash(password, user.salt))
@@ -88,7 +88,7 @@ router.post("/login",[
   router.post("/signup",[
     check('firstname', 'First name is too long or contains invalid characters (alpha only)').not().isEmpty().isAlpha().trim().escape().isLength({ max: 50 }),
     check('lastname', 'Last name is too long or contains invalid characters (alpha only) ').not().isEmpty().isAlpha().trim().escape().isLength({ max: 50 }),
-    check('email', 'Your email is not valid').not().isEmpty().trim().isEmail().normalizeEmail().isLength({ max: 50 }),
+    check('_id', 'Your email is not valid').not().isEmpty().trim().isEmail().normalizeEmail().isLength({ max: 50 }),
     check('password', 'Your password must be between 6-18 characters').not().isEmpty().isLength({ min: 6, max:18 }),
   ], (req, res, next) => {
   
@@ -100,10 +100,10 @@ router.post("/login",[
   
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
-    const email = req.body.email;
+    const _id = req.body._id;
     const password = req.body.password;
       
-    Users.findById(email).exec(function (err, user) {
+    Users.findById(_id).exec(function (err, user) {
       if (err) return res.status(500).json({ msg: "Server Error" });
       if (user) {
         return res.status(409).json({ msg: "Email is already taken" });
@@ -111,11 +111,11 @@ router.post("/login",[
       const salt = generateSalt();
       const hash = generateHash(password, salt);
   
-      const newUser = new Users({ _id: email, firstname, lastname, hash, salt });
+      const newUser = new Users({ _id, firstname, lastname, hash, salt });
   
       newUser.save(function(err) {
         if (err) return res.status(500).json({ msg: "Server Error" });
-        return res.json({ msg: "Success", _id: email, firstname, lastname });
+        return res.json({ msg: "Success", _id, firstname, lastname });
       });
       
     });

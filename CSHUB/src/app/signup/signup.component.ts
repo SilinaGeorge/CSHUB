@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms'
-import { SignupService } from "../services/signup.service";
+import { UsersService } from "../services/users.service";
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
   errorHTML: string;
 
 
-  constructor(private fb: FormBuilder, private _signupService: SignupService, private router: Router) { }
+  constructor(private fb: FormBuilder, private _userService: UsersService, private router: Router) { }
 
   ngOnInit() {
 
@@ -75,7 +75,7 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
 
-    this._signupService.postSignupUser({
+    /* this._userService.signupUser({
       firstname: this.firstname,
       lastname: this.lastname,
       email: this.email,
@@ -95,7 +95,7 @@ export class SignupComponent implements OnInit {
             }
             else this.errorHTML = `<li>${error.error.msg}</li>`
           }
-        });
+        }); */
   }
 
 

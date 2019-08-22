@@ -37,13 +37,21 @@ import {
   
    import { DateTimePickerModule} from 'ngx-datetime-picker';
 
-import { LoginService } from './services/login.service';
-import { SignupService } from "./services/signup.service";
+   
+import { UsersService } from './services/users.service'
+
+
+
 import { NotificationComponent } from './notification/notification.component';
 import { NotifDialogPopupComponent } from './notif-dialog-popup/notif-dialog-popup.component';
 import { TimerComponent } from './timer/timer.component';
 import { SpotifyComponent } from './spotify/spotify.component';
 import { SpotifyPopupComponent } from './spotify-popup/spotify-popup.component';
+import { StoreModule } from '@ngrx/store';
+import { UserReducer } from './store/reducers/user.reducer';
+import { LoginHomeComponent } from './login-home/login-home.component';
+import { EffectsModule } from '@ngrx/effects';
+import { UsersEffects } from './store/effects/users.effects';
 
 
 
@@ -61,8 +69,13 @@ import { SpotifyPopupComponent } from './spotify-popup/spotify-popup.component';
     TimerComponent,
     SpotifyComponent,
     SpotifyPopupComponent,
+    LoginHomeComponent,
   ],
   imports: [
+    EffectsModule.forRoot([UsersEffects]),
+    StoreModule.forRoot({
+      user: UserReducer
+    }),
     MatSnackBarModule,
     MatTableModule,
     MatTabsModule,
@@ -87,8 +100,7 @@ import { SpotifyPopupComponent } from './spotify-popup/spotify-popup.component';
     AppRoutingModule,    
   ],
   providers: [
-    LoginService, 
-    SignupService
+    UsersService
   ],
   bootstrap: [AppComponent],
   entryComponents:[NotifDialogPopupComponent],

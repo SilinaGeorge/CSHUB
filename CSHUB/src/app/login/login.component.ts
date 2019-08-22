@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { LoginService } from '../services/login.service'
+import { UsersService } from '../services/users.service'
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/models/app-state.model';
+import { LoginUserAction } from '../store/actions/user.actions';
+import { User } from '../store/models/user.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +17,14 @@ export class LoginComponent implements OnInit {
 
   loginFormGroup: FormGroup;
   errorHTML: string;
- 
-  constructor(private fb: FormBuilder, private _loginService: LoginService, private router: Router) { }
+  loginUser: User = {_id: null, password: null};
+  error$: Observable<Error>;
+
+
+  constructor(private store: Store<AppState>, private fb: FormBuilder, private _usersService: UsersService, private router: Router) { }
 
   ngOnInit() {
+
     this.loginFormGroup = this.fb.group({
       email: ['', [
         Validators.required,
@@ -30,17 +39,30 @@ export class LoginComponent implements OnInit {
   }
 
   get email() {
-    return this.loginFormGroup.get('email');
+    return this.loginFormGroup.get('email').value;
   }
 
   get password() {
-    return this.loginFormGroup.get('password');
+    return this.loginFormGroup.get('password').value;
   }
 
   onSubmit() {
-    this._loginService.postLoginUser(this.loginFormGroup.value)
+
+    this.loginUser._id = this.email;
+    this.loginUser.password = this.password;
+
+    
+    this.store.dispatch(new LoginUserAction(this.loginUser));
+    this.error$ = this.store.select(store => store.user.error)
+
+
+    //console.log(this.success$);
+    //console.log(this.error$);
+
+
+/*     this._usersService.loginUser(this.loginFormGroup.value)
       .subscribe(
-        response => this.router.navigateByUrl('/'),
+        response => this.router.navigateByUrl('/login-home'),
         error => {
           this.errorHTML = ''
           if ('msg' in error.error) {
@@ -53,7 +75,7 @@ export class LoginComponent implements OnInit {
             }
             else this.errorHTML = `<li>${error.error.msg}</li>`
           }
-        });
+        }); */
   }
 
 }
