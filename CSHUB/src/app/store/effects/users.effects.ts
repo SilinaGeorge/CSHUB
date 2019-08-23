@@ -6,6 +6,7 @@ import { LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErro
 import { UsersService} from '../../services/users.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class UsersEffects{
@@ -17,9 +18,15 @@ export class UsersEffects{
         data => this.userService.loginUser(data.payload)
         .pipe(
             map(data => {
+                console.log("data")
+                console.log(data)
                 this.router.navigateByUrl('/login-home')
                 return new LoginUserSuccessAction(data)}),
-            catchError(error => of(new LoginUserErrorAction(error)))
+            catchError((error) =>{
+                console.log(error.error)
+                
+                return of(new LoginUserErrorAction(error.error))}
+                )
         )
     )
 )

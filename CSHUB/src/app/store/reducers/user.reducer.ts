@@ -1,4 +1,5 @@
 import { User } from "../models/user.model";
+import { Error } from "../models/error.model";
 import { UserActionTypes, UserAction } from '../actions/user.actions';
 
 export interface UserState{

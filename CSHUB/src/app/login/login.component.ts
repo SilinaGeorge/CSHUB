@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { LoginUserAction } from '../store/actions/user.actions';
 import { User } from '../store/models/user.model';
+import { Error } from '../store/models/error.model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -25,6 +26,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+    this.error$ = this.store.select(store => store.user.error)
+    
     this.loginFormGroup = this.fb.group({
       email: ['', [
         Validators.required,
@@ -51,13 +54,11 @@ export class LoginComponent implements OnInit {
     this.loginUser._id = this.email;
     this.loginUser.password = this.password;
 
-    
-    this.store.dispatch(new LoginUserAction(this.loginUser));
-    this.error$ = this.store.select(store => store.user.error)
 
+    this.store.dispatch(new LoginUserAction(this.loginUser));
 
     //console.log(this.success$);
-    //console.log(this.error$);
+    console.log(this.error$);
 
 
 /*     this._usersService.loginUser(this.loginFormGroup.value)

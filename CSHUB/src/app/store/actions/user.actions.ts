@@ -2,6 +2,7 @@
 
 import { Action } from '@ngrx/store';
 import { User } from '../models/user.model';
+import { Error } from '../models/error.model';
 
 export enum UserActionTypes{
     LOGIN_USER = '[USER] Login',

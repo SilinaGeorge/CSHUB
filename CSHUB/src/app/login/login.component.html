@@ -3,7 +3,12 @@
     <div class="card-header">Login into CS HUB</div>
     <div class="card-body">
 
-        <div *ngIf="error$ | async as error" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML">{{error.msg}}</div>
+        <div *ngIf="error$ | async as error">
+            <ul *ngIf="error$ | async as error">
+                    <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
+            </ul>
+                
+        </div>
 
         <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
             <div>

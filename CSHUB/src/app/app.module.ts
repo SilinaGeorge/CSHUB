@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -72,6 +73,7 @@ import { UsersEffects } from './store/effects/users.effects';
     LoginHomeComponent,
   ],
   imports: [
+    CommonModule,
     EffectsModule.forRoot([UsersEffects]),
     StoreModule.forRoot({
       user: UserReducer
