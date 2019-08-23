@@ -2,11 +2,15 @@
 
     <div class="card-header">Sign up to CS HUB</div>
     <div class="card-body">
-        <div id="serverErrors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"> </div>
+
+        <div *ngIf="error$ | async as error">
+            <ul *ngIf="error$ | async as error">
+                <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
+            </ul>
+
+        </div>
+
         <form [formGroup]="signupFormGroup" (ngSubmit)="onSubmit()">
-
-
-
             <mat-form-field style="margin-right:25%">
                 <input matInput type="text" placeholder="First Name" formControlName="firstname" maxlength="50">
                 <mat-error>Please enter first name (alphabet only)</mat-error>

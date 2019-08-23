@@ -12,7 +12,7 @@ export enum UserActionTypes{
     SIGNUP_USER_SUCCESS = '[USER] Signup Success',
     SIGNUP_USER_ERROR = '[USER] Signup Error',
 }
-
+// LOGIN
 export class LoginUserAction implements Action{
     readonly type = UserActionTypes.LOGIN_USER;
     constructor(public payload: User){};
@@ -27,13 +27,27 @@ export class LoginUserErrorAction implements Action{
     constructor(public payload: Error){};
 }
 
+// SIGNUP
+export class SignupUserAction implements Action{
+    readonly type = UserActionTypes.SIGNUP_USER;
+    constructor(public payload: User){};
+}
+
 export class SignupUserSuccessAction implements Action{
     readonly type = UserActionTypes.SIGNUP_USER_SUCCESS;
     constructor(public payload: User){};
 }
 
+export class SignupUserErrorAction implements Action{
+    readonly type = UserActionTypes.SIGNUP_USER_ERROR;
+    constructor(public payload: Error){};
+}
+
 export type UserAction = 
 LoginUserAction|
 LoginUserSuccessAction | 
+LoginUserErrorAction |
+SignupUserAction|
 SignupUserSuccessAction |
-LoginUserErrorAction;
+SignupUserErrorAction
+;

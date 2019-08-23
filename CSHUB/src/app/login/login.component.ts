@@ -17,7 +17,6 @@ import { Observable } from 'rxjs';
 export class LoginComponent implements OnInit {
 
   loginFormGroup: FormGroup;
-  errorHTML: string;
   loginUser: User = {_id: null, password: null};
   error$: Observable<Error>;
 
@@ -26,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    this.error$ = this.store.select(store => store.user.error)
+    //this.error$ = null;
     
     this.loginFormGroup = this.fb.group({
       email: ['', [
@@ -56,9 +55,7 @@ export class LoginComponent implements OnInit {
 
 
     this.store.dispatch(new LoginUserAction(this.loginUser));
-
-    //console.log(this.success$);
-    console.log(this.error$);
+    this.error$ = this.store.select(store => store.user.error)
 
 
 /*     this._usersService.loginUser(this.loginFormGroup.value)

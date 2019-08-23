@@ -20,8 +20,12 @@ export function UserReducer (state: UserState = intialState, action: UserAction)
             return {...state, user: action.payload};
         case UserActionTypes.LOGIN_USER_ERROR:
                 return {...state, error: action.payload};
+        case UserActionTypes.SIGNUP_USER:
+            return {...state, user: action.payload};
         case UserActionTypes.SIGNUP_USER_SUCCESS:
                 return {...state, user: action.payload};
+        case UserActionTypes.SIGNUP_USER_ERROR:
+                return {...state, error: action.payload};
         default:
             return state;
     }

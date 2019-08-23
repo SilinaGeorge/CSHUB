@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType} from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction } from '../actions/user.actions';
+import { LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction } from '../actions/user.actions';
 import { UsersService} from '../../services/users.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -18,14 +18,26 @@ export class UsersEffects{
         data => this.userService.loginUser(data.payload)
         .pipe(
             map(data => {
-                console.log("data")
-                console.log(data)
                 this.router.navigateByUrl('/login-home')
                 return new LoginUserSuccessAction(data)}),
-            catchError((error) =>{
-                console.log(error.error)
-                
+            catchError((error) =>{            
                 return of(new LoginUserErrorAction(error.error))}
+                )
+        )
+    )
+)
+
+@Effect() signupUser = this.actions$
+.pipe(
+    ofType<SignupUserAction>(UserActionTypes.SIGNUP_USER),
+    mergeMap(
+        data => this.userService.signupUser(data.payload)
+        .pipe(
+            map(data => {
+                this.router.navigateByUrl('/login-home')
+                return new SignupUserSuccessAction(data)}),
+            catchError((error) =>{            
+                return of(new SignupUserErrorAction(error.error))}
                 )
         )
     )
