@@ -13,21 +13,24 @@
             
                 <div style="margin-bottom: 1em"></div>
 
+
+                <mat-error *ngIf="notifFormGroup?.hasError('timeNotValid') && notifFormGroup.get('ampm').touched && notifFormGroup.get('minute').touched && notifFormGroup.get('hour').touched">Please pick a time that has not passed</mat-error>
+
                 
             
                 
               <mat-form-field>
-                        <input matInput formControlName="dateTime" [matDatepicker]="datePicker" [min]="minDate" placeholder="Choose a date">
+                        <input matInput formControlName="dateTime" (input)="onTimeInput()" [matDatepicker]="datePicker" [min]="minDate" placeholder="Choose a date">
                         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
                         <mat-datepicker #datePicker disabled="false"></mat-datepicker>
               </mat-form-field>
             
               <div ></div>
-            
+
               <mat-form-field style="width:5em">
                     <mat-label>Hour</mat-label>
-                    <select matNativeControl required value="0"   formControlName="hour">
-                      <option value="0" selected='active'>12</option>
+                    <select matNativeControl (input)="onTimeInput()" required value="0" formControlName="hour">
+                      <option value="0" >12</option>
                       <option value="1">01</option>
                       <option value="2">02</option>
                       <option value="3">03</option>
@@ -47,8 +50,8 @@
             
               <mat-form-field style="width:5em;">
                     <mat-label>Minute</mat-label>
-                    <select matNativeControl required placeholder="0" formControlName="minute">  
-                      <option value="0" selected="true">00</option>
+                    <select matNativeControl required (input)="onTimeInput()" placeholder="0" formControlName="minute">  
+                      <option value="0" >00</option>
                       <option value="1">01</option>
                       <option value="2">02</option>
                       <option value="3">03</option>
@@ -114,11 +117,12 @@
             
               <mat-form-field style="width:5em; margin-left: 10px">
                     <mat-label>AM/PM</mat-label>
-                    <select matNativeControl formControlName="ampm"  required >
-                      <option value="AM" selected="true">AM</option>
+                    <select matNativeControl formControlName="ampm" (input)="onTimeInput()" required >
+                      <option value="AM" >AM</option>
                       <option value="PM">PM</option>
                     </select>
                     <mat-error></mat-error>
+                    <mat-error *ngIf="ampm?.invalid && !ampm?.hasError('required')">Please pick a time that has not passed</mat-error>
               </mat-form-field>
             
             

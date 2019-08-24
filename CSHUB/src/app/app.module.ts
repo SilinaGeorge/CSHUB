@@ -10,6 +10,7 @@ import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
 
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SideNavMenuComponent } from './side-nav-menu/side-nav-menu.component';

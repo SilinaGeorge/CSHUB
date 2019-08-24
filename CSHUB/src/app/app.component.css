@@ -1,17 +1,4 @@
-/*!
- * Hamburgers
- * @description Tasty CSS-animated hamburgers
- * @author Jonathan Suh @jonsuh
- * @site https://jonsuh.com/hamburgers
- * @link https://github.com/jonsuh/hamburgers
- */
 
-/* You can add global styles to this file, and also import other style files */
-
- .parallax-container {
-  height: 100%;
-  width: 100%;
-}
 
 .parallax-directive {
   background-image: url(./../assets/buttons-contemporary-desktop-background-1157804.jpg);
