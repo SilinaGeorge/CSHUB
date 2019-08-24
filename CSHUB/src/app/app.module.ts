@@ -8,6 +8,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
+import { CountdownModule } from 'ngx-countdown';
 
 
 
@@ -23,6 +24,7 @@ import { AboutComponent } from './about/about.component';
 
 
 import { 
+  MatTooltipModule,
   MatSnackBarModule,
   MatTabsModule,
   MatNativeDateModule,
@@ -54,6 +56,8 @@ import { UserReducer } from './store/reducers/user.reducer';
 import { LoginHomeComponent } from './login-home/login-home.component';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from './store/effects/users.effects';
+import { TimerIconComponent } from './timer-icon/timer-icon.component';
+import { CountdownConfig } from 'ngx-countdown/src/countdown.config';
 
 
 
@@ -72,8 +76,11 @@ import { UsersEffects } from './store/effects/users.effects';
     SpotifyComponent,
     SpotifyPopupComponent,
     LoginHomeComponent,
+    TimerIconComponent,
   ],
   imports: [
+    MatTooltipModule,
+    CountdownModule ,
     CommonModule,
     EffectsModule.forRoot([UsersEffects]),
     StoreModule.forRoot({

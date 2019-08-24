@@ -95,7 +95,7 @@ export class NotifDialogPopupComponent implements OnInit {
 
     //snack bar show
     this._snackbar.open("Email Reminder Created: " + moment(this.dateTime).format(("dddd, MMMM Do YYYY, h:mm a")),
-      'Ok',
+      'OK',
       { duration: 6000 });
 
 

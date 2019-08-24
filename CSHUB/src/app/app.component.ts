@@ -19,4 +19,5 @@ export class AppComponent {
     this._opened = !this._opened;
   }
 
+
 }

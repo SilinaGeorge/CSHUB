@@ -1,0 +1,16 @@
+<div class="bg-light">
+
+    <countdown class="text-lg"  (finished)="timerFinished()" #c [config]="config"> $!h!:$!m!:$!s!</countdown>
+    <button (click)="c.pause()" class="btn btn-link btn-sm">pause</button>
+    <button (click)="c.resume()" class="btn btn-link btn-sm">resume</button>
+
+
+
+    <input placeholder="hh" style="border-color:transparent !important" [(ngModel)]="hours" value="0" style="width:3em; height:2em"> :
+    <input placeholder="mm" style="border-color:transparent !important" [(ngModel)]="minutes" value="0" style="width:3em; height:2em">
+    <button (click)="change()" class="btn btn-link btn-sm">start</button>
+
+
+
+
+</div>
