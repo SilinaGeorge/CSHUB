@@ -10,25 +10,25 @@ import { Config } from 'ngx-countdown';
   styleUrls: ['./timer.component.css']
 })
 export class TimerComponent implements OnInit {
-  date  = moment(new Date()).add(1,'minute').unix();
-  hours: string='1';
-  minutes: string='0';
-  timeleft= 30;
+  date = moment(new Date()).add(1, 'minute').unix();
+  hours: string = '1';
+  minutes: string = '0';
+  timeleft = 30;
 
-      config= {
-        leftTime: 3600,
-        demand: true,
-    }
+  config = {
+    leftTime: 3600,
+    demand: true,
+  }
 
- //console.log (moment(new Date()).add(1,'days').unix)));
+  //console.log (moment(new Date()).add(1,'days').unix)));
 
   constructor(private _snackbar: MatSnackBar) { }
-  
+
 
   ngOnInit() {
   }
 
-  timerFinished(){
+  timerFinished() {
     this._snackbar.open("Time to take a break!", 'OK');
   }
 
@@ -37,15 +37,19 @@ export class TimerComponent implements OnInit {
 
     if (this.minutes == '') this.minutes = '0';
     if (this.hours == '') this.hours = '0';
-    
-    
-    this.timeleft = parseInt(this.minutes) *60 + parseInt(this.hours)*3600
-    if (this.timeleft != 0)
-    { this.config= {
-      leftTime: this.timeleft,
-      demand: false,
-    } }
-       
+
+    if (!isNaN(parseInt(this.minutes)) && !isNaN(parseInt(this.hours))) {
+      this.timeleft = parseInt(this.minutes) * 60 + parseInt(this.hours) * 3600
+      if (this.timeleft != 0) {
+
+        this.config = {
+          leftTime: this.timeleft,
+          demand: false,
+        }
+
+      }
+    }
+
   }
 
 }
