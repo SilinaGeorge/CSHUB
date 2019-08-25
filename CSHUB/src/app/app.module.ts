@@ -24,6 +24,7 @@ import { AboutComponent } from './about/about.component';
 
 
 import { 
+  MatProgressSpinnerModule,
   MatTooltipModule,
   MatSnackBarModule,
   MatTabsModule,
@@ -58,6 +59,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from './store/effects/users.effects';
 import { TimerIconComponent } from './timer-icon/timer-icon.component';
 import { CountdownConfig } from 'ngx-countdown/src/countdown.config';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 
 
@@ -77,8 +79,10 @@ import { CountdownConfig } from 'ngx-countdown/src/countdown.config';
     SpotifyPopupComponent,
     LoginHomeComponent,
     TimerIconComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
+    MatProgressSpinnerModule,
     MatTooltipModule,
     CountdownModule ,
     CommonModule,
@@ -113,6 +117,6 @@ import { CountdownConfig } from 'ngx-countdown/src/countdown.config';
     UsersService
   ],
   bootstrap: [AppComponent],
-  entryComponents:[NotifDialogPopupComponent],
+  entryComponents:[NotifDialogPopupComponent,],
 })
 export class AppModule { }

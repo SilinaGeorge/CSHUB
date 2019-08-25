@@ -2,6 +2,7 @@ import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { DomSanitizer, SafeResourceUrl, SafeValue } from '@angular/platform-browser';
 
+
 @Component({
   selector: 'app-spotify-popup',
   templateUrl: './spotify-popup.component.html',
@@ -13,6 +14,7 @@ export class SpotifyPopupComponent implements OnInit {
 
   srcUrl: SafeResourceUrl;
   errorHTML: string;
+  closeResult: string;
 
  
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer) {
@@ -29,13 +31,15 @@ export class SpotifyPopupComponent implements OnInit {
     });
   }
 
+
   get spotifyurl() {
     return String (this.spotifyFormGroup.get('spotifyurl').value);
   }
 
   close(){
-    var spotifypopup = document.getElementById("spotify");
-    spotifypopup.style.display = "none";
+     var spotifypopup = document.getElementById("spotify");
+    spotifypopup.style.display = "none"; 
+    
     
   }
 

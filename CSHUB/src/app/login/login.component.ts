@@ -19,11 +19,14 @@ export class LoginComponent implements OnInit {
   loginFormGroup: FormGroup;
   loginUser: User = {_id: null, password: null};
   error$: Observable<Error>;
+  loading$: Observable<Boolean>;
 
 
   constructor(private store: Store<AppState>, private fb: FormBuilder, private _usersService: UsersService, private router: Router) { }
 
   ngOnInit() {
+
+    
 
     //this.error$ = null;
     
@@ -54,6 +57,7 @@ export class LoginComponent implements OnInit {
     this.loginUser.password = this.password;
 
 
+    this.loading$ = this.store.select(store => store.user.loading)
     this.store.dispatch(new LoginUserAction(this.loginUser));
     this.error$ = this.store.select(store => store.user.error)
 

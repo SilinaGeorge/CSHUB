@@ -18,6 +18,7 @@ export class SignupComponent implements OnInit {
 
   signupFormGroup: FormGroup;
   error$: Observable<Error>;
+  loading$: Observable<Boolean>;
   signupUser: User = {_id: null, password: null, firstname: null, lastname: null};
 
 
@@ -88,6 +89,7 @@ export class SignupComponent implements OnInit {
     this.signupUser.password = this.password;
     this.signupUser._id = this.email;
 
+    this.loading$ = this.store.select(store => store.user.loading)
     this.store.dispatch(new SignupUserAction(this.signupUser));
     this.error$ = this.store.select(store => store.user.error)
 

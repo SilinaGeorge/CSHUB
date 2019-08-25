@@ -1,4 +1,4 @@
-<div class="bg-light">
+<div id="timer" class="bg-light" style="display: none">
 
     <countdown class="text-lg"  (finished)="timerFinished()" #c [config]="config"> $!h!:$!m!:$!s!</countdown>
     <button (click)="c.pause()" class="btn btn-link btn-sm">pause</button>

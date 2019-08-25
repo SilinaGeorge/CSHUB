@@ -5,9 +5,9 @@
 
         <div *ngIf="error$ | async as error">
             <ul *ngIf="error$ | async as error">
-                    <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
+                <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
             </ul>
-                
+
         </div>
 
         <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
@@ -18,15 +18,25 @@
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput type='password' placeholder="Password" minlength="6" formControlName="password" >
+                    <input matInput type='password' placeholder="Password" minlength="6" formControlName="password">
                     <mat-error>Please enter a valid password
                     </mat-error>
                 </mat-form-field>
             </div>
             <div style="text-align: center;">
-                <button mat-raised-button type='submit' [disabled]="loginFormGroup.invalid" class="btn btn-primary shadow-sm">Login
+
+                <button mat-raised-button type='submit' [disabled]="loginFormGroup.invalid"
+                    class="btn btn-primary shadow-sm">Login
+                    <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
                 </button>
+
+
+
+
+
             </div>
+
+
 
         </form>
         <div><input type="image" style="width: 220px; height:68px" src="../../assets/fb_login.png"></div>
