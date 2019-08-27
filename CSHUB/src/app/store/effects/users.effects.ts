@@ -1,48 +1,51 @@
 import { Injectable } from '@angular/core';
 
-import { Effect, Actions, ofType} from '@ngrx/effects'
+import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
 import { LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction } from '../actions/user.actions';
-import { UsersService} from '../../services/users.service';
+import { AuthService } from '../../services/auth.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
-export class UsersEffects{
+export class UsersEffects {
 
-@Effect() loginUser = this.actions$
-.pipe(
-    ofType<LoginUserAction>(UserActionTypes.LOGIN_USER),
-    mergeMap(
-        data => this.userService.loginUser(data.payload)
+    @Effect() loginUser = this.actions$
         .pipe(
-            map(data => {
-                this.router.navigateByUrl('/login-home')
-                return new LoginUserSuccessAction(data)}),
-            catchError((error) =>{            
-                return of(new LoginUserErrorAction(error.error))}
-                )
+            ofType<LoginUserAction>(UserActionTypes.LOGIN_USER),
+            mergeMap(
+                data => this.authService.loginUser(data.payload)
+                    .pipe(
+                        map(data => {
+                            this.router.navigateByUrl('/login-home')
+                            return new LoginUserSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new LoginUserErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
         )
-    )
-)
 
-@Effect() signupUser = this.actions$
-.pipe(
-    ofType<SignupUserAction>(UserActionTypes.SIGNUP_USER),
-    mergeMap(
-        data => this.userService.signupUser(data.payload)
+    @Effect() signupUser = this.actions$
         .pipe(
-            map(data => {
-                this.router.navigateByUrl('/login-home')
-                return new SignupUserSuccessAction(data)}),
-            catchError((error) =>{            
-                return of(new SignupUserErrorAction(error.error))}
-                )
+            ofType<SignupUserAction>(UserActionTypes.SIGNUP_USER),
+            mergeMap(
+                data => this.authService.signupUser(data.payload)
+                    .pipe(
+                        map(data => {
+                            this.router.navigateByUrl('/login-home')
+                            return new SignupUserSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new SignupUserErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
         )
-    )
-)
 
-constructor (private actions$: Actions, private userService: UsersService, private router: Router){}
+    constructor(private actions$: Actions, private authService: AuthService, private router: Router) { }
 
 }

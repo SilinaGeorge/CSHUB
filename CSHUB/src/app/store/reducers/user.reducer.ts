@@ -4,13 +4,15 @@ import { UserActionTypes, UserAction } from '../actions/user.actions';
 
 export interface UserState{
     user: User,
-    error: Error,
+    signupError: Error,
+    loginError: Error,
     loading: boolean
 }
 
 const intialState: UserState = {
     user: null,
-    error: null,
+    signupError: null,
+    loginError: null,
     loading: false
 };
 
@@ -21,13 +23,13 @@ export function UserReducer (state: UserState = intialState, action: UserAction)
         case UserActionTypes.LOGIN_USER_SUCCESS:
             return {...state, user: action.payload, loading:false};
         case UserActionTypes.LOGIN_USER_ERROR:
-                return {...state, error: action.payload, loading:false};
+                return {...state, loginError: action.payload, loading:false};
         case UserActionTypes.SIGNUP_USER:
             return {...state, user: action.payload, loading:true};
         case UserActionTypes.SIGNUP_USER_SUCCESS:
                 return {...state, user: action.payload, loading:false};
         case UserActionTypes.SIGNUP_USER_ERROR:
-                return {...state, error: action.payload, loading:false};
+                return {...state, signupError: action.payload, loading:false};
         default:
             return state;
     }

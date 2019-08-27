@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms'
-import { UsersService } from "../services/users.service";
-import { Router } from '@angular/router';
 import { User } from '../store/models/user.model';
 import { Error } from '../store/models/error.model';
 import { Observable } from 'rxjs';
@@ -19,10 +17,10 @@ export class SignupComponent implements OnInit {
   signupFormGroup: FormGroup;
   error$: Observable<Error>;
   loading$: Observable<Boolean>;
-  signupUser: User = {_id: null, password: null, firstname: null, lastname: null};
+  signupUser: User = {email: null, password: null, firstname: null, lastname: null};
 
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder, private _userService: UsersService, private router: Router) { }
+  constructor(private store: Store<AppState>, private fb: FormBuilder) { }
 
   ngOnInit() {
     //this.error$ = null;
@@ -87,11 +85,11 @@ export class SignupComponent implements OnInit {
     this.signupUser.firstname = this.firstname;
     this.signupUser.lastname = this.lastname;
     this.signupUser.password = this.password;
-    this.signupUser._id = this.email;
+    this.signupUser.email = this.email;
 
     this.loading$ = this.store.select(store => store.user.loading)
     this.store.dispatch(new SignupUserAction(this.signupUser));
-    this.error$ = this.store.select(store => store.user.error)
+    this.error$ = this.store.select(store => store.user.signupError)
 
     /* this._userService.signupUser({
       firstname: this.firstname,

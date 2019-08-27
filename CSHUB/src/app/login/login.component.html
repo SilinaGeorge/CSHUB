@@ -1,3 +1,6 @@
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
 <div class="card bg-light mb-3 shadow-sm" style="max-width: 40%; margin:auto; margin-top: 20vh">
 
     <div class="card-header">Login into CS HUB</div>
@@ -39,8 +42,15 @@
 
 
         </form>
-        <div><input type="image" style="width: 220px; height:68px" src="../../assets/fb_login.png"></div>
-        <div><input type="image" style="width: 200px; height:40px; margin-left:8px"
+        <a class="nav-link" href="/auth/facebook" target="_blank">Login Facebook</a>
+
+<!-- <img src='../../assets/fb_login.png' style="width: 220px; height:68px" > -->
+
+
+        <!-- <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
+    <div><input type="image" style="width: 220px; height:68px" (click)='fbLogin()' src="../../assets/fb_login.png"></div> 
+
+        <div><input type="image" style="width: 200px; height:40px; margin-left:8px" (click)='googleLogin()'
                 src="../../assets/google_signin.png"></div>
 
     </div>

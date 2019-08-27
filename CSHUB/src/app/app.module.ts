@@ -10,6 +10,7 @@ import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
 import { CountdownModule } from 'ngx-countdown';
 
+import { QuillModule } from 'ngx-quill'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -43,7 +44,7 @@ import {
    import { DateTimePickerModule} from 'ngx-datetime-picker';
 
    
-import { UsersService } from './services/users.service'
+import { AuthService } from './services/auth.service'
 
 
 
@@ -62,6 +63,25 @@ import { CountdownConfig } from 'ngx-countdown/src/countdown.config';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
+import { EditorComponent } from './editor/editor.component';
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("921142445428-ep65ocgbr23dedjgpiuv51hdse5o53hv.apps.googleusercontent.com")
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider("2426554690949520")
+  }
+]);
+ 
+export function provideConfig() {
+  return config;
+}
+ 
 
 @NgModule({
   declarations: [
@@ -80,8 +100,11 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     LoginHomeComponent,
     TimerIconComponent,
     LoadingSpinnerComponent,
+    EditorComponent,
   ],
   imports: [
+    QuillModule.forRoot(),
+    SocialLoginModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
     CountdownModule ,
@@ -114,7 +137,11 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     AppRoutingModule,    
   ],
   providers: [
-    UsersService
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    },
+    AuthService
   ],
   bootstrap: [AppComponent],
   entryComponents:[NotifDialogPopupComponent,],

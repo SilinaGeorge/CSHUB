@@ -2,12 +2,16 @@ const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
-const {check, validationResult} = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const cookie = require("cookie");
+const https = require('https');
+const fs = require('fs');
+const dotenv = require("dotenv").config();
+const passport = require('passport');
 
 const app = express();
 
-const mongoDB = 'mongodb+srv://silina01:cSB42MnimhMneRSX@cshub-vtf1l.mongodb.net/test?retryWrites=true&w=majority' 
+const mongoDB = 'mongodb+srv://silina01:cSB42MnimhMneRSX@cshub-vtf1l.mongodb.net/test?retryWrites=true&w=majority'
 
 // connect to our database
 mongoose.connect(mongoDB, { useNewUrlParser: true });
@@ -29,13 +33,20 @@ const dist = '../dist/CSHubProject';
 app.use(express.static(dist));
 
 // Create server to listen for connections
-const server = http.createServer(app);
-server.listen(port, () => console.log("listening on port " + port));
+//const server = http.createServer(app);
+https.createServer({
+  key: fs.readFileSync('localhost.key'),
+  cert: fs.readFileSync('localhost.crt')
+}, app).listen(port, () => {
+  console.log('Listening...')
+})
+//server.listen(port, () => console.log("listening on port " + port));
 
 
 // ----------------- security
 // create session
 const session = require("express-session");
+
 
 const MongoStore = require("connect-mongo")(session);
 app.use(
@@ -51,25 +62,28 @@ app.use(
   })
 );
 
-const isAuthenticated = function(req, res, next) {
+const isAuthenticated = function (req, res, next) {
   if (!req.session.id) return res.status(401).end("access denied");
   next();
 };
-
 
 //parse object id
 var ObjectId = require("mongodb").ObjectId;
 
 // ------------------------------
-var userRoute = require('./routes/users-api.js');
-app.use('/users',userRoute);
+var userRoute = require('./routes/auth-api.js');
+app.use('/auth', userRoute);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   let err = new Error("Not Found");
   err.status = 404;
   next(err);
 });
+
+
+
+
 
 module.exports = app;
 

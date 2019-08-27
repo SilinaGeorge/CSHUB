@@ -6,28 +6,24 @@ import { delay } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class AuthService {
 
-private URL = "http://localhost:4200/users";
+  private URL = "https://localhost:4200/auth";
 
   constructor(private http: HttpClient) { }
 
-  signupUser(signupData: User){
+  signupUser(signupData: User) {
     return this.http.post<User>(`${this.URL}/signup`, signupData)
-    .pipe(delay(2000))
-    
-    ;
+      .pipe(delay(2000))
+
+      ;
   };
 
-  loginUser(loginUserData: User){
+  loginUser(loginUserData: User) {
     return this.http.post<User>(`${this.URL}/login`, loginUserData)
-    .pipe(delay(2000))
+      .pipe(delay(2000))
 
-    ;
-  };
-
-  updateSpotify(spotifyURL){
-
+      ;
   };
 
 }
