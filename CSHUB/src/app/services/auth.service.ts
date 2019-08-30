@@ -26,4 +26,10 @@ export class AuthService {
       ;
   };
 
+  getSocialMediaUserInfo(socialMediaUserId: User){
+    return this.http.get<User>(`${this.URL}/social/` + socialMediaUserId._id)
+    .pipe(delay(2000))
+    ;
+  }
+
 }

@@ -8,6 +8,7 @@ const https = require('https');
 const fs = require('fs');
 const dotenv = require("dotenv").config();
 const passport = require('passport');
+const path = require('path');
 
 const app = express();
 
@@ -58,7 +59,7 @@ app.use(
     }),
     resave: false,
     saveUninitialized: true,
-    cookie: { httpOnly: true, sameSite: true, secure: false }
+    cookie: { httpOnly: true, sameSite: true, secure: true }
   })
 );
 
@@ -70,6 +71,8 @@ const isAuthenticated = function (req, res, next) {
 //parse object id
 var ObjectId = require("mongodb").ObjectId;
 
+
+
 // ------------------------------
 var userRoute = require('./routes/auth-api.js');
 app.use('/auth', userRoute);
@@ -80,6 +83,7 @@ app.use(function (req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 
 

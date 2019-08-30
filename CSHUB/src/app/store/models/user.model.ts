@@ -7,9 +7,8 @@ export interface User{
     password? : string,
     local?: boolean,
     facebook?: boolean,
-    facebook_id?: string,
+    social_id?: string,
     google?:boolean,
-    google_id?: string,
     accessToken?: string,
     notifications?: Object,
     msg?: string

@@ -11,6 +11,9 @@ export enum UserActionTypes{
     SIGNUP_USER = '[USER] Signup',
     SIGNUP_USER_SUCCESS = '[USER] Signup Success',
     SIGNUP_USER_ERROR = '[USER] Signup Error',
+    GET_SOCIAL_USER = '[USER] Get Social Media User Info',
+    GET_SOCIAL_USER_SUCCESS = '[USER] Get Social Media User Info Success',
+    GET_SOCIAL_USER_ERROR = '[USER] Get Social Media User Info Error',
 }
 // LOGIN
 export class LoginUserAction implements Action{
@@ -43,11 +46,30 @@ export class SignupUserErrorAction implements Action{
     constructor(public payload: Error){};
 }
 
+// FACEBOOK LOGIN
+export class GetSocialUserAction implements Action{
+    readonly type = UserActionTypes.GET_SOCIAL_USER;
+    constructor(public payload: User){};
+}
+
+export class GetSocialUserSuccessAction implements Action{
+    readonly type = UserActionTypes.GET_SOCIAL_USER_SUCCESS;
+    constructor(public payload: User){};
+}
+export class GetSocialUserErrorAction implements Action{
+    readonly type = UserActionTypes.GET_SOCIAL_USER_ERROR;
+    constructor(public payload: Error){};
+}
+
+
 export type UserAction = 
 LoginUserAction|
 LoginUserSuccessAction | 
 LoginUserErrorAction |
 SignupUserAction|
 SignupUserSuccessAction |
-SignupUserErrorAction
+SignupUserErrorAction |
+GetSocialUserAction|
+GetSocialUserSuccessAction | 
+GetSocialUserErrorAction 
 ;

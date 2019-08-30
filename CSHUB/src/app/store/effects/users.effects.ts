@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction } from '../actions/user.actions';
+import { LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction } from '../actions/user.actions';
 import { AuthService } from '../../services/auth.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -22,6 +22,25 @@ export class UsersEffects {
                         }),
                         catchError((error) => {
                             return of(new LoginUserErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
+
+        @Effect() getSocialUser = this.actions$
+        .pipe(
+            ofType<GetSocialUserAction>(UserActionTypes.GET_SOCIAL_USER),
+            mergeMap(
+                data => this.authService.getSocialMediaUserInfo(data.payload)
+                    .pipe(
+                        map(data => {
+                            this.router.navigateByUrl('/login-home')
+                            return new GetSocialUserSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            this.router.navigateByUrl('/')
+                            return of(new GetSocialUserErrorAction(error.error))
                         }
                         )
                     )

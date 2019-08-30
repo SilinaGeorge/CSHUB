@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
 import { LoginHomeComponent } from './login-home/login-home.component';
 import { EditorComponent} from './editor/editor.component';
+import { SocialRedirectComponent } from './social-redirect/social-redirect.component'
 
 
 
@@ -16,10 +17,11 @@ const routes: Routes = [
   { path:'about', component: AboutComponent},
   { path:'login-home', component: LoginHomeComponent},
   { path:'editor', component: EditorComponent},
+  { path:'social-redirect/:id', component: SocialRedirectComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

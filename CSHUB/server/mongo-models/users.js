@@ -11,9 +11,8 @@ const UserSchema = new Schema({
   hash: { type: String, required: false },
   local: { type: Boolean, required: true },
   facebook: { type: Boolean, required: true },
-  facebook_id: { type: String, required: false},
+  social_id: { type: String, required: false},
   google: { type: Boolean, required: true },
-  google_id: { type: String, required: false},
   accessToken: { type: String, required: false},
   spotifyurl: { type: String, max: 90},
   notifications: { type: Object, required: false}

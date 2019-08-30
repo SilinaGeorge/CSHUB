@@ -16,11 +16,9 @@ export class TimerComponent implements OnInit {
   timeleft = 30;
 
   config = {
-    leftTime: 3600,
+    leftTime: 3600, // intial timer is set to an hour
     demand: true,
   }
-
-  //console.log (moment(new Date()).add(1,'days').unix)));
 
   constructor(private _snackbar: MatSnackBar) { }
 
@@ -38,6 +36,7 @@ export class TimerComponent implements OnInit {
     if (this.minutes == '') this.minutes = '0';
     if (this.hours == '') this.hours = '0';
 
+    // time is a number
     if (!isNaN(parseInt(this.minutes)) && !isNaN(parseInt(this.hours))) {
       this.timeleft = parseInt(this.minutes) * 60 + parseInt(this.hours) * 3600
       if (this.timeleft != 0) {
