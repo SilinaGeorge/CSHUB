@@ -9,8 +9,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
 import { CountdownModule } from 'ngx-countdown';
+import { MccSpeedDialModule} from 'material-community-components'
 
-import { QuillModule } from 'ngx-quill'
+import { DragDropModule} from '@angular/cdk/drag-drop'
+
+import { QuillModule } from 'ngx-quill';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
+import { NgxDocViewerModule } from 'ngx-doc-viewer'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -66,6 +72,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 
 import { EditorComponent } from './editor/editor.component';
 import { SocialRedirectComponent } from './social-redirect/social-redirect.component';
+import { DocViewerComponent } from './doc-viewer/doc-viewer.component';
 
 
 @NgModule({
@@ -87,9 +94,13 @@ import { SocialRedirectComponent } from './social-redirect/social-redirect.compo
     LoadingSpinnerComponent,
     EditorComponent,
     SocialRedirectComponent,
+    DocViewerComponent,
   ],
   imports: [
-    
+    DragDropModule,
+    MccSpeedDialModule,
+    NgxDocViewerModule,
+    CKEditorModule,
     QuillModule.forRoot(),
     MatProgressSpinnerModule,
     MatTooltipModule,

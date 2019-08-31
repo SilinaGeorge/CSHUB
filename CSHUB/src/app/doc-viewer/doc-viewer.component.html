@@ -1,0 +1,35 @@
+<div style="position: absolute;" cdkDrag>
+        <mcc-speed-dial direction='right' animation="scale" mouseHover= 'false' spin='true'
+        matTooltip="Drag me" matTooltipShowDelay="1000"
+        matTooltipHideDelay="0">
+        
+                <!-- This icon can be anything you want -->
+                <mat-icon>add</mat-icon>
+            
+                <mcc-speed-dial-actions >
+                  <button mat-mini-fab matTooltip="Add new file" matTooltipShowDelay="1000"
+                  matTooltipHideDelay="0">
+                    <mat-icon>insert_drive_file</mat-icon>
+                  </button>
+                  <button mat-mini-fab matTooltip="Delete file" matTooltipShowDelay="1000"
+                  matTooltipHideDelay="0">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mcc-speed-dial-actions>
+              </mcc-speed-dial>
+            
+</div>
+
+<div >
+
+       
+
+
+<ngx-doc-viewer [url]="doc" viewer="google" style="width:100%;height:90vh;">
+
+
+</ngx-doc-viewer>
+
+</div>    
+
+

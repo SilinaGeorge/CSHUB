@@ -1,1 +1,7 @@
-<quill-editor></quill-editor>
+<div class='container'></div>
+<ckeditor
+    [config]="editorConfig" [editor]="Editor"
+    required [(ngModel)]="text"
+    data="" name="text"
+></ckeditor>
+
