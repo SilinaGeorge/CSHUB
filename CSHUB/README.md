@@ -3,11 +3,11 @@
 
 ## How to Run Project
 nagivate to CSHUB/server directory then execute 
->`nodemon app.js`
+`nodemon app.js`
 then on another terminal nagivate to CSHUB directory then execute the following:
->`npm install`
->`ng build`
->`ng serve -o -ssl` 
+`npm install`
+`ng build`
+`ng serve -o -ssl` 
 
 --------------------------
 
