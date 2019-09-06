@@ -1,6 +1,18 @@
 
 # CSHubProject
 
+## About
+A hub for computer science related learning and job hunting. Features include (features are not finished yet):   
+- Notes on computer science concepts are there for you already, don't like them? created your own custom studying material:  
+    - upload .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .jpeg, .png and more  
+    - create your own studying notes, can embed images and youtube videos in the notes too  
+- Manage your custom studying material  
+- Had enough studying? Ready to job hunt but too lazy to open a new tab? query your google job search right here and let the application do all the work to bring you to google's job search page  
+- Count down timer: set a timer, when it is finished it'll let you know that it is time for a break  
+- Email notification reminder: set a date and time and an email will be sent reminding you it is time to study/ job hunt  
+- Play your favorite spotify playlist while studying
+--------------------------
+
 ## How to Run Project
 nagivate to CSHUB/server directory then execute  
 `nodemon app.js`  
