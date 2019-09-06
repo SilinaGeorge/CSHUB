@@ -4,10 +4,12 @@
 ## How to Run Project
 nagivate to CSHUB/server directory then execute  
 `nodemon app.js`  
-then on another terminal nagivate to CSHUB directory then execute the following:  
+your local server is now set up  
+on another terminal nagivate to CSHUB directory then execute the following:  
 `npm install`  
 `ng build`  
-`ng serve -o -ssl`   
+`ng serve -o -ssl`  
+a web browser tab should now be opened with the application
 
 --------------------------
 
