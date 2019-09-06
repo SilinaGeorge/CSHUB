@@ -1,4 +1,15 @@
+
 # CSHubProject
+
+## How to Run Project
+nagivate to CSHUB/server directory then execute 
+>`nodemon app.js`
+then on another terminal nagivate to CSHUB directory then execute the following:
+>`npm install`
+>`ng build`
+>`ng serve -o -ssl` 
+
+--------------------------
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.1.
 
