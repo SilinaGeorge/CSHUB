@@ -14,14 +14,16 @@ A hub for computer science related learning and job hunting. Features include (f
 --------------------------
 
 ## How to Run Project
-nagivate to CSHUB/server directory then execute  
-`nodemon app.js`  
-your local server is now set up  
-on another terminal nagivate to CSHUB directory then execute the following:  
+
+nagivate to CSHUB directory then execute the following:  
 `npm install`  
 `ng build`  
 `ng serve -o -ssl`  
-a web browser tab should now be opened with the application
+a web browser tab should now be opened with the application  
+
+on another terminal nagivate to CSHUB/server directory then execute  
+`nodemon app.js`  
+your local server is now set up  
 
 --------------------------
 
