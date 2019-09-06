@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./doc-viewer.component.css']
 })
 export class DocViewerComponent implements OnInit {
-  doc = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+  doc = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf'
   constructor() { }
 
   ngOnInit() {
