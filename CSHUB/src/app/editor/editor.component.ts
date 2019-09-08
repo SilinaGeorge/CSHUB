@@ -26,9 +26,10 @@ export class EditorComponent implements OnInit {
     document.getElementById('note').innerHTML = this.content;
 
     this.editorConfig = {
+      disableResizeEditor: true,
+      height: '75vh',
       placeholder: '',
       tabsize: 2,
-      height: 100,
       uploadImagePath: '',
       maximumImageFileSize: 200*1024, // 200 KB 
       callbacks:{ onImageUploadError: function(msg){ console.log(msg); } },
