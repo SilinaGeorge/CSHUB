@@ -30,6 +30,8 @@ export class EditorComponent implements OnInit {
       tabsize: 2,
       height: 100,
       uploadImagePath: '',
+      maximumImageFileSize: 200*1024, // 200 KB 
+      callbacks:{ onImageUploadError: function(msg){ console.log(msg); } },
       toolbar: [
           // [groupName, [list of button]]
           ['misc', ['codeview', 'undo', 'redo', 'codeBlock', 'help']],
