@@ -1,7 +1,6 @@
-<div class='container'></div>
-<ckeditor
-    [config]="editorConfig" [editor]="Editor"
-    required [(ngModel)]="text"
-    data="" name="text"
-></ckeditor>
 
+
+<textarea id="note" [ngxSummernote]='editorConfig' [(ngModel)]="content"></textarea>
+
+<!-- <div [ngxSummernoteView]="content"></div> -->
+<button (click)='save()'>save</button>

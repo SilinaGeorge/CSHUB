@@ -10,6 +10,8 @@ import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
 import { CountdownModule } from 'ngx-countdown';
 import { MccSpeedDialModule} from 'material-community-components'
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { NgxSummernoteModule} from 'ngx-summernote'
 
 import { DragDropModule} from '@angular/cdk/drag-drop'
 
@@ -97,6 +99,9 @@ import { DocViewerComponent } from './doc-viewer/doc-viewer.component';
     DocViewerComponent,
   ],
   imports: [
+    NgxSummernoteModule,
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot(),
     DragDropModule,
     MccSpeedDialModule,
     NgxDocViewerModule,
