@@ -75,6 +75,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { EditorComponent } from './editor/editor.component';
 import { SocialRedirectComponent } from './social-redirect/social-redirect.component';
 import { DocViewerComponent } from './doc-viewer/doc-viewer.component';
+import { GoogleSearchComponent } from './google-search/google-search.component';
 
 
 @NgModule({
@@ -97,6 +98,7 @@ import { DocViewerComponent } from './doc-viewer/doc-viewer.component';
     EditorComponent,
     SocialRedirectComponent,
     DocViewerComponent,
+    GoogleSearchComponent,
   ],
   imports: [
     NgxSummernoteModule,

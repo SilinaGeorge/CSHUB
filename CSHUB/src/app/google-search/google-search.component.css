@@ -1,0 +1,26 @@
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: darkmagenta !important;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:  darkmagenta !important;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color:  darkmagenta !important;
+  }
+
+  input#search{
+    background-image: url(../../assets/google-logo-g.png);
+    background-repeat: no-repeat;
+    text-indent: 20px;
+    background-size:  30px;
+    width: 350px
+   }
+
+   button#searchButton{
+    color:  darkmagenta !important;
+   }
+   
+   
