@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
 <mat-drawer-container>
 
     <!-- side menu -->
@@ -11,49 +10,46 @@
 
     <mat-drawer-content style='min-height: 100vh;min-width: 100vw'>
 
-        <!-- main menu: hide when scroll down, show whe scroll up -->
+        <!-- main menu hide when scroll down, show whe scroll up -->
         <ngx-headroom>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg" style="height:10vh !important">
 
-                <!--hamburger side menu button-->
-           <!--      <button style="margin-right:2em" class="hamburger hamburger--collapse" type="button"
-                    (click)="_toggleOpened()">
-                    <span class="hamburger-box">
-                        <span class="hamburger-inner"></span>
-                    </span>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
+
+                <button mat-icon-button (click)="_toggleOpened()">
+                    <mat-icon>menu</mat-icon>
                 </button>
- -->
-
-                <button mat-icon-button (click)="_toggleOpened()"><mat-icon>menu</mat-icon></button>
-
-                <!--main menu-->
+                
                 <a class="navbar-brand" routerLink="/">{{Title}}</a>
-                <app-nav-menu></app-nav-menu>
+
+                <button class="navbar-toggler" type="button" aria-controls="navbarContent"
+                    [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
+                    <!--main menu content-->
+                    <app-nav-menu></app-nav-menu>
+
+                </div>
+
+
             </nav>
 
             <app-timer></app-timer>
 
         </ngx-headroom>
- 
-      
-
 
         <app-spotify-popup></app-spotify-popup>
-
-
 
         <div>
             <router-outlet></router-outlet>
         </div>
 
 
-
-
-
-
     </mat-drawer-content>
 </mat-drawer-container>
 
 
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0&appId=2426554690949520&autoLogAppEvents=1"></script>
+<!-- <div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0&appId=2426554690949520&autoLogAppEvents=1"></script> -->
