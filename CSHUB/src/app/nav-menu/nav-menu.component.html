@@ -1,24 +1,50 @@
-<ul class="navbar-nav ml-auto">
-  <a class="nav-link" routerLink="/login">Login</a>
-  <a class="nav-link" routerLink="/signup">Signup</a>
-  <a class="nav-link" routerLink="/about">About</a>
-  <a class="nav-link" routerLink="/editor">Editor</a>
-  <a class="nav-link" routerLink="/doc-viewer">Doc Viewer</a>
-  <li class="nav-item" ngbDropdown>
-    <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
-      Drop Down
-    </a>
-    <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-      <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Action</a>
-      <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Another action</a>
-      <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Something else here</a>
-    </div>
-  </li>
 
-  <app-notification></app-notification>
+ <!--initial load-->
+<div [ngClass]="(user$ | async)? 'hide': 'show'">
+  <ul #notLoggedIn class="navbar-nav ml-auto">
+    <a class="nav-link" routerLink="/login">Login</a>
+    <a class="nav-link" routerLink="/signup">Signup</a>
+    <a class="nav-link" routerLink="/about">About</a>
+  </ul>
 
-  <app-spotify></app-spotify>
-  <app-timer-icon></app-timer-icon>
-  <app-google-search></app-google-search>
+</div>
 
-</ul>
+
+<div *ngIf="user$ | async as user">
+
+  <!--user entered wrong credentials-->
+  <div *ngIf="!user._id">
+    <ul class="navbar-nav ml-auto">
+      <a class="nav-link" routerLink="/login">Login</a>
+      <a class="nav-link" routerLink="/signup">Signup</a>
+      <a class="nav-link" routerLink="/about">About</a>
+    </ul>
+
+  </div>
+
+
+<!--user successfully logged in-->
+  <ul id='navMenu' class="navbar-nav ml-auto" *ngIf="user._id;">
+
+    <a class="nav-link" routerLink="/editor">Editor</a>
+    <a class="nav-link" routerLink="/doc-viewer">Doc Viewer</a>
+    <li class="nav-item" ngbDropdown>
+      <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
+        Drop Down
+      </a>
+      <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Action</a>
+        <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Another action</a>
+        <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Something else here</a>
+      </div>
+    </li>
+
+    <app-notification></app-notification>
+
+    <app-spotify></app-spotify>
+    <app-timer-icon></app-timer-icon>
+    <app-google-search></app-google-search>
+
+
+  </ul>
+</div>

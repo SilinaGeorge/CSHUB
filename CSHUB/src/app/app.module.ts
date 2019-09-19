@@ -76,6 +76,7 @@ import { EditorComponent } from './editor/editor.component';
 import { SocialRedirectComponent } from './social-redirect/social-redirect.component';
 import { DocViewerComponent } from './doc-viewer/doc-viewer.component';
 import { GoogleSearchComponent } from './google-search/google-search.component';
+import { DigitOnlyDirective } from './directives/digit-only.directive';
 
 
 @NgModule({
@@ -99,6 +100,7 @@ import { GoogleSearchComponent } from './google-search/google-search.component';
     SocialRedirectComponent,
     DocViewerComponent,
     GoogleSearchComponent,
+    DigitOnlyDirective,
   ],
   imports: [
     NgxSummernoteModule,

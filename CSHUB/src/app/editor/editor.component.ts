@@ -36,8 +36,7 @@ export class EditorComponent implements OnInit {
       toolbar: [
           // [groupName, [list of button]]
           ['misc', ['codeview', 'undo', 'redo', 'codeBlock', 'help']],
-          ['style', ['bold', 'italic', 'underline', 'clear']],
-          ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript']],
+          ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
           ['fontsize', ['fontname', 'fontsize', 'color']],
           ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
           ['insert', ['table', 'picture', 'link', 'video', 'hr']]
