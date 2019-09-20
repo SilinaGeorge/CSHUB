@@ -88,7 +88,8 @@ router.post("/login", [
       lastname: user.lastname,
       local: user.local,
       facebook: user.facebook,
-      google: user.google
+      google: user.google,
+      spotifyurl: user.spotifyurl
     });
   });
 });
@@ -120,13 +121,13 @@ router.post("/signup", [
     const salt = generateSalt();
     const hash = generateHash(password, salt);
 
-    const newUser = new Users({ email, firstname, lastname, hash, salt, local: true, facebook: false, google: false });
+    const newUser = new Users({ email, firstname, lastname, hash, salt, local: true, facebook: false, google: false, spotifyurl: 'https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx' });
 
     newUser.save(function (err, user) {
       if (err) return res.status(500).json({ msgs: ["Server Error"] });
       if (user) {
         req.session.userid = user._id;
-        return res.status(200).json({ msg: "Success", _id: user._id, email, firstname, lastname, local: true, facebook: false, google: false });
+        return res.status(200).json({ msg: "Success", _id: user._id, email: user.email, firstname: user.firstname, lastname: user.lastname, local: user.local, facebook: user.facebook, google: user.google, spotifyurl: user.spotifyurl});
       }
     });
 
@@ -200,7 +201,8 @@ router.get('/social/:id', [
       social_id: user.social_id,
       facebook: user.facebook,
       google: user.google,
-      local: user.local
+      local: user.local,
+      spotifyurl: user.spotifyurl
     });
   });
 });

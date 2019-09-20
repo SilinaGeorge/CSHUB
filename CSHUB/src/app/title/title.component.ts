@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
 import { User } from '../store/models/user.model';
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  selector: 'app-title',
+  templateUrl: './title.component.html',
+  styleUrls: ['./title.component.css']
 })
-export class NavMenuComponent implements OnInit {
-  
+export class TitleComponent implements OnInit {
+  Title = 'CS HUB'
   user$: Observable<User>;
 
   constructor(private store: Store<AppState>) { }
@@ -18,4 +18,5 @@ export class NavMenuComponent implements OnInit {
   ngOnInit() {
     this.user$ = this.store.select(store => store.user.user)
   }
+
 }

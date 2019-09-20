@@ -1,27 +1,7 @@
+<div *ngIf="user$ | async as user; else notLoggedIn">
 
- <!--initial load-->
-<div [ngClass]="(user$ | async)? 'hide': 'show'">
-  <ul #notLoggedIn class="navbar-nav ml-auto">
-    <a class="nav-link" routerLink="/login">Login</a>
-    <a class="nav-link" routerLink="/signup">Signup</a>
-    <a class="nav-link" routerLink="/about">About</a>
-  </ul>
-
-</div>
-
-
-<div *ngIf="user$ | async as user">
-
-  <!--user entered wrong credentials-->
-  <div *ngIf="!user._id">
-    <ul class="navbar-nav ml-auto">
-      <a class="nav-link" routerLink="/login">Login</a>
-      <a class="nav-link" routerLink="/signup">Signup</a>
-      <a class="nav-link" routerLink="/about">About</a>
-    </ul>
-
-  </div>
-
+<!--user entered wrong credentials -->
+<div *ngIf="!user._id; then notLoggedIn"></div>
 
 <!--user successfully logged in-->
   <ul id='navMenu' class="navbar-nav ml-auto" *ngIf="user._id;">
@@ -48,3 +28,12 @@
 
   </ul>
 </div>
+
+ <!--initial load -->
+<ng-template #notLoggedIn>
+    <ul class="navbar-nav ml-auto">
+      <a class="nav-link" routerLink="/login">Login</a>
+      <a class="nav-link" routerLink="/signup">Signup</a>
+      <a class="nav-link" routerLink="/about">About</a>
+    </ul>
+</ng-template>
