@@ -20,6 +20,7 @@ export class SpotifyPopupComponent implements OnInit {
   errorHTML: string;
   closeResult: string;
   user$: Observable<User>;
+  url: string;
 
  
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private store: Store<AppState>) {}
@@ -32,11 +33,20 @@ export class SpotifyPopupComponent implements OnInit {
       ]],
 
     });
-    
-   /*  this.store.select(store => store.user.user).subscribe(state =>   {
-      if (state.email) this.url = state.email;
-      }); */
-    this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx");
+    this.store.select(store => store.user.user).subscribe(state =>   {
+      if (state)
+        this.url = state.spotifyurl
+      }); 
+
+    if (this.url){
+      let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, this.url);
+      this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
+      //console.log(this.url)
+    }
+   //console.log(this.url)
+
+   
+    //this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://open.spotify.com/embed/playlist/37i9dQZF1DX692WcMwL2yW");
   }
 
 

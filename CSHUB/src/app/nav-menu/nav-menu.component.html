@@ -1,7 +1,7 @@
 <div *ngIf="user$ | async as user; else notLoggedIn">
 
-<!--user entered wrong credentials -->
-<div *ngIf="!user._id; then notLoggedIn"></div>
+<!--user entered wrong credentials 
+<div *ngIf="!user._id; then notLoggedIn"></div>-->
 
 <!--user successfully logged in-->
   <ul id='navMenu' class="navbar-nav ml-auto" *ngIf="user._id;">
@@ -35,5 +35,7 @@
       <a class="nav-link" routerLink="/login">Login</a>
       <a class="nav-link" routerLink="/signup">Signup</a>
       <a class="nav-link" routerLink="/about">About</a>
+      <!-- <app-spotify></app-spotify>  -->
+      
     </ul>
 </ng-template>

@@ -1,4 +1,4 @@
-<div id="spotify" class="modal" style="display:none" tabindex="-1" role="dialog">
+<div id="spotify" class="modal" style="display:none;overflow: visible;z-index:1000!important" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,10 +8,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <iframe
+                    <iframe [src]="srcUrl" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+             <!--  <iframe
                     [src] ="srcUrl" width="300" height="380"
                     frameborder="0" allowtransparency="true" allow="encrypted-media">
-                </iframe>
+                </iframe> -->
             </div>
             <div class="modal-footer">
             <div id="errors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"> </div>

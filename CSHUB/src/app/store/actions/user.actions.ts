@@ -3,6 +3,8 @@
 import { Action } from '@ngrx/store';
 import { User } from '../models/user.model';
 import { Error } from '../models/error.model';
+import { Auth, SocialMediaAuth } from '../models/auth.model';
+import { SignUpUser } from '../models/sign-up-user.model';
 
 export enum UserActionTypes{
     LOGIN_USER = '[USER] Login',
@@ -18,7 +20,7 @@ export enum UserActionTypes{
 // LOGIN
 export class LoginUserAction implements Action{
     readonly type = UserActionTypes.LOGIN_USER;
-    constructor(public payload: User){};
+    constructor(public payload: Auth){};
 }
 
 export class LoginUserSuccessAction implements Action{
@@ -33,7 +35,7 @@ export class LoginUserErrorAction implements Action{
 // SIGNUP
 export class SignupUserAction implements Action{
     readonly type = UserActionTypes.SIGNUP_USER;
-    constructor(public payload: User){};
+    constructor(public payload: SignUpUser){};
 }
 
 export class SignupUserSuccessAction implements Action{
@@ -49,7 +51,7 @@ export class SignupUserErrorAction implements Action{
 // FACEBOOK LOGIN
 export class GetSocialUserAction implements Action{
     readonly type = UserActionTypes.GET_SOCIAL_USER;
-    constructor(public payload: User){};
+    constructor(public payload: SocialMediaAuth){};
 }
 
 export class GetSocialUserSuccessAction implements Action{

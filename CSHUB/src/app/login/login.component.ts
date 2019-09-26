@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { LoginUserAction } from '../store/actions/user.actions';
-import { User } from '../store/models/user.model';
+import { Auth } from '../store/models/auth.model';
 import { Error } from '../store/models/error.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   loggedIn: boolean;
 
   loginFormGroup: FormGroup;
-  loginUser: User = {email: null, password: null};
+  loginUser: Auth = {email: null, password: null};
   error$: Observable<Error>;
   loading$: Observable<Boolean>;
 

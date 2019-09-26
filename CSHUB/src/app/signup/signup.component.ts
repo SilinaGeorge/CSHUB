@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms'
-import { User } from '../store/models/user.model';
 import { Error } from '../store/models/error.model';
 import { Observable } from 'rxjs';
 import { SignupUserAction } from '../store/actions/user.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
+import { SignUpUser } from '../store/models/sign-up-user.model';
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +17,7 @@ export class SignupComponent implements OnInit {
   signupFormGroup: FormGroup;
   error$: Observable<Error>;
   loading$: Observable<Boolean>;
-  signupUser: User = {email: null, password: null, firstname: null, lastname: null};
+  signupUser: SignUpUser = {email: null, password: null, firstname: null, lastname: null};
 
 
   constructor(private store: Store<AppState>, private fb: FormBuilder) { }

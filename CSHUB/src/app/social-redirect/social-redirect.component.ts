@@ -7,6 +7,7 @@ import { Error } from '../store/models/error.model';
 import { GetSocialUserAction } from '../store/actions/user.actions';
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs';
+import { SocialMediaAuth } from '../store/models/auth.model';
 
 @Component({
   selector: 'app-social-redirect',
@@ -16,7 +17,7 @@ import { Observable } from 'rxjs';
 export class SocialRedirectComponent implements OnInit {
 
   id : string;
-  user: User = {_id: null};
+  user: SocialMediaAuth = {_id: null};
   error$: Observable<Error>;
 
   constructor(private store: Store<AppState>, private activatedroute: ActivatedRoute, private router: Router) {
