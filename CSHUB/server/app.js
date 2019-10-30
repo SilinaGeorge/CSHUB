@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
+mongoose.set('useFindAndModify', false);
 const { check, validationResult } = require('express-validator');
 const cookie = require("cookie");
 const https = require('https');
@@ -75,7 +76,9 @@ var ObjectId = require("mongodb").ObjectId;
 
 // ------------------------------
 var userRoute = require('./routes/auth-api.js');
+var widgetRoute = require('./routes/widgets-api.js');
 app.use('/auth', userRoute);
+app.use('/widgets', widgetRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

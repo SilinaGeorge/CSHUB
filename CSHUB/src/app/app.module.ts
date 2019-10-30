@@ -61,16 +61,19 @@ import { NotifDialogPopupComponent } from './notif-dialog-popup/notif-dialog-pop
 import { TimerComponent } from './timer/timer.component';
 import { SpotifyComponent } from './spotify/spotify.component';
 import { SpotifyPopupComponent } from './spotify-popup/spotify-popup.component';
-import { StoreModule } from '@ngrx/store';
-import { UserReducer } from './store/reducers/user.reducer';
+
 import { LoginHomeComponent } from './login-home/login-home.component';
-import { EffectsModule } from '@ngrx/effects';
-import { UsersEffects } from './store/effects/users.effects';
+
 import { TimerIconComponent } from './timer-icon/timer-icon.component';
 import { CountdownConfig } from 'ngx-countdown/src/countdown.config';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
-
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { UserReducer } from './store/reducers/user.reducer';
+import { WidgetReducer } from './store/reducers/widget.reducer';
+import { UsersEffects } from './store/effects/users.effects';
+import { WidgetEffects } from './store/effects/widget.effects';
 
 import { EditorComponent } from './editor/editor.component';
 import { SocialRedirectComponent } from './social-redirect/social-redirect.component';
@@ -117,9 +120,10 @@ import { TitleComponent } from './title/title.component';
     MatTooltipModule,
     CountdownModule ,
     CommonModule,
-    EffectsModule.forRoot([UsersEffects]),
+    EffectsModule.forRoot([UsersEffects, WidgetEffects]),
     StoreModule.forRoot({
-      user: UserReducer
+      user: UserReducer,
+      widgets: WidgetReducer
     }),
     MatSnackBarModule,
     MatTableModule,
