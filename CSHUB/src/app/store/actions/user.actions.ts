@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 import { Error } from '../models/error.model';
 import { Auth, SocialMediaAuth } from '../models/auth.model';
 import { SignUpUser } from '../models/sign-up-user.model';
+import { Spotify } from '../models/spotify.model';
 
 export enum UserActionTypes{
     LOGIN_USER = '[USER] Login',
@@ -16,6 +17,9 @@ export enum UserActionTypes{
     GET_SOCIAL_USER = '[USER] Get Social Media User Info',
     GET_SOCIAL_USER_SUCCESS = '[USER] Get Social Media User Info Success',
     GET_SOCIAL_USER_ERROR = '[USER] Get Social Media User Info Error',
+    UPDATE_SPOTIFY = '[USER] Update Spotify',
+    UPDATE_SPOTIFY_SUCCESS = '[USER] Update Spotify Success',
+    UPDATE_SPOTIFY_ERROR = '[USER] Update Spotify Error',
 }
 // LOGIN
 export class LoginUserAction implements Action{
@@ -62,6 +66,18 @@ export class GetSocialUserErrorAction implements Action{
     readonly type = UserActionTypes.GET_SOCIAL_USER_ERROR;
     constructor(public payload: Error){};
 }
+export class UpdateSpotifyAction implements Action{
+    readonly type = UserActionTypes.UPDATE_SPOTIFY;
+    constructor(public payload: Spotify){};
+}
+export class UpdateSpotifySuccessAction implements Action{
+    readonly type = UserActionTypes.UPDATE_SPOTIFY_SUCCESS;
+    constructor(public payload: Spotify){};
+}
+export class UpdateSpotifyErrorAction implements Action{
+    readonly type = UserActionTypes.UPDATE_SPOTIFY_ERROR;
+    constructor(public payload: Error){};
+}
 
 
 export type UserAction = 
@@ -73,6 +89,9 @@ SignupUserSuccessAction |
 SignupUserErrorAction |
 GetSocialUserAction|
 GetSocialUserSuccessAction | 
-GetSocialUserErrorAction 
+GetSocialUserErrorAction |
+UpdateSpotifyAction |
+UpdateSpotifySuccessAction |
+UpdateSpotifyErrorAction 
 
 ;

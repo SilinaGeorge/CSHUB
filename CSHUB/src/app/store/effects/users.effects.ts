@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction } from '../actions/user.actions';
+import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction } from '../actions/user.actions';
 import { AuthService } from '../../services/auth.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { WidgetService } from '../../services/widget.service';
 
 @Injectable()
 export class UsersEffects {
@@ -65,6 +66,23 @@ export class UsersEffects {
             )
         )
 
-    constructor(private actions$: Actions, private authService: AuthService, private router: Router) { }
+        @Effect() UpdateSpotify = this.actions$
+        .pipe(
+            ofType<UpdateSpotifyAction>(UserActionTypes.UPDATE_SPOTIFY),
+            mergeMap(
+                data => this.widgetService.PatchSpotify(data.payload)
+                    .pipe(
+                        map(data => {
+                            return new UpdateSpotifySuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new UpdateSpotifyErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
+
+    constructor(private actions$: Actions, private authService: AuthService, private widgetService: WidgetService, private router: Router) { }
 
 }

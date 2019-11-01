@@ -1,12 +1,12 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { DomSanitizer, SafeResourceUrl, SafeValue } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { Observable, Subscription } from 'rxjs';
 import { Spotify } from '../store/models/spotify.model';
 import { Error } from '../store/models/error.model';
-import { UpdateSpotifyAction } from '../store/actions/widget.actions';
+import { UpdateSpotifyAction } from '../store/actions/user.actions';
 
 
 @Component({
@@ -41,22 +41,24 @@ export class SpotifyPopupComponent implements OnInit {
 
     });
     this.subscription = this.store.select(store => store.user.user).subscribe(state =>   {
-      if (state)
+      if (state){
         this.url = state.spotifyurl;
         this.userID = state._id;
+      }
+      if (this.url){
+
+        let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, this.url);
+        this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
+      }
+      else{
+  
+        let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, "https://open.spotify.com/embed/playlist/37i9dQZF1DX9sIqqvKsjG8");
+        this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
+  
+      }
       }); 
 
-    if (this.url){
 
-      let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, this.url);
-      this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
-    }
-    else{
-
-      let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, "https://open.spotify.com/embed/playlist/37i9dQZF1DX9sIqqvKsjG8");
-      this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
-
-    }
   }
 
 
@@ -78,15 +80,15 @@ export class SpotifyPopupComponent implements OnInit {
       let embedURL = this.spotifyurl.substr(0, 25) + "embed\/" + this.spotifyurl.substr(25);
      // console.log(embedURL);
       let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, embedURL);
-      this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
+      //this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
 
 
       this.spotify.spotifyurl = embedURL;
       this.spotify._id = this.userID;
   
-      this.loading$ = this.store.select(store => store.widgets.loading)
+      this.loading$ = this.store.select(store => store.user.loading)
       this.store.dispatch(new UpdateSpotifyAction(this.spotify));
-      this.error$ = this.store.select(store => store.widgets.spotifyError)
+      this.error$ = this.store.select(store => store.user.spotifyError)
   
     }
     catch(ex){

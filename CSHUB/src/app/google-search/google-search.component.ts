@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-google-search',
@@ -8,13 +9,16 @@ import { Component, OnInit } from '@angular/core';
 export class GoogleSearchComponent implements OnInit {
   query: string;
   google = 'https://www.google.com/search?q='
-  url: string;
-  constructor() { }
+  url: SafeUrl;
+  constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
   }
   
   searchClick() {
-    this.url = this.google + this.query;
+    //this.url = this.google + this.query;
+
+    let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, this.google + this.query);
+    this.url = this.sanitizer.bypassSecurityTrustUrl(sanatizedUrl);
   }
 }
