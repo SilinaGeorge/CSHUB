@@ -1,5 +1,5 @@
 export interface Notifications{
     _id: string,
-    notifications: Object,
+    datetime: string,
     msg?: string
 }

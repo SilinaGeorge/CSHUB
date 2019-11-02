@@ -128,7 +128,7 @@ export class NotifDialogPopupComponent implements OnInit {
   }
 
 
-  // check to see if passwords match on every input
+  // check to see if datetimetime has not past yet on every input
   onTimeInput() {
     if (this.notifFormGroup.hasError('timeNotValid'))
     this.notifFormGroup.setErrors([{ 'timeNotValid': true }]);
@@ -153,7 +153,7 @@ const ELEMENT_DATA: Element[] = [
 
 ];
 
-// check password and verify password are the same
+// check to see if the datetime has not past yet
 export const timeValidator: ValidatorFn = (timeFormGroup: FormGroup): ValidationErrors | null => {
   try{
     let dateTime = new Date(timeFormGroup.get('dateTime').value.getTime());
