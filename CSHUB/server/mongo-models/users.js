@@ -15,7 +15,7 @@ const UserSchema = new Schema({
   google: { type: Boolean, required: true },
   accessToken: { type: String, required: false},
   spotifyurl: { type: String, max: 90, required: true },
-  notifications: { type: Array, required: false}
+  notifications: { type: Array, required: true}
 
 });
 

@@ -40,6 +40,7 @@ export class SpotifyPopupComponent implements OnInit {
       ]],
 
     });
+    
     this.subscription = this.store.select(store => store.user.user).subscribe(state =>   {
       if (state){
         this.url = state.spotifyurl;

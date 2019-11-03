@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction } from '../actions/user.actions';
+import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction, AddNotifAction, AddNotifActionSuccessAction, AddNotifActionErrorAction } from '../actions/user.actions';
 import { AuthService } from '../../services/auth.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -77,6 +77,23 @@ export class UsersEffects {
                         }),
                         catchError((error) => {
                             return of(new UpdateSpotifyErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
+
+        @Effect() AddNotif = this.actions$
+        .pipe(
+            ofType<AddNotifAction>(UserActionTypes.ADD_NOTIF),
+            mergeMap(
+                data => this.widgetService.PutNotif(data.payload)
+                    .pipe(
+                        map(data => {
+                            return new AddNotifActionSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new AddNotifActionErrorAction(error.error))
                         }
                         )
                     )

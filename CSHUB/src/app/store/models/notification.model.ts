@@ -1,4 +1,4 @@
-export interface Notifications{
+export interface Notification{
     _id: string,
     datetime: string,
     msg?: string

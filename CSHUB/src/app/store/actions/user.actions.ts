@@ -6,6 +6,8 @@ import { Error } from '../models/error.model';
 import { Auth, SocialMediaAuth } from '../models/auth.model';
 import { SignUpUser } from '../models/sign-up-user.model';
 import { Spotify } from '../models/spotify.model';
+import { Notification } from '../models/notification.model';
+
 
 export enum UserActionTypes{
     LOGIN_USER = '[USER] Login',
@@ -20,6 +22,9 @@ export enum UserActionTypes{
     UPDATE_SPOTIFY = '[USER] Update Spotify',
     UPDATE_SPOTIFY_SUCCESS = '[USER] Update Spotify Success',
     UPDATE_SPOTIFY_ERROR = '[USER] Update Spotify Error',
+    ADD_NOTIF = '[USER] Add Notification',
+    ADD_NOTIF_SUCCESS = '[USER] Add Notification Success',
+    ADD_NOTIF_ERROR = '[USER] Add Notification Error',
 }
 // LOGIN
 export class LoginUserAction implements Action{
@@ -78,6 +83,18 @@ export class UpdateSpotifyErrorAction implements Action{
     readonly type = UserActionTypes.UPDATE_SPOTIFY_ERROR;
     constructor(public payload: Error){};
 }
+export class AddNotifAction implements Action{
+    readonly type = UserActionTypes.ADD_NOTIF;
+    constructor(public payload: Notification){};
+}
+export class AddNotifActionSuccessAction implements Action{
+    readonly type = UserActionTypes.ADD_NOTIF_SUCCESS;
+    constructor(public payload: Notification){};
+}
+export class AddNotifActionErrorAction implements Action{
+    readonly type = UserActionTypes.ADD_NOTIF_ERROR;
+    constructor(public payload: Error){};
+}
 
 
 export type UserAction = 
@@ -92,6 +109,9 @@ GetSocialUserSuccessAction |
 GetSocialUserErrorAction |
 UpdateSpotifyAction |
 UpdateSpotifySuccessAction |
-UpdateSpotifyErrorAction 
+UpdateSpotifyErrorAction |
+AddNotifAction |
+AddNotifActionSuccessAction |
+AddNotifActionErrorAction
 
 ;

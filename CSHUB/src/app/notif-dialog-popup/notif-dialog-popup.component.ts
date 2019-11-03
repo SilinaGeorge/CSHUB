@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms'
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatSnackBar } from '@angular/material'
 import * as moment from 'moment';
-
+import { Observable, Subscription } from 'rxjs';
+import { Notification } from '../store/models/notification.model';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/models/app-state.model';
+import { AddNotifAction } from '../store/actions/user.actions';
+import { Error } from '../store/models/error.model';
 
 @Component({
   selector: 'app-notif-dialog-popup',
@@ -17,17 +21,19 @@ export class NotifDialogPopupComponent implements OnInit {
   data = Object.assign(ELEMENT_DATA);
   dataSource = new MatTableDataSource<Element>(this.data);
   selection = new SelectionModel<Element>(true, []);
-
-
-
   notifFormGroup: FormGroup;
-
   minDate = new Date();
-  //dateTime: Date;
-
   errorHTML = "";
+  loading$: Observable<Boolean>;
+  error$: Observable<Error>;
+  add_notif: Notification = {_id: null, datetime: null};
+  subscription: Subscription;
+  user_notifs: Array<String>;
+  success: boolean;
+  success$: Observable<boolean>;
 
-  constructor(private fb: FormBuilder, private _snackbar: MatSnackBar) { }
+
+  constructor(private fb: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit() {
 
@@ -46,6 +52,16 @@ export class NotifDialogPopupComponent implements OnInit {
       ]],
 
     }, { validator: timeValidator });
+
+
+    this.success$ = this.store.select(store => store.user.notificationSuccess)
+
+    this.subscription = this.store.select(store => store.user).subscribe(state =>   {
+      if (state){
+        this.user_notifs = state.user.notifications;
+        this.add_notif._id = state.user._id;
+      }
+      }); 
 
   }
 
@@ -66,7 +82,9 @@ export class NotifDialogPopupComponent implements OnInit {
   }
 
   //  send new email click ok
-  okClick() {
+  onCreateClick() {
+
+    this.errorHTML = "";
 
     try {
       this.dateTime.setSeconds(0);
@@ -80,27 +98,30 @@ export class NotifDialogPopupComponent implements OnInit {
         this.dateTime.setHours(parseInt(this.hour));
       }
 
+      if (this.user_notifs.length == 3)
+        this.errorHTML = `only 3 allowed`;
+
+      else if (this.user_notifs.includes(this.dateTime.toString()))
+        this.errorHTML = `already have a notification for this date`;
+      else{
+    
+        this.add_notif.datetime = this.dateTime.toString()
+        this.loading$ = this.store.select(store => store.user.loading)
+        this.store.dispatch(new AddNotifAction(this.add_notif));
+        this.error$ = this.store.select(store => store.user.notificationError)
+      }
+      
+
     }
     catch (ex) {
       this.errorHTML = `An error as occured.`;
 
     }
 
+  }
 
-
-    console.log(this.dateTime)
-    //check if datetime > now datetime
-    // api call node-schedule
-
-
-    //snack bar show
-    this._snackbar.open("Email Reminder Created: " + moment(this.dateTime).format(("dddd, MMMM Do YYYY, h:mm a")),
-      'OK',
-      { duration: 6000 });
-
-
-
-
+  displayDateTime(){
+    return moment(this.dateTime).format(("dddd, MMMM Do YYYY, h:mm a"))
   }
 
 
@@ -134,6 +155,11 @@ export class NotifDialogPopupComponent implements OnInit {
     this.notifFormGroup.setErrors([{ 'timeNotValid': true }]);
     else
       this.notifFormGroup.setErrors(null);
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+
   }
 
 }

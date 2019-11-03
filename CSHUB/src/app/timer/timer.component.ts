@@ -27,7 +27,7 @@ export class TimerComponent implements OnInit {
   }
 
   timerFinished() {
-    this._snackbar.open("Time to take a break!", 'OK');
+    this._snackbar.open("Time to take a break!", 'Close');
   }
 
 

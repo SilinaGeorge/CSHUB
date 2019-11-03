@@ -3,6 +3,7 @@ import { Error } from "../models/error.model";
 import { Spotify } from "../models/spotify.model";
 import { Auth, SocialMediaAuth } from "../models/auth.model";
 import { SignUpUser } from "../models/sign-up-user.model";
+import { Notification } from "../models/notification.model";
 import { UserActionTypes, UserAction } from '../actions/user.actions';
 
 export interface UserState {
@@ -15,6 +16,9 @@ export interface UserState {
     getSocialUserError: Error,
     spotify: Spotify,
     spotifyError: Error,
+    notification: Notification,
+    notificationSuccess: boolean,
+    notificationError: Error,
     loading: boolean
 }
 
@@ -28,6 +32,9 @@ const intialState: UserState = {
     getSocialUserError: null,
     spotify: null,
     spotifyError: null,
+    notification: null,
+    notificationError: null,
+    notificationSuccess: false,
     loading: false
 };
 
@@ -56,9 +63,17 @@ export function UserReducer(state: UserState = intialState, action: UserAction) 
         case UserActionTypes.UPDATE_SPOTIFY_SUCCESS:
             let updated_user = {...state.user}
             updated_user.spotifyurl = action.payload.spotifyurl;
-            return { ...state, user: updated_user, loading: false };
+            return { ...state, user: updated_user, spotifyError: null, loading: false };
         case UserActionTypes.UPDATE_SPOTIFY_ERROR:
             return { ...state, spotifyError: action.payload, loading: false };
+        case UserActionTypes.ADD_NOTIF:
+                return { ...state, notification: action.payload, loading: true };
+        case UserActionTypes.ADD_NOTIF_SUCCESS:
+            let updated_user_notif = {...state.user};
+            updated_user_notif.notifications.push(action.payload.datetime);
+            return { ...state, user: updated_user_notif, notificationError:null, notificationSuccess: true, loading: false };
+        case UserActionTypes.ADD_NOTIF_ERROR:
+            return { ...state, notificationError: action.payload,notificationSuccess: false, loading: false };
         default:
             return state;
     }

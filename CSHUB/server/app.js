@@ -64,16 +64,6 @@ app.use(
   })
 );
 
-const isAuthenticated = function (req, res, next) {
-  if (!req.session.id) return res.status(401).end("access denied");
-  next();
-};
-
-//parse object id
-var ObjectId = require("mongodb").ObjectId;
-
-
-
 // ------------------------------
 var userRoute = require('./routes/auth-api.js');
 var widgetRoute = require('./routes/widgets-api.js');
@@ -86,10 +76,6 @@ app.use(function (req, res, next) {
   err.status = 404;
   next(err);
 });
-
-
-
-
 
 
 module.exports = app;

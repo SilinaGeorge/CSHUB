@@ -9,6 +9,6 @@ export interface User{
     social_id?: string,
     google:boolean,
     accessToken?: string,
-    notifications?: Array,
+    notifications?: Array<String>,
     msg?: string
 }

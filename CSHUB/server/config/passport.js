@@ -44,6 +44,7 @@ module.exports = function (router, passport) {
                         newUser.google = false;
                         newUser.local = false;
                         newUser.spotifyurl = 'https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx';
+                        newUser.notifications = [];
                         newUser.save(function (err, user) {
                             if (err) throw err;
                             if (user) {
@@ -82,7 +83,8 @@ module.exports = function (router, passport) {
                     newUser.facebook = false;
                     newUser.google = true;
                     newUser.local = false;
-                    newUser.spotifyurl = 'https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx'
+                    newUser.spotifyurl = 'https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx',
+                    newUser.notifications = [];
                     newUser.save(function (err, user) {
                         if (err) throw err;
                         if (user) {

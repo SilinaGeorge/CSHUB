@@ -56,6 +56,18 @@ var j = schedule.scheduleJob(date, function(){
     }
   });
 }); */
+const isAuthenticated = function(req, res, next) {
+  if (!req.session.userid) return res.status(401).json({ msgs: ["You Are Not Logged In"] });
+  next();
+};
+
+const isAuthorized = function(req, res, next) {
+  const id = req.params.id;
+  if (req.session.userid != id){
+    return res.status(403).json({ msgs: ["Access Denied"] });
+  }
+  next();
+};
 
 // user login api call
 router.post("/login", [
@@ -66,7 +78,7 @@ router.post("/login", [
   // returns validation errors if there are any 
   const result = validationResult(req).formatWith(errorFormatter);
   if (!result.isEmpty()) {
-    return res.status(401).json({ msgs: result.array() });
+    return res.status(400).json({ msgs: result.array() });
 
   }
 
@@ -86,10 +98,8 @@ router.post("/login", [
       email: user.email,
       firstname: user.firstname,
       lastname: user.lastname,
-      local: user.local,
-      facebook: user.facebook,
-      google: user.google,
-      spotifyurl: user.spotifyurl
+      spotifyurl: user.spotifyurl,
+      notifications: user.notifications
     });
   });
 });
@@ -105,7 +115,7 @@ router.post("/signup", [
   // returns validation errors if there are any 
   const result = validationResult(req).formatWith(errorFormatter);
   if (!result.isEmpty()) {
-    return res.status(401).json({ msgs: result.array() });
+    return res.status(400).json({ msgs: result.array() });
   }
 
   const firstname = req.body.firstname;
@@ -121,13 +131,30 @@ router.post("/signup", [
     const salt = generateSalt();
     const hash = generateHash(password, salt);
 
-    const newUser = new Users({ email, firstname, lastname, hash, salt, local: true, facebook: false, google: false, spotifyurl: 'https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx' });
+    const newUser = new Users({ email, 
+      firstname, 
+      lastname, 
+      hash, 
+      salt, 
+      local: true, 
+      facebook: false, 
+      google: false, 
+      spotifyurl: 'https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx',
+      notifications: []
+     });
 
     newUser.save(function (err, user) {
       if (err) return res.status(500).json({ msgs: ["Server Error"] });
       if (user) {
         req.session.userid = user._id;
-        return res.status(200).json({ msg: "Success", _id: user._id, email: user.email, firstname: user.firstname, lastname: user.lastname, local: user.local, facebook: user.facebook, google: user.google, spotifyurl: user.spotifyurl});
+        return res.status(200).json({ msg: "Success", 
+        _id: user._id, 
+        email: user.email, 
+        firstname: user.firstname, 
+        lastname: user.lastname, 
+        spotifyurl: user.spotifyurl,
+        notifications: user.notifications
+      });
       }
     });
 
@@ -143,14 +170,7 @@ router.get('/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function (req, res) {
 
-    /*      res.redirect(
-          url.format({
-            pathname: "/#/social-redirect/",
-            query: { id: req.user._id },
-          })
-        );  */
-
-        req.session.userid = req.user._id;
+    req.session.userid = req.user._id;
 
     res.redirect("/#/social-redirect/" + req.user._id);
 
@@ -173,19 +193,15 @@ router.get('/google/callback',
 
 
 // get facebook/google user information
-router.get('/social/:id', [
+router.get('/social/:id', isAuthenticated ,isAuthorized, [
   param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
 ], (req, res, next) => {
 
   // returns validation errors if there are any 
   const result = validationResult(req).formatWith(errorFormatter);
-
   if (!result.isEmpty()) {
-    return res.status(401).json({ msgs: result.array() });
+    return res.status(400).json({ msgs: result.array() });
   }
-
-  if (req.params.id !== req.session.userid)
-    return res.status(401).json({ msgs: ["Access Denied"] });
 
   Users.findOne({ _id: ObjectId(req.params.id), local: false }, function (err, user) {
     if (err) return res.status(500).json({ msgs: ["Server Error"] });
@@ -198,11 +214,8 @@ router.get('/social/:id', [
       email: user.email,
       firstname: user.firstname,
       lastname: user.lastname,
-      social_id: user.social_id,
-      facebook: user.facebook,
-      google: user.google,
-      local: user.local,
-      spotifyurl: user.spotifyurl
+      spotifyurl: user.spotifyurl,
+      notifications: user.notifications
     });
   });
 });
