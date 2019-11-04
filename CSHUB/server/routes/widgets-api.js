@@ -84,10 +84,12 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
   if (!result.isEmpty()) {
     return res.status(400).json({ msgs: result.array() });
   }
-
-  const id = req.params.id;
   const datetime = req.body.datetime;
 
+  if (new Date(datetime) < new Date()) 
+    return res.status(404).json({ msgs: ["Date has already passed"] });
+
+  const id = req.params.id;
 
   Users.findOneAndUpdate(
   {_id:id, 'notifications.2': {'$exists': false}, notifications: { $not: {$in : [datetime]} }}, 
@@ -133,7 +135,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
 
 
 // delete a notification
-router.delete("/notif/:id",isAuthenticated,isAuthorized, [
+router.patch("/notif/delete/:id",isAuthenticated,isAuthorized, [
   check('datetime', 'invalid datetime'),//.matches('/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/'),
   param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
 ], (req, res, next) => {
@@ -147,9 +149,9 @@ router.delete("/notif/:id",isAuthenticated,isAuthorized, [
   const id = req.params.id;
   const datetime = req.body.datetime;
   
-  Users.findByIdAndUpdate(id,{$pull: {notifications: datetime}}, {new: true}).exec(function (err, user) {
+  Users.findOneAndUpdate({_id:id, notifications:{$in : [datetime]}}, {$pull: {notifications: datetime}}, {new: true}).exec(function (err, user) {
     if (err) return res.status(500).json({ msgs: ["Server Error"] });
-    if (!user) return res.status(404).json({ msgs: ["User can't be found"] });
+    if (!user) return res.status(404).json({ msgs: ["User can't be found or date does not exist in notifications"] });
 
     return res.status(200).json({
       msg: "Success",

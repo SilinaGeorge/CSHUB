@@ -32,6 +32,15 @@ export class WidgetService {
       ;
   };
 
+  DeleteNotif(notifData: Notification)
+  {
+ 
+    return this.http.patch<Notification>(`${this.URL}/notif/delete/${notifData._id}`, notifData)
+      .pipe(delay(2000))
+
+      ;
+  };
+
 }
 
 

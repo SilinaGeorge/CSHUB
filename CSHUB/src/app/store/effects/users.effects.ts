@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction, AddNotifAction, AddNotifActionSuccessAction, AddNotifActionErrorAction } from '../actions/user.actions';
+import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction, AddNotifAction, AddNotifActionSuccessAction, AddNotifActionErrorAction, DeleteNotifActionSuccessAction, DeleteNotifActionErrorAction, DeleteNotifAction } from '../actions/user.actions';
 import { AuthService } from '../../services/auth.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -94,6 +94,23 @@ export class UsersEffects {
                         }),
                         catchError((error) => {
                             return of(new AddNotifActionErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
+
+        @Effect() DeleteNotif = this.actions$
+        .pipe(
+            ofType<DeleteNotifAction>(UserActionTypes.DELETE_NOTIF),
+            mergeMap(
+                data => this.widgetService.DeleteNotif(data.payload)
+                    .pipe(
+                        map(data => {
+                            return new DeleteNotifActionSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new DeleteNotifActionErrorAction(error.error))
                         }
                         )
                     )

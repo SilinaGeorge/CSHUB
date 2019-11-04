@@ -19,6 +19,8 @@ export interface UserState {
     notification: Notification,
     notificationSuccess: boolean,
     notificationError: Error,
+    deleteNotification: Notification,
+    deleteNotificationError: Error,
     loading: boolean
 }
 
@@ -35,45 +37,63 @@ const intialState: UserState = {
     notification: null,
     notificationError: null,
     notificationSuccess: false,
+    deleteNotification: null,
+    deleteNotificationError: null,
     loading: false
 };
 
 export function UserReducer(state: UserState = intialState, action: UserAction) {
     switch (action.type) {
+
         case UserActionTypes.LOGIN_USER:
             return { ...state, auth: action.payload, loading: true };
         case UserActionTypes.LOGIN_USER_SUCCESS:
             return { ...state, user: action.payload, loading: false };
         case UserActionTypes.LOGIN_USER_ERROR:
             return { ...state, loginError: action.payload, loading: false };
+
         case UserActionTypes.SIGNUP_USER:
             return { ...state, signUpUser: action.payload, loading: true };
         case UserActionTypes.SIGNUP_USER_SUCCESS:
             return { ...state, user: action.payload, loading: false };
         case UserActionTypes.SIGNUP_USER_ERROR:
             return { ...state, signupError: action.payload, loading: false };
+
         case UserActionTypes.GET_SOCIAL_USER:
             return { ...state, loading: true,  socialMediaAuth: action.payload };
         case UserActionTypes.GET_SOCIAL_USER_SUCCESS:
             return { ...state, user: action.payload, loading: false };
         case UserActionTypes.GET_SOCIAL_USER_ERROR:
             return { ...state, getSocialUserError: action.payload, loading: false };
+
         case UserActionTypes.UPDATE_SPOTIFY:
             return { ...state, spotify: action.payload, loading: true };
         case UserActionTypes.UPDATE_SPOTIFY_SUCCESS:
-            let updated_user = {...state.user}
-            updated_user.spotifyurl = action.payload.spotifyurl;
-            return { ...state, user: updated_user, spotifyError: null, loading: false };
+            let stateUser = {...state.user}
+            stateUser.spotifyurl = action.payload.spotifyurl;
+            return { ...state, user: stateUser, spotifyError: null, loading: false };
         case UserActionTypes.UPDATE_SPOTIFY_ERROR:
             return { ...state, spotifyError: action.payload, loading: false };
+
         case UserActionTypes.ADD_NOTIF:
                 return { ...state, notification: action.payload, loading: true };
         case UserActionTypes.ADD_NOTIF_SUCCESS:
-            let updated_user_notif = {...state.user};
-            updated_user_notif.notifications.push(action.payload.datetime);
-            return { ...state, user: updated_user_notif, notificationError:null, notificationSuccess: true, loading: false };
+            let stateUser2 = {...state.user};
+            stateUser2.notifications.push(action.payload.datetime);
+            return { ...state, user: stateUser2, notificationError:null, notificationSuccess: true, loading: false };
         case UserActionTypes.ADD_NOTIF_ERROR:
             return { ...state, notificationError: action.payload,notificationSuccess: false, loading: false };
+        
+        case UserActionTypes.DELETE_NOTIF:
+                return { ...state, deleteNotification: action.payload, loading: true };
+        case UserActionTypes.DELETE_NOTIF_SUCCESS:
+            let delUserNotif = {...state.user};
+            var index = delUserNotif.notifications.indexOf(action.payload.datetime);
+            delUserNotif.notifications.splice(index, 1);
+            return { ...state, user: delUserNotif, deleteNotificationError:null, loading: false };
+        case UserActionTypes.DELETE_NOTIF_ERROR:
+            return { ...state, deleteNotificationError: action.payload, loading: false };
+        
         default:
             return state;
     }

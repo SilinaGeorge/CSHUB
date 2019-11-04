@@ -25,6 +25,9 @@ export enum UserActionTypes{
     ADD_NOTIF = '[USER] Add Notification',
     ADD_NOTIF_SUCCESS = '[USER] Add Notification Success',
     ADD_NOTIF_ERROR = '[USER] Add Notification Error',
+    DELETE_NOTIF = '[USER] Delete Notification',
+    DELETE_NOTIF_SUCCESS = '[USER] Delete Notification Success',
+    DELETE_NOTIF_ERROR = '[USER] Delete Notification Error',
 }
 // LOGIN
 export class LoginUserAction implements Action{
@@ -95,7 +98,18 @@ export class AddNotifActionErrorAction implements Action{
     readonly type = UserActionTypes.ADD_NOTIF_ERROR;
     constructor(public payload: Error){};
 }
-
+export class DeleteNotifAction implements Action{
+    readonly type = UserActionTypes.DELETE_NOTIF;
+    constructor(public payload: Notification){};
+}
+export class DeleteNotifActionSuccessAction implements Action{
+    readonly type = UserActionTypes.DELETE_NOTIF_SUCCESS;
+    constructor(public payload: Notification){};
+}
+export class DeleteNotifActionErrorAction implements Action{
+    readonly type = UserActionTypes.DELETE_NOTIF_ERROR;
+    constructor(public payload: Error){};
+}
 
 export type UserAction = 
 LoginUserAction|
@@ -112,6 +126,8 @@ UpdateSpotifySuccessAction |
 UpdateSpotifyErrorAction |
 AddNotifAction |
 AddNotifActionSuccessAction |
-AddNotifActionErrorAction
-
+AddNotifActionErrorAction |
+DeleteNotifAction |
+DeleteNotifActionSuccessAction |
+DeleteNotifActionErrorAction
 ;

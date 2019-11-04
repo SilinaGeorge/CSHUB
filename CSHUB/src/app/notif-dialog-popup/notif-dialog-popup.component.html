@@ -17,8 +17,8 @@
                     <ul *ngIf="error$ | async as error">
                         <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
                     </ul>
-        
                 </div>
+
                 <div id="errors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"> </div>
 
                 <p style="margin-bottom: 1em">An email will be sent to you reminding you to study/job hunt</p>
@@ -155,6 +155,12 @@
     <!--tab 2: manage notifications-->
     <mat-tab label="Manage Notifications" >
 
+        <div *ngIf="deleteError$ | async as error">
+            <ul *ngIf="deleteError$ | async as error">
+                <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
+            </ul>
+          </div>
+
 
         <div class="example-container mat-elevation-z8">
 
@@ -199,6 +205,7 @@
 
             <button mat-raised-button class="btn btn-primary" (click)="removeSelectedRows()">
                 Delete Selected Rows
+                <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
               </button>
   
         
