@@ -23,6 +23,28 @@ const isAuthorized = function(req, res, next) {
   next();
 };
 
+
+const schedule = require('node-schedule');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'hotmail.com',
+  auth: {
+    user: 'cshub-do-not-reply@hotmail.com',
+    pass: 'CSHUBisthebest'
+  },
+  tls: {
+    rejectUnauthorized: false
+}
+});
+
+
+
+var date = new Date(2019, 7, 15, 23, 40, 0);
+ 
+
+
+
 // spotify url change
 router.patch("/spotify/:id",isAuthenticated,isAuthorized, [
   check('spotifyurl', 'invalid spotify playlist/album url').matches('https://open.spotify.com/album|playlist|station/[a-zA-Z0-9/=?]*'),
@@ -66,28 +88,46 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
   const id = req.params.id;
   const datetime = req.body.datetime;
 
-  Users.findById(id).exec(function (err, user) {
+
+  Users.findOneAndUpdate(
+  {_id:id, 'notifications.2': {'$exists': false}, notifications: { $not: {$in : [datetime]} }}, 
+  {$addToSet: {notifications: datetime}}, 
+  {new: true}).exec(function (err, user) {
+
     if (err) return res.status(500).json({ msgs: [err] });
-    if (!user) return res.status(404).json({ msgs: ["User can't be found"] });
+    if (!user) return res.status(404).json({ msgs: ["You have a maximum of 3 notifications already or you have a notification with the same date already"] });
 
-    const nofications = user.notifications
-    if (nofications.includes(datetime)) return res.status(406).json({ msgs: ["You already have a notification for this date"] });
-    if (user.notifications.length >= 3) return res.status(406).json({ msgs: ["You are allowed a maximum of three notifications at a time"] });
-
-    else{
+    /*
+     const email = user.email;
       Users.findByIdAndUpdate(id,{$addToSet: {notifications: datetime}}, {new: true}).exec(function (err, user) {
         if (err) return res.status(500).json({ msgs: [err] });
         if (!user) return res.status(404).json({ msgs: ["User can't be found"] });
-    
-        return res.status(200).json({
-          msg: "Success",
-          _id: user._id,
-          datetime
-        });
-      });
 
-    }
-});
+        let mailOptions = {
+          from: 'cshub-do-not-reply@hotmail.com',
+          to: 'cshub-do-not-reply@hotmail.com',
+          subject: 'CSHUB: Time to Get Crackng',
+          text: 'Visit --insert prod link-- and start studying. /n This is an automated email,please do not reply back'
+        };
+
+        let dateObj = new Date(datetime)
+
+        let j = schedule.scheduleJob(dateObj, function(){
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+        }); 
+    */
+    return res.status(200).json({
+      msg: "Success",
+      _id: user._id,
+      datetime
+    });
+  });
 
 });
 

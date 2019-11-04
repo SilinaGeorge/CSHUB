@@ -18,9 +18,11 @@ import { Error } from '../store/models/error.model';
 export class NotifDialogPopupComponent implements OnInit {
 
   displayedColumns = ['Select', 'Date'];
-  data = Object.assign(ELEMENT_DATA);
-  dataSource = new MatTableDataSource<Element>(this.data);
-  selection = new SelectionModel<Element>(true, []);
+  //data = Object.assign(ELEMENT_DATA);
+  user_notifs: Array<String>;
+  data = []
+  dataSource = new MatTableDataSource();
+  selection = new SelectionModel(true, []);
   notifFormGroup: FormGroup;
   minDate = new Date();
   errorHTML = "";
@@ -28,7 +30,7 @@ export class NotifDialogPopupComponent implements OnInit {
   error$: Observable<Error>;
   add_notif: Notification = {_id: null, datetime: null};
   subscription: Subscription;
-  user_notifs: Array<String>;
+
   success: boolean;
   success$: Observable<boolean>;
 
@@ -60,6 +62,14 @@ export class NotifDialogPopupComponent implements OnInit {
       if (state){
         this.user_notifs = state.user.notifications;
         this.add_notif._id = state.user._id;
+        this.data = this.user_notifs;
+        let dataArray = Object.assign({}, this.user_notifs)
+        this.data = Object.keys(dataArray).map(key => (
+          {id: Number(key), 
+            displayDate: moment(new Date(dataArray[key])).format(("dddd, MMMM Do YYYY, h:mm a")) ,
+            name: dataArray[key]}));
+        console.log(this.data)
+        this.dataSource = new MatTableDataSource(this.data);
       }
       }); 
 
@@ -99,10 +109,10 @@ export class NotifDialogPopupComponent implements OnInit {
       }
 
       if (this.user_notifs.length == 3)
-        this.errorHTML = `only 3 allowed`;
+        this.errorHTML = `A maximum of 2 notifications are allowed at once`;
 
       else if (this.user_notifs.includes(this.dateTime.toString()))
-        this.errorHTML = `already have a notification for this date`;
+        this.errorHTML = `You already have a notification for this date`;
       else{
     
         this.add_notif.datetime = this.dateTime.toString()
@@ -137,9 +147,9 @@ export class NotifDialogPopupComponent implements OnInit {
       let index: number = this.data.findIndex(d => d === item);
       console.log(this.data.findIndex(d => d === item));
       this.data.splice(index, 1)
-      this.dataSource = new MatTableDataSource<Element>(this.data);
+      this.dataSource = new MatTableDataSource(this.data);
     });
-    this.selection = new SelectionModel<Element>(true, []);
+    this.selection = new SelectionModel(true, []);
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
@@ -163,21 +173,6 @@ export class NotifDialogPopupComponent implements OnInit {
   }
 
 }
-
-
-export interface Element {
-  Date: Date;
-
-}
-
-
-
-const ELEMENT_DATA: Element[] = [
-  { Date: new Date() },
-  { Date: new Date() },
-  { Date: new Date() },
-
-];
 
 // check to see if the datetime has not past yet
 export const timeValidator: ValidatorFn = (timeFormGroup: FormGroup): ValidationErrors | null => {

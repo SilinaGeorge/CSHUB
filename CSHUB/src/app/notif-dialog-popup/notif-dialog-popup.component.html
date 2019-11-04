@@ -4,11 +4,23 @@
 
     <mat-tab label="Send Notification">
 
-        <form [formGroup]="notifFormGroup" (ngSubmit)="okClick()" style="padding-bottom:10vh;padding-right: 10vh"> 
+        <form [formGroup]="notifFormGroup" (ngSubmit)="onCreateClick()" style="padding-bottom:10vh;padding-right: 10vh"> 
             <mat-dialog-content>
             
+                
+                
+                <div *ngIf="success$ | async as error">
+                    <div style="color: green; margin-bottom: 1em">you will be notified on {{displayDateTime()}} </div>
+                </div>
+                
+                <div *ngIf="error$ | async as error">
+                    <ul *ngIf="error$ | async as error">
+                        <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
+                    </ul>
+        
+                </div>
                 <div id="errors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"> </div>
-            
+
                 <p style="margin-bottom: 1em">An email will be sent to you reminding you to study/job hunt</p>
             
                 <div style="margin-bottom: 1em"></div>
@@ -129,7 +141,10 @@
             </mat-dialog-content>
             <div style="text-align: center;">
             <mat-dialog-actions style="text-align: center;">
-                    <button type='submit' mat-raised-button mat-dialog-close mat-dialog-close="false" [disabled]="notifFormGroup.invalid"  class="btn btn-primary shadow-sm" (click)="okClick()">Ok</button>
+                    <button type='submit' mat-raised-button  [disabled]="notifFormGroup.invalid"  class="btn btn-primary shadow-sm">
+                        Create
+                        <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
+                    </button>
                     <button  mat-dialog-close mat-dialog-close="true"  class="btn btn-secondary" >Close</button>
             </mat-dialog-actions>
             
@@ -170,7 +185,7 @@
               <!-- Date Column -->
               <ng-container matColumnDef="Date">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.Date}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.displayDate}} </mat-cell>
               </ng-container>
           
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -198,9 +213,4 @@
     </mat-tab>
 
   </mat-tab-group>
-
-
-
-
-
 
