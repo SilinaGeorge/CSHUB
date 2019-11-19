@@ -7,13 +7,17 @@ const { check, validationResult } = require('express-validator');
 const cookie = require("cookie");
 const https = require('https');
 const fs = require('fs');
-const dotenv = require("dotenv").config();
 const passport = require('passport');
 const path = require('path');
+require('dotenv').config()
 
 const app = express();
 
-const mongoDB = 'mongodb+srv://silina01:cSB42MnimhMneRSX@cshub-vtf1l.mongodb.net/test?retryWrites=true&w=majority'
+
+
+
+
+const mongoDB = process.env.MONGODBCONNECTION;
 
 // connect to our database
 mongoose.connect(mongoDB, { useNewUrlParser: true });
@@ -53,14 +57,14 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 app.use(
   session({
-    secret: "SiEyHwWt5JGgFZOEamFp",
+    secret: process.env.SESSIONSECRET,
     store: new MongoStore({
       url: mongoDB,
       ttl: 14 * 24 * 60 * 60 // = 14 days. Default
     }),
     resave: false,
     saveUninitialized: true,
-    cookie: { httpOnly: true, sameSite: true, secure: true }
+    cookie: { httpOnly: true, sameSite: true, secure: true, maxAge: 60000 }
   })
 );
 

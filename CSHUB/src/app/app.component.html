@@ -4,9 +4,13 @@
 <mat-drawer-container>
 
     <!-- side menu -->
-    <mat-drawer mode="push" [(opened)]="_opened">
+
+    <mat-drawer  mode="side" [(opened)]="_opened">
+        <div id='sideMenuDraw'>
         <app-side-nav-menu></app-side-nav-menu>
+    </div>
     </mat-drawer>
+
 
     <mat-drawer-content style='min-height: 100vh;min-width: 100vw'>
 
@@ -15,9 +19,11 @@
 
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
 
+                <div id='hamburgerIcon' style='display:none'>
                 <button mat-icon-button (click)="_toggleOpened()">
                     <mat-icon>menu</mat-icon>
                 </button>
+            </div>
                 
                 <app-title></app-title>
 

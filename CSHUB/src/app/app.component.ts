@@ -16,10 +16,10 @@ export class AppComponent {
 
   constructor() {}
 
-   private _opened: boolean = false;
+   public _opened: boolean = false;
  
 
-  private _toggleOpened(): void {
+   public _toggleOpened(): void {
     this._opened = !this._opened;
   } 
 

@@ -10,13 +10,12 @@ import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
 import { CountdownModule } from 'ngx-countdown';
 import { MccSpeedDialModule} from 'material-community-components'
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+
 import { NgxSummernoteModule} from 'ngx-summernote'
 
 import { DragDropModule} from '@angular/cdk/drag-drop'
 
-import { QuillModule } from 'ngx-quill';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 
 import { NgxDocViewerModule } from 'ngx-doc-viewer'
 
@@ -49,7 +48,7 @@ import {
    MatTableModule,
   } from '@angular/material';
   
-   import { DateTimePickerModule} from 'ngx-datetime-picker';
+
 
    
 import { AuthService } from './services/auth.service'
@@ -108,13 +107,9 @@ import { TitleComponent } from './title/title.component';
   ],
   imports: [
     NgxSummernoteModule,
-    FroalaEditorModule.forRoot(), 
-    FroalaViewModule.forRoot(),
     DragDropModule,
     MccSpeedDialModule,
     NgxDocViewerModule,
-    CKEditorModule,
-    QuillModule.forRoot(),
     MatProgressSpinnerModule,
     MatTooltipModule,
     CountdownModule ,
@@ -127,7 +122,6 @@ import { TitleComponent } from './title/title.component';
     MatSnackBarModule,
     MatTableModule,
     MatTabsModule,
-    DateTimePickerModule,
     MatNativeDateModule,
     MatDatepickerModule,
     MatDialogModule,
