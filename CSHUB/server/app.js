@@ -71,8 +71,10 @@ app.use(
 // ------------------------------
 var userRoute = require('./routes/auth-api.js');
 var widgetRoute = require('./routes/widgets-api.js');
+var notesRoute = require('./routes/notes-api.js');
 app.use('/auth', userRoute);
 app.use('/widgets', widgetRoute);
+app.use('/notes', notesRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
