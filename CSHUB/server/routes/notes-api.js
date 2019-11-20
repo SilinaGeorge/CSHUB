@@ -61,19 +61,21 @@ router.post("/:id",isAuthenticated, isAuthorized, [
 
     newNote.save(function (err, result) {
         if (err) return res.status(500).json({ msgs: [err] })
+        if (result){
+            return res.status(200).json({
+                msg: "Success",
+                noteId: result._id,
+                userId: result.userId,
+                content: result.content,
+                description: result.description,
+                name: result.name,
+                topic: result.topic,
+                dateCreate: result.dateCreate,
+                dateModified: result.dateModified
+    
+              });
+        }
 
-        return res.status(200).json({
-            msg: "Success",
-            noteId: result._id,
-            userId: result.userId,
-            content: result.content,
-            description: result.description,
-            name: result.name,
-            topic: result.topic,
-            dateCreate: result.dateCreate,
-            dateModified: result.dateModified
-
-          });
 
     });
   });
