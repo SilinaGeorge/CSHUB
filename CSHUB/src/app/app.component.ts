@@ -1,4 +1,7 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
+
+import { SideNavToggleService } from './services/side-nav-toggle.service';
 
 
 
@@ -8,20 +11,28 @@ import { Component, HostListener } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css', '../../node_modules/hamburgers/_sass/hamburgers/hamburgers.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit  {
 
   closeResult: string;
   collapsed = true;
   Title: string = "CS HUB";
 
-  constructor() {}
+
+  @ViewChild('sidenav', {static: true}) public sidenav: MatSidenav;
+ 
+
+  constructor(private sideNavService: SideNavToggleService) { 
+  }
+
+  ngOnInit() { 
+
+    this.sideNavService.setSidenav(this.sidenav);
+
+  } 
 
    public _opened: boolean = false;
  
 
-   public _toggleOpened(): void {
-    this._opened = !this._opened;
-  } 
 
 
 }

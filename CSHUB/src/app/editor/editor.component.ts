@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
+
+import { SideNavToggleService } from '../services/side-nav-toggle.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -8,20 +11,24 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class EditorComponent implements OnInit {
 
+
   public content='helli'
   public editorConfig
   saveNoteFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private sidenav: SideNavToggleService) { }
 
   ngOnDestroy(){
 
     let hamburgerIcon = document.getElementById("hamburgerIcon");
     hamburgerIcon.style.display = "none";
+    this.sidenav.close();
 
   }
 
   ngOnInit() {
+    this.sidenav.open();
+
     let hamburgerIcon = document.getElementById("hamburgerIcon");
     hamburgerIcon.style.display = "block";
 
@@ -71,6 +78,7 @@ export class EditorComponent implements OnInit {
    
  }
  onSave(){
+  
    console.log(this.content)
  }
  

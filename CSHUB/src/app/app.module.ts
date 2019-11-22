@@ -50,11 +50,6 @@ import {
   
 
 
-   
-import { AuthService } from './services/auth.service'
-
-
-
 import { NotificationComponent } from './notification/notification.component';
 import { NotifDialogPopupComponent } from './notif-dialog-popup/notif-dialog-popup.component';
 import { TimerComponent } from './timer/timer.component';
