@@ -2,22 +2,26 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
-<mat-sidenav-container >
-        <mat-sidenav #sidenav mode="side">
+<mat-drawer-container>
+
+        <!-- side menu -->
+    
+        <mat-drawer #sidenav mode="side" >
             <app-side-nav-menu></app-side-nav-menu>
-        </mat-sidenav>
-
-        <mat-sidenav-content>
-                    <!-- main menu hide when scroll down, show whe scroll up -->
-        <ngx-headroom>
-
+        </mat-drawer>
+    
+    
+        <mat-drawer-content style='min-height: 100vh;min-width: 100vw'>
+    
+            <!-- main menu hide when scroll down, show whe scroll up -->
+            <ngx-headroom>
+    
                 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
-                        
+    
                     <div id='hamburgerIcon' style='display:none'>
-                            <button mat-icon-button (click)="sidenav.toggle()">
-                                    <mat-icon>menu</mat-icon>
-                                </button>
-                    
+                    <button mat-icon-button (click)="sidenav.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
                 </div>
                     
                     <app-title></app-title>
@@ -49,9 +53,9 @@
                 <router-outlet></router-outlet>
             </div>
     
-        </mat-sidenav-content>
-
-</mat-sidenav-container>
+    
+        </mat-drawer-content>
+    </mat-drawer-container>
       
 
 

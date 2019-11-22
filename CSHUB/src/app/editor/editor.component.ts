@@ -25,9 +25,11 @@ export class EditorComponent implements OnInit {
     this.sidenav.close();
 
   }
-
-  ngOnInit() {
+  ngAfterViewInit(){
     this.sidenav.open();
+  }
+  ngOnInit() {
+    
 
     let hamburgerIcon = document.getElementById("hamburgerIcon");
     hamburgerIcon.style.display = "block";
@@ -62,6 +64,8 @@ export class EditorComponent implements OnInit {
     
 
   };
+
+
 
   openModal(){
     var spotifypopup = document.getElementById("saveNote");
