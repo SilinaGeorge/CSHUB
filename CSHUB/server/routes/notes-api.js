@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-const { check, validationResult, param } = require('express-validator');
+const { check, validationResult, param, query } = require('express-validator');
 
 //mongodb model
 const Notes = require("../mongo-models/notes.js");
@@ -110,8 +110,10 @@ router.delete("/:id",isAuthenticated,isAuthorizedBody, [
   
   // get all notes for a user
   router.get("/:id",isAuthenticated,isAuthorized, [
-    param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
+    param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty(),
+    query('topic', 'topic is invalid').optional().isAlphanumeric().trim().escape(),
   ], (req, res, next) => {
+
   
     // returns validation errors if there are any 
     const result = validationResult(req).formatWith(errorFormatter);
@@ -120,8 +122,10 @@ router.delete("/:id",isAuthenticated,isAuthorizedBody, [
     }
   
     const userId = req.params.id;
+    const topic = req.query.topic;
+    let query = (topic !=null) ? {userId: userId,  topic: topic} : {userId: userId};
     
-    Notes.find({userId: userId}).exec(function (err, result) {
+    Notes.find(query).exec(function (err, result) {
       if (err) return res.status(500).json({ msgs: ["Server Error"] });
       if (!result) return res.status(404).json({ msgs: ["Invalid user"] });
   

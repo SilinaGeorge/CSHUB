@@ -1,9 +1,24 @@
 <div  style="overflow-y:auto; height:100%;" class="bg-dark">
 
+
+ 
+
+
         <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action  li_style li_style disabled"> 
-                        Custom Uploads</a>
-                <a href="#" class="list-group-item list-group-item-action active li_style">Feature</a>
+                        
+
+                <div *ngIf="topicNotes$ | async as topicNotes">
+                        <a href="" class="list-group-item list-group-item-action  li_style li_style disabled"> 
+                                        Custom {{topicNotes.notes[0].topic}}</a>
+                        
+                <a href="" (click)="noteClick(note)" *ngFor="let note of topicNotes.notes" class="list-group-item list-group-item-action active li_style"> 
+                                {{note.name}} <br> {{note.description}}</a>
+                        
+                </div>
+
+
+                
+    <!--             <a href="#" class="list-group-item list-group-item-action active li_style">Feature</a>
                 <a href="#" class="list-group-item list-group-item-action li_style">Feature</a>
                 <a href="#" class="list-group-item list-group-item-action li_style">Feature</a>
                 <a href="#" class="list-group-item list-group-item-action li_style">Feature</a>
@@ -23,7 +38,7 @@
                 <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
                 <a href="#" class="list-group-item list-group-item-action  li_style">Feature7</a>
                 
-
+ -->
                         
         </div>
 

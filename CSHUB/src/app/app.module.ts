@@ -65,7 +65,9 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { UserReducer } from './store/reducers/user.reducer';
+import { NotesReducer } from './store/reducers/notes.reducer';
 import { UsersEffects } from './store/effects/users.effects';
+import { NotesEffects } from './store/effects/notes.effects';
 
 
 import { EditorComponent } from './editor/editor.component';
@@ -109,9 +111,10 @@ import { TitleComponent } from './title/title.component';
     MatTooltipModule,
     CountdownModule ,
     CommonModule,
-    EffectsModule.forRoot([UsersEffects]),
+    EffectsModule.forRoot([UsersEffects, NotesEffects]),
     StoreModule.forRoot({
-      user: UserReducer
+      user: UserReducer,
+      noteState: NotesReducer,
 
     }),
     MatSnackBarModule,

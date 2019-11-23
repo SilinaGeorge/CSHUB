@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { AddNoteAction, AddNoteErrorAction, AddNoteSuccessAction, NotesActionTypes } from '../actions/notes.actions';
+import { AddNoteAction, AddNoteErrorAction, AddNoteSuccessAction, NotesActionTypes, GetTopicNotesAction, GetTopicNotesErrorAction, GetTopicNotesSuccessAction } from '../actions/notes.actions';
 import { NotesService } from '../../services/notes.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 
 
 @Injectable()
-export class UsersEffects {
+export class NotesEffects {
 
     @Effect() addNote = this.actions$
         .pipe(
@@ -29,6 +29,23 @@ export class UsersEffects {
             )
         )
 
+        @Effect() getTopicNotes = this.actions$
+        .pipe(
+            ofType<GetTopicNotesAction>(NotesActionTypes.GET_TOPIC_NOTES),
+            mergeMap(
+                data => this.noteService.GetTopicNotes(data.payload)
+                    .pipe(
+                        map(data => {
+
+                            return new GetTopicNotesSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new GetTopicNotesErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
     
     constructor(private actions$: Actions, private noteService: NotesService) { }
 

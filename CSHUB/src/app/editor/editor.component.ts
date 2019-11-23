@@ -3,6 +3,12 @@ import { MatSidenav } from '@angular/material';
 
 import { SideNavToggleService } from '../services/side-nav-toggle.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subscription, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/models/app-state.model';
+import { GetTopicNotes } from '../store/models/get-notes.model';
+import { GetTopicNotesAction } from '../store/actions/notes.actions';
+import { Error } from '../store/models/error.model';
 
 @Component({
   selector: 'app-editor',
@@ -15,8 +21,12 @@ export class EditorComponent implements OnInit {
   public content='helli'
   public editorConfig
   saveNoteFormGroup: FormGroup;
+  subscription: Subscription;
+  loading$: Observable<Boolean>;
+  error$: Observable<Error>;
+  getTopicNotes: GetTopicNotes = {userId: null, topic:"Python"}
 
-  constructor(private fb: FormBuilder, private sidenav: SideNavToggleService) { }
+  constructor(private fb: FormBuilder, private sidenav: SideNavToggleService, private store: Store<AppState>) { }
 
   ngOnDestroy(){
 
@@ -29,6 +39,15 @@ export class EditorComponent implements OnInit {
     this.sidenav.open();
   }
   ngOnInit() {
+
+    this.subscription = this.store.select(store => store.user).subscribe(state =>   {
+      if (state){
+        this.getTopicNotes.userId = state.user._id;
+      }
+      }); 
+
+    this.store.dispatch(new GetTopicNotesAction(this.getTopicNotes));
+    this.error$ = this.store.select(store => store.noteState.getTopicNotesError)
     
 
     let hamburgerIcon = document.getElementById("hamburgerIcon");
@@ -81,7 +100,7 @@ export class EditorComponent implements OnInit {
     popup.style.display = "none"; 
    
  }
- onSave(){
+ onCreateNewSave(){
   
    console.log(this.content)
  }

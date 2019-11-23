@@ -13,12 +13,12 @@ export class SideNavToggleService {
 	}
 
 	public open() {
-		return this.sidenav.opened = true;
+		return this.sidenav.open()
 	}
 
 
 	public close() {
-		return this.sidenav.opened = false;
+		return this.sidenav.close();
 	}
 
 /* 	public toggle(): void {

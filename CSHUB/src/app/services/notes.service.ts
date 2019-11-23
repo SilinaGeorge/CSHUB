@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AddNote } from '../store/models/add-note.model';
+import { ReturnedTopicNotes, GetTopicNotes } from '../store/models/get-notes.model';
 import { Note } from '../store/models/note.model';
 import { HttpClient } from '@angular/common/http'
 import { delay } from 'rxjs/operators';
@@ -14,9 +15,18 @@ export class NotesService {
 
   AddNote(addNoteData: AddNote) {
  
-    return this.http.post<Note>(`${this.URL}/${addNoteData.userId}`, addNoteData)
-      .pipe(delay(2000))
-
-      ;
+    return this.http.post<Note>(`${this.URL}/notes/${addNoteData.userId}`, addNoteData);
   };
+
+  GetTopicNotes(getTopicNotesData: GetTopicNotes) {
+ 
+    return this.http.get<ReturnedTopicNotes>(`${this.URL}/${getTopicNotesData.userId}?topic=${getTopicNotesData.topic}`);
+  };
+
+
+
+
+
+
+
 }

@@ -5,9 +5,9 @@
 
 
 
-<div style="margin-left: 47%">
+<div style="margin-left: 46%">
 <button  mat-raised-button (click)="openModal()"
-                    class="btn btn-primary shadow-sm">Save
+                    class="btn btn-primary shadow-sm">Create New
                     <!--<app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>-->
                 </button>
 </div>
@@ -24,7 +24,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form [formGroup]="saveNoteFormGroup" (ngSubmit)="onSave()">
+            <form [formGroup]="saveNoteFormGroup" (ngSubmit)="onCreateNewSave()">
             <div class="modal-body">
 
                     
