@@ -10,7 +10,9 @@ const NoteSchema = new Schema({
     name: { type: String, required: true, max: 50 },
     topic:{ type: String, max: 50, required: true },
     dateCreate: {type: Date, required: true},
-    dateModified: {type: Date, required: false}
+    dateModified: {type: Date, required: true},
+    dateCreateString: {type: String, required: true},
+    dateModifiedString: {type: String, required: true}
 });
 
 const Notes = mongoose.model("Notes", NoteSchema);

@@ -1,45 +1,47 @@
-<div  style="overflow-y:auto; height:100%;" class="bg-dark">
+<div style="overflow-y:auto; height:100%;width:25vw; word-wrap: break-word " class="bg-dark">
+        <ul class="list-group">
 
-
- 
-
-
-        <div class="list-group">
-                        
 
                 <div *ngIf="topicNotes$ | async as topicNotes">
-                        <a href="" class="list-group-item list-group-item-action  li_style li_style disabled"> 
-                                        Custom {{topicNotes.notes[0].topic}}</a>
+                        <li
+                                class="list-group-item list-group-item-action flex-column align-items-start disabled">
+
+                                <h4 class="mb-1">{{topicNotes.notes[0].topic}} Notes</h4>
+                </li>
+
+                <li class="list-group-item list-group-item-action flex-column align-items-start" (click)="select(-1); onNewNoteClick()" [ngClass]="{'active': selectedIndex == -1}">
+
+                <h5>Create New Note</h5>
+                </li>
+
+       
+
+                        <li  (click)="select(i); onNoteClick(note)" *ngFor="let note of topicNotes.notes; let i=index" 
+                        [ngClass]="{'active': selectedIndex == i}"
+                                class="list-group-item list-group-item-action flex-column align-items-start">
+                              <!--   <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">{{note.name}}</h5>
+                                        <small maxlength="10" class="text-muted">{{note.dateModified}}</small>
+                                </div> -->
+                                <div class="d-flex justify-content-end">
+                                        <small  class="text-muted">{{note.dateModifiedString}}</small>
+
+                                </div>
+                                
+                                <h5 class="mb-1">{{note.name}}</h5>
+                               
+                                <p class="mb-1">{{note.description}}</p>
+
+                        </li>
+
                         
-                <a href="" (click)="noteClick(note)" *ngFor="let note of topicNotes.notes" class="list-group-item list-group-item-action active li_style"> 
-                                {{note.name}} <br> {{note.description}}</a>
-                        
+
+
+
                 </div>
 
 
-                
-    <!--             <a href="#" class="list-group-item list-group-item-action active li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature</a>
-                <a href="#" class="list-group-item list-group-item-action  li_style">Feature7</a>
-                
- -->
-                        
-        </div>
+
+        </ul>
 
 </div>

@@ -9,6 +9,8 @@ import { AppState } from '../store/models/app-state.model';
 import { GetTopicNotes } from '../store/models/get-notes.model';
 import { GetTopicNotesAction } from '../store/actions/notes.actions';
 import { Error } from '../store/models/error.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import {Topics} from '../topics'
 
 @Component({
   selector: 'app-editor',
@@ -17,16 +19,23 @@ import { Error } from '../store/models/error.model';
 })
 export class EditorComponent implements OnInit {
 
-
+  topic:string;
   public content='helli'
   public editorConfig
   saveNoteFormGroup: FormGroup;
   subscription: Subscription;
   loading$: Observable<Boolean>;
   error$: Observable<Error>;
-  getTopicNotes: GetTopicNotes = {userId: null, topic:"Python"}
+  getTopicNotes: GetTopicNotes = {userId: null, topic: "Python"}
 
-  constructor(private fb: FormBuilder, private sidenav: SideNavToggleService, private store: Store<AppState>) { }
+  constructor(private fb: FormBuilder, 
+    private sidenav: SideNavToggleService, 
+    private store: Store<AppState>, 
+    private actroute: ActivatedRoute,
+    private router: Router) { 
+      
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
 
   ngOnDestroy(){
 
@@ -40,6 +49,13 @@ export class EditorComponent implements OnInit {
   }
   ngOnInit() {
 
+     this.actroute.queryParams.subscribe(params => {
+      this.topic = params.topic;
+      if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/login-home'])
+      else this.getTopicNotes.topic = this.topic
+  });
+
+         
     this.subscription = this.store.select(store => store.user).subscribe(state =>   {
       if (state){
         this.getTopicNotes.userId = state.user._id;

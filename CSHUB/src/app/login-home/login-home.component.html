@@ -1,2 +1,39 @@
-<p *ngIf="user$ | async as user">{{ user.firstname}}</p>
 
+      <mat-grid-list cols="3" rowHeight="1:1">
+            <mat-grid-tile>
+                    <div class="card border-dark text-white bg-secondary mb-3 shadow-lg rounded" style="max-width: 20rem; ">
+                            <div class="card-header">Learn Python 
+                                    <img src='../../assets/python-logo.png' style="width: 20px" >
+                            </div>
+                            <div class="card-body text-center">
+                                    <img src='../../assets/python-logo-name.png' style="max-width: 80%; margin-top:7vh;margin-bottom:7vh" >
+
+                            </div>
+                            <a href="#" style="width:100%" class="btn btn-primary border-dark">Cliff Notes</a>
+                            <a href="#/editor?topic=Python" style="width:100%" class="btn btn-primary border-dark">Your Python Notes</a>
+                            <a href="#" style="width:100%" class="btn btn-primary border-dark">Your Python Documents</a>
+                            <a href="#" style="width:100%" class="btn btn-primary border-dark">Interpreter</a>
+                          </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+
+                    <div class="card border-dark text-white bg-secondary mb-3 shadow-lg rounded" style="max-width: 20rem; ">
+                            <div class="card-header">Learn Other 
+                                    <img src='../../assets/other-icon.png' style="width: 30px" >
+                            </div>
+                            <div class="card-body text-center">
+                                    <img src='../../assets/other-shapes.png' style="max-width: 69%; margin-top:7vh;margin-bottom:7vh" >
+        
+                            </div>
+                            <a href="#/editor?topic=Other" style="width:100%" class="btn btn-primary border-dark">Your Other Notes</a>
+                            <a href="#" style="width:100%" class="btn btn-primary border-dark">Your Other Documents</a>
+                  
+                        </div>
+
+            </mat-grid-tile>
+
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+        
+            

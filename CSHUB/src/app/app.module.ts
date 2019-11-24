@@ -46,6 +46,7 @@ import {
    MatSidenavModule, 
    MatDialogModule,
    MatTableModule,
+   MatGridListModule
   } from '@angular/material';
   
 
@@ -117,6 +118,7 @@ import { TitleComponent } from './title/title.component';
       noteState: NotesReducer,
 
     }),
+    MatGridListModule,
     MatSnackBarModule,
     MatTableModule,
     MatTabsModule,

@@ -6,6 +6,8 @@ export interface Note{
     description: String,
     name: String,
     topic: String,
-    dateCreate: String,
-    dateModified: String
+    dateCreate?: Date,
+    dateModified?: Date,
+    dateCreatString: String,
+    dateModifiedString: String
 }

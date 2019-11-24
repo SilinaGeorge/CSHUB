@@ -3,6 +3,7 @@ import { ReturnedTopicNotes } from '../store/models/get-notes.model';
 import { Observable } from 'rxjs/internal/Observable';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-side-nav-menu',
@@ -11,6 +12,7 @@ import { AppState } from '../store/models/app-state.model';
 })
 export class SideNavMenuComponent implements OnInit {
   topicNotes$: Observable<ReturnedTopicNotes>;
+  selectedIndex: number = -1;
   
   constructor(private store: Store<AppState>) { }
 
@@ -20,9 +22,16 @@ export class SideNavMenuComponent implements OnInit {
 
   }
 
-  noteClick(note){
+  onNoteClick(note){
     console.log(note)
 
   }
+  onNewNoteClick(){
+    console.log('new note click')
+  }
+ 
+  select(index: number) {
+    this.selectedIndex = index;
+}
 
 }
