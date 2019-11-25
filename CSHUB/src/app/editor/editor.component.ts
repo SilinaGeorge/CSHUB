@@ -11,6 +11,7 @@ import { GetTopicNotesAction } from '../store/actions/notes.actions';
 import { Error } from '../store/models/error.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Topics} from '../topics'
+import { SelectedNote, SaveNote } from '../store/models/note.model';
 
 @Component({
   selector: 'app-editor',
@@ -18,14 +19,16 @@ import {Topics} from '../topics'
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-
+  userID: String
   topic:string;
-  public content='helli'
+  public content: String
   public editorConfig
   saveNoteFormGroup: FormGroup;
   subscription: Subscription;
   loading$: Observable<Boolean>;
   error$: Observable<Error>;
+  selectedNote: SelectedNote;
+  isCreateNewNote: boolean = true;
   getTopicNotes: GetTopicNotes = {userId: null, topic: "Python"}
 
   constructor(private fb: FormBuilder, 
@@ -33,7 +36,7 @@ export class EditorComponent implements OnInit {
     private store: Store<AppState>, 
     private actroute: ActivatedRoute,
     private router: Router) { 
-      
+
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
@@ -46,6 +49,8 @@ export class EditorComponent implements OnInit {
   }
   ngAfterViewInit(){
     this.sidenav.open();
+
+
   }
   ngOnInit() {
 
@@ -56,9 +61,23 @@ export class EditorComponent implements OnInit {
   });
 
          
-    this.subscription = this.store.select(store => store.user).subscribe(state =>   {
+    this.subscription = this.store.select(store => store).subscribe(state =>   {
       if (state){
-        this.getTopicNotes.userId = state.user._id;
+        this.userID = state.user.user._id
+        this.getTopicNotes.userId = this.userID;
+        if (state.noteState.selectedNote != null ){
+          this.isCreateNewNote= state.noteState.selectedNote.newNote
+          if (!state.noteState.selectedNote.newNote){
+          this.selectedNote = state.noteState.selectedNote
+          this.content = this.selectedNote.note.content
+          
+          }
+          else{
+            this.content = ''
+            this.selectedNote = null;
+          }
+
+        } 
       }
       }); 
 
@@ -92,7 +111,8 @@ export class EditorComponent implements OnInit {
           ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
           ['fontsize', ['fontname', 'fontsize', 'color']],
           ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
-          ['insert', ['table', 'picture', 'link', 'video', 'hr']]
+          ['insert', ['table', 'picture', 'link', 'video', 'hr']],
+          ['view', ['fullscreen', 'codeview']],
       ],
       fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
     }
@@ -103,11 +123,11 @@ export class EditorComponent implements OnInit {
 
 
   openModal(){
-    var spotifypopup = document.getElementById("saveNote");
-   if (spotifypopup.style.display === "none") {
-     spotifypopup.style.display = "block";
+    var saveNotepopup = document.getElementById("saveNote");
+   if (saveNotepopup.style.display === "none") {
+    saveNotepopup.style.display = "block";
    } else {
-     spotifypopup.style.display = "none";
+    saveNotepopup.style.display = "none";
    } 
   }
 
@@ -118,9 +138,39 @@ export class EditorComponent implements OnInit {
  }
  onCreateNewSave(){
   
-   console.log(this.content)
+  console.log(this.content, this.name, this.description)
+  this.name.value;
  }
+
+ onSaveNoteClick(){
+  console.log(this.content, this.name, this.description)
+/*   let noteToSave: SaveNote ={
+    userId: this.userID,
+    content: this.content,
+    
+  } */
+ }
+
+ get name() {
+  return this.saveNoteFormGroup.get('name');
+}
+
+get description() {
+  return this.saveNoteFormGroup.get('description');
+}
  
+setData(){
+  if (this.selectedNote && this.selectedNote.note){
+    this.name.setValue(this.selectedNote.note.name);
+    this.description.setValue(this.selectedNote.note.description);    
+  }
+  else{
+    this.name.setValue("");
+    this.description.setValue("")
+
+  }
+
+}
 
 
 }

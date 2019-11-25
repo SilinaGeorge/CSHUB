@@ -1,21 +1,43 @@
-
-
-    <textarea id="note" [ngxSummernote]='editorConfig' [(ngModel)]="content"></textarea>
-
-
-
+<textarea id="note" [ngxSummernote]='editorConfig' [(ngModel)]="content"></textarea>
 
 <div style="margin-left: 46%">
-<button  mat-raised-button (click)="openModal()"
-                    class="btn btn-primary shadow-sm">Create New
-                    <!--<app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>-->
-                </button>
+    <button mat-raised-button (click)="openModal();setData()" class="btn btn-primary shadow-sm">Create New
+    </button>
 </div>
 
 
+<!--  <div *ngIf="isCreateNewNote; then thenBlock else elseBlock"></div>
+
+    <ng-template #thenBlock>
+        <div style="margin-left: 46%" *ngIf='isCreateNewNote'>
+            <button  mat-raised-button (click)="openModal()"
+                                class="btn btn-primary shadow-sm">Create New
+            </button>
+            </div>
+        </ng-template>
 
 
-<div  id="saveNote" class="modal" style="display:none; background: rgba(0,0,0,0.6);" role="dialog" >
+    <ng-template #elseBlock>
+            <div style="margin-left: 46%" *ngIf='!isCreateNewNote' >
+                    <button  mat-raised-button (click)="onSaveNoteClick()"
+                            class="btn btn-primary shadow-sm">Save Note
+                                      
+                    </button>
+                    <button  mat-raised-button (click)="onDeleteNoteClick()"
+                            class="btn btn-primary shadow-sm">Delete Note
+                                      
+                    </button>
+            </div></ng-template>
+
+ -->
+
+
+
+
+
+
+
+<div id="saveNote" class="modal" style="display:none; background: rgba(0,0,0,0.6);" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -25,39 +47,37 @@
                 </button>
             </div>
             <form [formGroup]="saveNoteFormGroup" (ngSubmit)="onCreateNewSave()">
-            <div class="modal-body">
+                <div class="modal-body">
 
-                    
-                            <mat-form-field style="width: 90%!important">
-                                <input matInput type="text" placeholder="Name" autocomplete="off" maxlength="50"
-                                    formControlName="name">
-                            </mat-form-field>
-                            <br>
 
-                            <mat-form-field style="width: 90%!important">
-                                    <textarea style='resize: none;' matInput type="text" placeholder="Description" rows='4' maxlength="210"  formControlName="description"></textarea>
-                                </mat-form-field>
-                           
+                    <mat-form-field style="width: 90%!important">                     
+                            <input matInput type="text" placeholder="Name" autocomplete="off" maxlength="50"
+                                formControlName="name">
+                    </mat-form-field>
+                    <br>
 
-                
+                    <mat-form-field style="width: 90%!important">
 
-            </div>
-            <div class="modal-footer text-center">
-               
+                        <textarea style='resize: none;' matInput type="text" placeholder="Description" rows='4'
+                        maxlength="210" formControlName="description"></textarea>
+
+                    </mat-form-field>
+
+
+
+
+                </div>
+                <div class="modal-footer text-center">
+
                     <button type="submit" [disabled]="saveNoteFormGroup.invalid" class="btn btn-primary mr-auto">Save
-                            <!-- <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner> -->
-                        </button>
-                <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
-    
-                
-            </div>
-        </form>
-        
+                        <!-- <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner> -->
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+
+
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
-
-
-
-
-

@@ -38,7 +38,7 @@ const isAuthorizedBody = function(req, res, next) {
 router.post("/:id",isAuthenticated, isAuthorized, [
     check('name', 'name is invalid').trim().escape().isLength({ max: 50 }).not().isEmpty(),
     check('description', 'description is invalid').trim().escape().isLength({ max: 210 }).not().isEmpty(),
-    check('content', 'invalid content').escape().not().isEmpty(),
+    check('content', 'invalid content').not().isEmpty(),
     check('topic', 'invalid topic').trim().escape().isLength({ max: 50 }).not().isEmpty(),
     param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
   ], (req, res, next) => {
@@ -57,8 +57,6 @@ router.post("/:id",isAuthenticated, isAuthorized, [
         name: req.body.name,
         topic: req.body.topic,
         dateCreate: date,
-        dateModified: date,
-        dateCreateString:  moment(date).format(("D/M/YYYY h:mm:ss a")),
         dateModifiedString: moment(date).format(("D/M/YYYY h:mm:ss a"))
 
     })
@@ -74,7 +72,7 @@ router.post("/:id",isAuthenticated, isAuthorized, [
                 description: result.description,
                 name: result.name,
                 topic: result.topic,
-                dateCreateString: result.dateCreateString,
+                dateCreate: result.dateCreate,
                 dateModifiedString: result.dateCreateString
     
               });
@@ -129,7 +127,7 @@ router.delete("/:id",isAuthenticated,isAuthorizedBody, [
     const topic = req.query.topic;
     let query = (topic !=null) ? {userId: userId,  topic: topic} : {userId: userId};
     
-    Notes.find(query).sort({dateModified: -1}).exec(function (err, result) {
+    Notes.find(query).sort({dateCreate: -1}).exec(function (err, result) {
       if (err) return res.status(500).json({ msgs: ["Server Error"] });
       if (!result) return res.status(404).json({ msgs: ["Invalid user"] });
   
@@ -148,7 +146,7 @@ router.delete("/:id",isAuthenticated,isAuthorizedBody, [
       check('userId', 'userId is invalid').isAlphanumeric().trim().escape().not().isEmpty(),
       check('name', 'name is invalid').trim().escape().isLength({ max: 50 }).not().isEmpty(),
       check('description', 'description is invalid').trim().escape().isLength({ max: 210 }).not().isEmpty(),
-      check('content', 'invalid content').escape().not().isEmpty(),
+      check('content', 'invalid content').not().isEmpty(),
     ], (req, res, next) => {
   
     
@@ -167,7 +165,6 @@ router.delete("/:id",isAuthenticated,isAuthorizedBody, [
         name: req.body.name,
         content: req.body.content,
         description: req.body.description,
-        dateModified: date,
         dateModifiedString: moment(date).format(("D/M/YYYY h:mm:ss a"))
       }
       

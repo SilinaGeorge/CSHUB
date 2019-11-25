@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { AddNote } from '../models/add-note.model';
 import { GetAllUserNotes, GetTopicNotes, ReturnedTopicNotes } from '../models/get-notes.model';
-import { Note } from '../models/note.model';
+import { Note, SelectedNote } from '../models/note.model';
 import { Error } from '../models/error.model';
 
 export enum NotesActionTypes{
@@ -12,6 +12,8 @@ export enum NotesActionTypes{
     GET_TOPIC_NOTES = '[NOTE] Get Topic Notes',
     GET_TOPIC_NOTES_SUCCESS = '[NOTE] Get Topic Notes Success',
     GET_TOPIC_NOTES_ERROR = '[NOTE] Get Topic Notes Error',
+
+    SELECT_NOTE = '[NOTE] Select Note'
 }
 
 export class AddNoteAction implements Action{
@@ -29,17 +31,22 @@ export class AddNoteErrorAction implements Action{
 }
 
     export class GetTopicNotesAction implements Action{
-        readonly type = NotesActionTypes.GET_TOPIC_NOTES;
-        constructor(public payload: GetTopicNotes){};
-    }
-    
-    export class GetTopicNotesSuccessAction implements Action{
-        readonly type = NotesActionTypes.GET_TOPIC_NOTES_SUCCESS;
-        constructor(public payload: ReturnedTopicNotes){};
-    }
-    export class GetTopicNotesErrorAction implements Action{
-        readonly type = NotesActionTypes.GET_TOPIC_NOTES_ERROR;
-        constructor(public payload: Error){};
+    readonly type = NotesActionTypes.GET_TOPIC_NOTES;
+    constructor(public payload: GetTopicNotes){};
+}
+
+export class GetTopicNotesSuccessAction implements Action{
+    readonly type = NotesActionTypes.GET_TOPIC_NOTES_SUCCESS;
+    constructor(public payload: ReturnedTopicNotes){};
+}
+export class GetTopicNotesErrorAction implements Action{
+    readonly type = NotesActionTypes.GET_TOPIC_NOTES_ERROR;
+    constructor(public payload: Error){};
+}
+
+export class SelectNoteAction implements Action{
+    readonly type = NotesActionTypes.SELECT_NOTE;
+    constructor(public payload: SelectedNote){};
 }
 
 export type NotesAction = 
@@ -48,5 +55,7 @@ AddNoteSuccessAction |
 AddNoteErrorAction | 
 GetTopicNotesAction |
 GetTopicNotesSuccessAction |
-GetTopicNotesErrorAction
+GetTopicNotesErrorAction |
+SelectNoteAction
+
 ;
