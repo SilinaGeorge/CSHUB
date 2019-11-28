@@ -1,83 +1,109 @@
-<textarea id="note" [ngxSummernote]='editorConfig' [(ngModel)]="content"></textarea>
+<mat-drawer-container style="z-index:0!important;height:90vh">
 
-<div style="margin-left: 46%">
-    <button mat-raised-button (click)="openModal();setData()" class="btn btn-primary shadow-sm">Create New
-    </button>
-</div>
+    <!-- side menu -->
+
+    <mat-drawer #sidenav mode="side" opened='true' >
+        <div style="overflow-y:auto; height:100%;width:25vw; word-wrap: break-word;" class="bg-dark">
+            <ul class="list-group">
 
 
-<!--  <div *ngIf="isCreateNewNote; then thenBlock else elseBlock"></div>
+                <div *ngIf="topicNotes">
+                    <li class="list-group-item list-group-item-action flex-column align-items-start disabled">
 
-    <ng-template #thenBlock>
-        <div style="margin-left: 46%" *ngIf='isCreateNewNote'>
-            <button  mat-raised-button (click)="openModal()"
-                                class="btn btn-primary shadow-sm">Create New
+                        <h4 class="mb-1">{{topic}} Notes</h4>
+                    </li>
+                    <li class="list-group-item list-group-item-action flex-column align-items-start"
+                        (click)="onNewNoteClick()"
+                        [ngClass]="{'active': selectedNoteId === '-1' || topicNotes.notes.length == 0}">
+
+                        <h5>Create New Note</h5>
+                    </li>
+
+                    <li (click)="onNoteClick(note)" *ngFor="let note of topicNotes.notes; let i=index" 
+                        [ngClass]="{'active': selectedNoteId === note._id}" 
+                        class="list-group-item list-group-item-action flex-column align-items-start">
+                      
+                        <!--   <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1">{{notse.name}}</h5>
+                                                        <small maxlength="10" class="text-muted">{{note.dateModified}}</small>
+                                                </div> -->
+                        <div class="d-flex justify-content-end">
+                            <small class="text-muted">{{note.dateModifiedString}}</small>
+
+                        </div>
+
+                        <h5 class="mb-1">{{note.name}}</h5>
+                        <h5 class="mb-1">{{note._id}}</h5>
+
+                        <p class="mb-1">{{note.description}}</p>
+
+                    </li>
+                </div>
+            </ul>
+        </div>
+
+
+
+
+    </mat-drawer>
+
+
+    <mat-drawer-content>
+
+
+
+        <textarea id="note" [ngxSummernote]='editorConfig' [(ngModel)]="content"></textarea>
+
+        <div style="margin-left: 46%">
+            <button mat-raised-button (click)="openModal();setData()" class="btn btn-primary shadow-sm">Create New
             </button>
-            </div>
-        </ng-template>
+        </div>
 
-
-    <ng-template #elseBlock>
-            <div style="margin-left: 46%" *ngIf='!isCreateNewNote' >
-                    <button  mat-raised-button (click)="onSaveNoteClick()"
-                            class="btn btn-primary shadow-sm">Save Note
-                                      
-                    </button>
-                    <button  mat-raised-button (click)="onDeleteNoteClick()"
-                            class="btn btn-primary shadow-sm">Delete Note
-                                      
-                    </button>
-            </div></ng-template>
-
- -->
-
-
-
-
-
-
+    </mat-drawer-content>
+</mat-drawer-container>
 
 <div id="saveNote" class="modal" style="display:none; background: rgba(0,0,0,0.6);" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Save Note</h5>
-                <button type="button" class="close" (click)="close()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form [formGroup]="saveNoteFormGroup" (ngSubmit)="onCreateNewSave()">
-                <div class="modal-body">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Save Note</h5>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="saveNoteFormGroup" (ngSubmit)="onCreateNewSave()">
+                    <div class="modal-body">
 
 
-                    <mat-form-field style="width: 90%!important">                     
+                        <mat-form-field style="width: 90%!important">
                             <input matInput type="text" placeholder="Name" autocomplete="off" maxlength="50"
                                 formControlName="name">
-                    </mat-form-field>
-                    <br>
+                        </mat-form-field>
+                        <br>
 
-                    <mat-form-field style="width: 90%!important">
+                        <mat-form-field style="width: 90%!important">
 
-                        <textarea style='resize: none;' matInput type="text" placeholder="Description" rows='4'
-                        maxlength="210" formControlName="description"></textarea>
+                            <textarea style='resize: none;' matInput type="text" placeholder="Description" rows='4'
+                                maxlength="210" formControlName="description"></textarea>
 
-                    </mat-form-field>
-
-
+                        </mat-form-field>
 
 
-                </div>
-                <div class="modal-footer text-center">
-
-                    <button type="submit" [disabled]="saveNoteFormGroup.invalid" class="btn btn-primary mr-auto">Save
-                        <!-- <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner> -->
-                    </button>
-                    <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
 
 
-                </div>
-            </form>
+                    </div>
+                    <div class="modal-footer text-center">
 
+                        <button type="submit" [disabled]="saveNoteFormGroup.invalid"
+                            class="btn btn-primary mr-auto">Save
+                            <!-- <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner> -->
+                        </button>
+                        <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+
+
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
-</div>

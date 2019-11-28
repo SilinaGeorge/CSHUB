@@ -21,9 +21,9 @@ export class SideNavToggleService {
 		return this.sidenav.close();
 	}
 
-/* 	public toggle(): void {
+ 	public toggle(): void {
 		this.sidenav.toggle();
-	} */
+	} 
 }
 
 

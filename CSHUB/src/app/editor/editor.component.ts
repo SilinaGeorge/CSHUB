@@ -6,12 +6,15 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
-import { GetTopicNotes } from '../store/models/get-notes.model';
+import { GetTopicNotes, ReturnedTopicNotes } from '../store/models/get-notes.model';
 import { GetTopicNotesAction } from '../store/actions/notes.actions';
 import { Error } from '../store/models/error.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Topics} from '../topics'
-import { SelectedNote, SaveNote } from '../store/models/note.model';
+import { SelectedNote, SaveNote, Note } from '../store/models/note.model';
+import { MatDrawer } from '@angular/material';
+
+
 
 @Component({
   selector: 'app-editor',
@@ -27,12 +30,18 @@ export class EditorComponent implements OnInit {
   subscription: Subscription;
   loading$: Observable<Boolean>;
   error$: Observable<Error>;
-  selectedNote: SelectedNote;
+  selectedNote: Note;
   isCreateNewNote: boolean = true;
-  getTopicNotes: GetTopicNotes = {userId: null, topic: "Python"}
+  getTopicNotes: GetTopicNotes = {userId: null, topic: null}
+  topicNotes: ReturnedTopicNotes;
+  selectedNoteId: String = "-1";
+  initialSelectedNoteId: String = "";
+
+  
+  @ViewChild('sidenav', {static: true}) public sidenav: MatDrawer;
 
   constructor(private fb: FormBuilder, 
-    private sidenav: SideNavToggleService, 
+    private sideNavService: SideNavToggleService, 
     private store: Store<AppState>, 
     private actroute: ActivatedRoute,
     private router: Router) { 
@@ -44,32 +53,62 @@ export class EditorComponent implements OnInit {
 
     let hamburgerIcon = document.getElementById("hamburgerIcon");
     hamburgerIcon.style.display = "none";
-    this.sidenav.close();
+  //  this.sidenav.close();
 
   }
   ngAfterViewInit(){
-    this.sidenav.open();
+   // this.sidenav.open();
 
 
   }
   ngOnInit() {
+    this.sideNavService.setSidenav(this.sidenav);
 
      this.actroute.queryParams.subscribe(params => {
       this.topic = params.topic;
+     
+      if (params.noteId) {
+        console.log('heerrrreee')
+        this.initialSelectedNoteId = params.noteId
+        this.selectedNoteId = this.initialSelectedNoteId
+
+      }
+      
       if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/login-home'])
       else this.getTopicNotes.topic = this.topic
   });
-
-         
+    
     this.subscription = this.store.select(store => store).subscribe(state =>   {
       if (state){
         this.userID = state.user.user._id
-        this.getTopicNotes.userId = this.userID;
+         this.getTopicNotes.userId = this.userID;
+         this.topicNotes = state.noteState.returnedTopicNotes
+
+  
+         if (this.initialSelectedNoteId){
+          
+          
+          for(let i=0; i< this.topicNotes.notes.length; i++) {
+             if (this.topicNotes.notes[i]._id == this.initialSelectedNoteId) {
+               this.selectedNote = this.topicNotes.notes[i];
+               this.content = this.topicNotes.notes[i].content;
+               this.initialSelectedNoteId = null;
+               break;
+             }
+
+           };
+           if (this.selectedNote == null){
+            this.selectedNoteId = "-1"
+            this.initialSelectedNoteId = null;
+
+           }
+         }
+         /*
         if (state.noteState.selectedNote != null ){
           this.isCreateNewNote= state.noteState.selectedNote.newNote
           if (!state.noteState.selectedNote.newNote){
           this.selectedNote = state.noteState.selectedNote
-          this.content = this.selectedNote.note.content
+          this.content = this.selectedNote.content
           
           }
           else{
@@ -77,11 +116,12 @@ export class EditorComponent implements OnInit {
             this.selectedNote = null;
           }
 
-        } 
+        } */ 
       }
       }); 
 
     this.store.dispatch(new GetTopicNotesAction(this.getTopicNotes));
+    //this.topicNotes$ = this.store.select(store => store.noteState.returnedTopicNotes)
     this.error$ = this.store.select(store => store.noteState.getTopicNotesError)
     
 
@@ -113,12 +153,15 @@ export class EditorComponent implements OnInit {
           ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
           ['insert', ['table', 'picture', 'link', 'video', 'hr']],
           ['view', ['fullscreen', 'codeview']],
+
       ],
+
       fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
     }
     
 
   };
+ 
 
 
 
@@ -160,9 +203,9 @@ get description() {
 }
  
 setData(){
-  if (this.selectedNote && this.selectedNote.note){
-    this.name.setValue(this.selectedNote.note.name);
-    this.description.setValue(this.selectedNote.note.description);    
+  if (this.selectedNote){
+    this.name.setValue(this.selectedNote.name);
+    this.description.setValue(this.selectedNote.description);    
   }
   else{
     this.name.setValue("");
@@ -170,6 +213,36 @@ setData(){
 
   }
 
+}
+
+onNoteClick(note){
+  console.log(note)
+  this.selectedNote = note;
+  this.content = note.content;
+  this.selectedNoteId = note._id
+  this.initialSelectedNoteId = null;
+
+
+}
+onNewNoteClick(){
+  console.log('new note click')
+  this.selectedNote = null;
+  this.content = "";
+  this.selectedNoteId = '-1';
+  this.initialSelectedNoteId = null;
+
+}
+
+/* select(index: number) {
+  this.selectedNoteId = index;
+  this.initialSelectedNoteId = null;
+} */
+initialNote(note){
+  console.log('intial note hererere')
+  this.selectedNote = note;
+  this.content = note.content;
+  this.initialSelectedNoteId = "";
+  //this.selectedNoteId = note._id
 }
 
 

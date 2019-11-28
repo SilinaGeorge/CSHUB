@@ -1,6 +1,6 @@
 export interface Note{
     msg?: String,
-    noteId: String,
+    _id: String,
     userId: String,
     content: String,
     description: String,
@@ -17,7 +17,7 @@ export interface SelectedNote{
 
 export interface SaveNote{
     userId: String,
-    noteId: String,
+    _id: String,
     description: String,
     name: String,
     content: String

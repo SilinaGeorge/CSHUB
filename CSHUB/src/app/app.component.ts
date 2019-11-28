@@ -1,9 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material';
-
+import { Component, OnInit } from '@angular/core';
 import { SideNavToggleService } from './services/side-nav-toggle.service';
-
-
 
 
 @Component({
@@ -17,8 +13,6 @@ export class AppComponent implements OnInit  {
   collapsed = true;
   Title: string = "CS HUB";
 
-
-  @ViewChild('sidenav', {static: true}) public sidenav: MatDrawer;
  
 
   constructor(private sideNavService: SideNavToggleService) { 
@@ -26,11 +20,14 @@ export class AppComponent implements OnInit  {
 
   ngOnInit() { 
 
-    this.sideNavService.setSidenav(this.sidenav);
+    
 
   } 
 
-   public _opened: boolean = false;
+  clickSideBar() { 
+    this.sideNavService.toggle();
+  }
+
  
 
 
