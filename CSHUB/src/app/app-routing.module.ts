@@ -8,6 +8,7 @@ import { LoginHomeComponent } from './login-home/login-home.component';
 import { EditorComponent} from './editor/editor.component';
 import { SocialRedirectComponent } from './social-redirect/social-redirect.component'
 import { DocViewerComponent } from './doc-viewer/doc-viewer.component'
+import {BadRouteComponent} from './bad-route/bad-route.component'
 
 
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path:'editor', component: EditorComponent},
   { path:'social-redirect/:id', component: SocialRedirectComponent},
   { path:'doc-viewer', component: DocViewerComponent},
+  { path:'**', component: BadRouteComponent},
 ];
 
 @NgModule({

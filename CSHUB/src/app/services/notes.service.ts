@@ -15,7 +15,7 @@ export class NotesService {
 
   AddNote(addNoteData: AddNote) {
  
-    return this.http.post<Note>(`${this.URL}/notes/${addNoteData.userId}`, addNoteData);
+    return this.http.post<Note>(`${this.URL}/${addNoteData.userId}`, addNoteData);
   };
 
   GetTopicNotes(getTopicNotesData: GetTopicNotes) {

@@ -37,9 +37,9 @@ export function NotesReducer(state: NotesState = intialState, action: NotesActio
         case NotesActionTypes.ADD_NOTE:
             return { ...state, noteToBeAdded: action.payload, loading: true };
         case NotesActionTypes.ADD_NOTE_SUCCESS:
-            let prevAllNotes = state.allNotes
-            prevAllNotes.push(action.payload)
-            return { ...state, addedNote: action.payload, allNotes:prevAllNotes, loading: false };
+            let prevTopicNotes = state.returnedTopicNotes
+            prevTopicNotes.notes.unshift(action.payload)
+            return { ...state, addedNote: action.payload, returnedTopicNotes:prevTopicNotes, loading: false };
         case NotesActionTypes.ADD_NOTE_ERROR:
             return { ...state, addNoteError: action.payload, loading: false };
 

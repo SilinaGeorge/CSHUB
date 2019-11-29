@@ -17,7 +17,6 @@ export interface SelectedNote{
 
 export interface SaveNote{
     userId: String,
-    _id: String,
     description: String,
     name: String,
     content: String

@@ -7,12 +7,13 @@ import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { GetTopicNotes, ReturnedTopicNotes } from '../store/models/get-notes.model';
-import { GetTopicNotesAction } from '../store/actions/notes.actions';
+import { GetTopicNotesAction, SelectNoteAction, AddNoteAction } from '../store/actions/notes.actions';
 import { Error } from '../store/models/error.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Topics} from '../topics'
 import { SelectedNote, SaveNote, Note } from '../store/models/note.model';
 import { MatDrawer } from '@angular/material';
+import { AddNote } from '../store/models/add-note.model';
 
 
 
@@ -36,6 +37,8 @@ export class EditorComponent implements OnInit {
   topicNotes: ReturnedTopicNotes;
   selectedNoteId: String = "-1";
   initialSelectedNoteId: String = "";
+  selectedIndex: number = -1;
+  addNewNote: AddNote ={userId: null,description: null,name: null,content: null, topic:null};
 
   
   @ViewChild('sidenav', {static: true}) public sidenav: MatDrawer;
@@ -85,13 +88,14 @@ export class EditorComponent implements OnInit {
          this.topicNotes = state.noteState.returnedTopicNotes
 
   
-         if (this.initialSelectedNoteId){
+         if (this.initialSelectedNoteId && this.topicNotes){
           
           
           for(let i=0; i< this.topicNotes.notes.length; i++) {
              if (this.topicNotes.notes[i]._id == this.initialSelectedNoteId) {
                this.selectedNote = this.topicNotes.notes[i];
                this.content = this.topicNotes.notes[i].content;
+               this.selectedIndex = i;
                this.initialSelectedNoteId = null;
                break;
              }
@@ -100,6 +104,7 @@ export class EditorComponent implements OnInit {
            if (this.selectedNote == null){
             this.selectedNoteId = "-1"
             this.initialSelectedNoteId = null;
+            this.selectedIndex = -1;
 
            }
          }
@@ -166,6 +171,8 @@ export class EditorComponent implements OnInit {
 
 
   openModal(){
+    if (this.selectedNote)
+    console.log(this.selectedNote._id)
     var saveNotepopup = document.getElementById("saveNote");
    if (saveNotepopup.style.display === "none") {
     saveNotepopup.style.display = "block";
@@ -215,12 +222,13 @@ setData(){
 
 }
 
-onNoteClick(note){
+onNoteClick(note, i){
   console.log(note)
   this.selectedNote = note;
   this.content = note.content;
   this.selectedNoteId = note._id
   this.initialSelectedNoteId = null;
+  this.selectedIndex = i;
 
 
 }
@@ -230,6 +238,7 @@ onNewNoteClick(){
   this.content = "";
   this.selectedNoteId = '-1';
   this.initialSelectedNoteId = null;
+  this.selectedIndex = -1;
 
 }
 
@@ -244,6 +253,50 @@ initialNote(note){
   this.initialSelectedNoteId = "";
   //this.selectedNoteId = note._id
 }
+onModalSave(){
+  if (this.selectedNote){
+    
+
+  }
+  else{
+
+    this.addNewNote ={
+      userId: this.userID,
+      description: this.description.value,
+      name: this.name.value,
+      content: this.content,
+      topic: this.topic
+    }
+    console.log('adding new note:' + this.addNewNote.description)
+      this.store.dispatch(new AddNoteAction(this.addNewNote));
+      
+      try{
+        this.selectedIndex = 0
+        this.selectedNote = this.topicNotes[this.selectedIndex]
+      }
+      catch(ex){
+        console.log(ex)
+        this.selectedIndex = -1
+      }
+      
+
+ /*      this.store.select(store => store.noteState.addedNote).subscribe(n =>   {
+        if (n){
+          this.selectedIndex = 0
+          this.selectedNote = n
+
+        }
+        });  */
+  
+  }
+  this.close()
+    
+
+  }
+
+  onDeleteClick(){
+
+  }
 
 
 }

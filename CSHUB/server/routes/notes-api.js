@@ -37,8 +37,8 @@ const isAuthorizedBody = function(req, res, next) {
 // add a new note for a user
 router.post("/:id",isAuthenticated, isAuthorized, [
     check('name', 'name is invalid').trim().escape().isLength({ max: 50 }).not().isEmpty(),
-    check('description', 'description is invalid').trim().escape().isLength({ max: 210 }).not().isEmpty(),
-    check('content', 'invalid content').not().isEmpty(),
+    check('description', 'description is invalid').trim().escape().isLength({ max: 210 }),
+    check('content', 'invalid content'),
     check('topic', 'invalid topic').trim().escape().isLength({ max: 50 }).not().isEmpty(),
     param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
   ], (req, res, next) => {
@@ -66,7 +66,7 @@ router.post("/:id",isAuthenticated, isAuthorized, [
         if (result){
             return res.status(200).json({
                 msg: "Success",
-                noteId: result._id,
+                _id: result._id,
                 userId: result.userId,
                 content: result.content,
                 description: result.description,
@@ -145,8 +145,8 @@ router.delete("/:id",isAuthenticated,isAuthorizedBody, [
       param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty(),
       check('userId', 'userId is invalid').isAlphanumeric().trim().escape().not().isEmpty(),
       check('name', 'name is invalid').trim().escape().isLength({ max: 50 }).not().isEmpty(),
-      check('description', 'description is invalid').trim().escape().isLength({ max: 210 }).not().isEmpty(),
-      check('content', 'invalid content').not().isEmpty(),
+      check('description', 'description is invalid').trim().escape().isLength({ max: 210 }),
+      check('content', 'invalid content'),
     ], (req, res, next) => {
   
     
