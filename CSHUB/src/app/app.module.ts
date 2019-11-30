@@ -78,6 +78,7 @@ import { GoogleSearchComponent } from './google-search/google-search.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { TitleComponent } from './title/title.component';
 import { BadRouteComponent } from './bad-route/bad-route.component';
+import { PythonInterComponent } from './python-inter/python-inter.component';
 
 
 @NgModule({
@@ -104,6 +105,7 @@ import { BadRouteComponent } from './bad-route/bad-route.component';
     DigitOnlyDirective,
     TitleComponent,
     BadRouteComponent,
+    PythonInterComponent,
   ],
   imports: [
     NgxSummernoteModule,

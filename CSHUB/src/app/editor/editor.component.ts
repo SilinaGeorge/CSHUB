@@ -7,11 +7,11 @@ import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { GetTopicNotes, ReturnedTopicNotes } from '../store/models/get-notes.model';
-import { GetTopicNotesAction, SelectNoteAction, AddNoteAction } from '../store/actions/notes.actions';
+import { GetTopicNotesAction, AddNoteAction, DeleteNoteAction, updateNoteAction } from '../store/actions/notes.actions';
 import { Error } from '../store/models/error.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Topics} from '../topics'
-import { SelectedNote, SaveNote, Note } from '../store/models/note.model';
+import { SelectedNote, UpdateNote, Note, DeleteNote } from '../store/models/note.model';
 import { MatDrawer } from '@angular/material';
 import { AddNote } from '../store/models/add-note.model';
 
@@ -35,10 +35,11 @@ export class EditorComponent implements OnInit {
   isCreateNewNote: boolean = true;
   getTopicNotes: GetTopicNotes = {userId: null, topic: null}
   topicNotes: ReturnedTopicNotes;
-  selectedNoteId: String = "-1";
+  //selectedNoteId: String = "-1";
   initialSelectedNoteId: String = "";
   selectedIndex: number = -1;
   addNewNote: AddNote ={userId: null,description: null,name: null,content: null, topic:null};
+  deleteNote: DeleteNote = {userId: null, _id:null}
 
   
   @ViewChild('sidenav', {static: true}) public sidenav: MatDrawer;
@@ -71,9 +72,9 @@ export class EditorComponent implements OnInit {
       this.topic = params.topic;
      
       if (params.noteId) {
-        console.log('heerrrreee')
+
         this.initialSelectedNoteId = params.noteId
-        this.selectedNoteId = this.initialSelectedNoteId
+        //this.selectedNoteId = this.initialSelectedNoteId
 
       }
       
@@ -102,26 +103,26 @@ export class EditorComponent implements OnInit {
 
            };
            if (this.selectedNote == null){
-            this.selectedNoteId = "-1"
+            //this.selectedNoteId = "-1"
             this.initialSelectedNoteId = null;
             this.selectedIndex = -1;
 
            }
          }
-         /*
-        if (state.noteState.selectedNote != null ){
-          this.isCreateNewNote= state.noteState.selectedNote.newNote
-          if (!state.noteState.selectedNote.newNote){
-          this.selectedNote = state.noteState.selectedNote
-          this.content = this.selectedNote.content
-          
-          }
-          else{
-            this.content = ''
-            this.selectedNote = null;
-          }
+          else if (this.selectedIndex != -1){
+          this.selectedNote = this.topicNotes.notes[this.selectedIndex]
+          this.content = this.selectedNote.content;
+          //this.selectedNoteId = this.selectedNote._id
 
-        } */ 
+         }  
+          else{
+          //this.selectedNoteId = "-1"
+          //this.selectedIndex = -1;
+          this.selectedNote = null
+          this.content = "";
+
+         } 
+         
       }
       }); 
 
@@ -171,8 +172,8 @@ export class EditorComponent implements OnInit {
 
 
   openModal(){
-    if (this.selectedNote)
-    console.log(this.selectedNote._id)
+    //if (this.selectedNote)
+
     var saveNotepopup = document.getElementById("saveNote");
    if (saveNotepopup.style.display === "none") {
     saveNotepopup.style.display = "block";
@@ -186,20 +187,7 @@ export class EditorComponent implements OnInit {
     popup.style.display = "none"; 
    
  }
- onCreateNewSave(){
-  
-  console.log(this.content, this.name, this.description)
-  this.name.value;
- }
 
- onSaveNoteClick(){
-  console.log(this.content, this.name, this.description)
-/*   let noteToSave: SaveNote ={
-    userId: this.userID,
-    content: this.content,
-    
-  } */
- }
 
  get name() {
   return this.saveNoteFormGroup.get('name');
@@ -223,38 +211,34 @@ setData(){
 }
 
 onNoteClick(note, i){
-  console.log(note)
-  this.selectedNote = note;
+   this.selectedNote = note;
   this.content = note.content;
-  this.selectedNoteId = note._id
-  this.initialSelectedNoteId = null;
+  //this.selectedNoteId = note._id
+  //this.initialSelectedNoteId = null; 
   this.selectedIndex = i;
 
 
 }
 onNewNoteClick(){
-  console.log('new note click')
-  this.selectedNote = null;
+   this.selectedNote = null;
   this.content = "";
-  this.selectedNoteId = '-1';
-  this.initialSelectedNoteId = null;
+  //this.selectedNoteId = '-1';
+  //this.initialSelectedNoteId = null;
   this.selectedIndex = -1;
 
 }
 
-/* select(index: number) {
-  this.selectedNoteId = index;
-  this.initialSelectedNoteId = null;
-} */
-initialNote(note){
-  console.log('intial note hererere')
-  this.selectedNote = note;
-  this.content = note.content;
-  this.initialSelectedNoteId = "";
-  //this.selectedNoteId = note._id
-}
 onModalSave(){
   if (this.selectedNote){
+     let updateNote: UpdateNote ={
+      _id:this.selectedNote._id,
+      userId: this.userID,
+      description: this.description.value,
+      name: this.name.value,
+      content: this.content
+    }
+    console.log(updateNote)
+    this.store.dispatch(new updateNoteAction(updateNote));
     
 
   }
@@ -267,36 +251,27 @@ onModalSave(){
       content: this.content,
       topic: this.topic
     }
-    console.log('adding new note:' + this.addNewNote.description)
+
       this.store.dispatch(new AddNoteAction(this.addNewNote));
-      
-      try{
-        this.selectedIndex = 0
-        this.selectedNote = this.topicNotes[this.selectedIndex]
-      }
-      catch(ex){
-        console.log(ex)
-        this.selectedIndex = -1
-      }
-      
-
- /*      this.store.select(store => store.noteState.addedNote).subscribe(n =>   {
-        if (n){
-          this.selectedIndex = 0
-          this.selectedNote = n
-
-        }
-        });  */
-  
+      this.selectedIndex = 0
   }
   this.close()
     
-
   }
 
   onDeleteClick(){
+    if(confirm("Delete "+ this.selectedNote.name + "?")) {
+    this.deleteNote ={userId:this.userID, _id: this.selectedNote._id}
+    
+    this.store.dispatch(new DeleteNoteAction(this.deleteNote));
+ 
+      this.selectedIndex = this.selectedIndex - 1
 
-  }
+      this.selectedIndex = -1
+    }
+
+  
+}
 
 
 }

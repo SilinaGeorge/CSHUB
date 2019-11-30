@@ -15,10 +15,16 @@ export interface SelectedNote{
     newNote: boolean
 }
 
-export interface SaveNote{
+export interface UpdateNote{
+    _id:String
     userId: String,
     description: String,
     name: String,
     content: String
 
+}
+
+export interface DeleteNote{
+    _id: String,
+    userId: String
 }

@@ -83,8 +83,8 @@ router.post("/:id",isAuthenticated, isAuthorized, [
   });
 
 // delete a note for a user
-router.delete("/:id",isAuthenticated,isAuthorizedBody, [
-    check('userId', 'userId is invalid').isAlphanumeric().trim().escape().not().isEmpty(),
+router.delete("/:noteId/:id",isAuthenticated,isAuthorized, [
+    param('noteId', 'note id is invalid').isAlphanumeric().trim().escape().not().isEmpty(),
     param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
   ], (req, res, next) => {
 
@@ -96,8 +96,8 @@ router.delete("/:id",isAuthenticated,isAuthorizedBody, [
       return res.status(400).json({ msgs: result.array() });
     }
   
-    const noteId = req.params.id;
-    const userId = req.body.userId;
+    const noteId = req.params.noteId;
+    const userId = req.params.id;
     
     Notes.findOneAndDelete({_id: noteId, userId:userId}).exec(function (err, result) {
       if (err) return res.status(500).json({ msgs: ["Server Error"] });
@@ -105,10 +105,17 @@ router.delete("/:id",isAuthenticated,isAuthorizedBody, [
   
       return res.status(200).json({
         msg: "Success",
-        noteId
-      });
+        _id: result._id,
+        userId: result.userId,
+        content: result.content,
+        description: result.description,
+        name: result.name,
+        topic: result.topic,
+        dateCreate: result.dateCreate,
+        dateModifiedString: result.dateCreateString
     });
   });
+});
   
   // get all notes for a user
   router.get("/:id",isAuthenticated,isAuthorized, [
@@ -168,13 +175,21 @@ router.delete("/:id",isAuthenticated,isAuthorizedBody, [
         dateModifiedString: moment(date).format(("D/M/YYYY h:mm:ss a"))
       }
       
-      Notes.findOneAndUpdate({_id: noteId, userId: userId}, update).exec(function (err, result) {
+      Notes.findOneAndUpdate({_id: noteId, userId: userId}, update, {new: true}).exec(function (err, result) {
         if (err) return res.status(500).json({ msgs: ["Server Error"] });
         if (!result) return res.status(404).json({ msgs: ["Invalid user or note"] });
     
         return res.status(200).json({
           msg: "Success",
-          updatedNote: result
+          _id: result._id,
+          userId: result.userId,
+          content: result.content,
+          description: result.description,
+          name: result.name,
+          topic: result.topic,
+          dateCreate: result.dateCreate,
+          dateModifiedString: result.dateCreateString
+          
         });
       });
     });

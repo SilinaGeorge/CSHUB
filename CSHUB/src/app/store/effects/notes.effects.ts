@@ -2,7 +2,19 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { AddNoteAction, AddNoteErrorAction, AddNoteSuccessAction, NotesActionTypes, GetTopicNotesAction, GetTopicNotesErrorAction, GetTopicNotesSuccessAction } from '../actions/notes.actions';
+import { AddNoteAction, 
+    AddNoteErrorAction, 
+    AddNoteSuccessAction, 
+    NotesActionTypes, 
+    GetTopicNotesAction, 
+    GetTopicNotesErrorAction, 
+    GetTopicNotesSuccessAction,
+DeleteNoteAction,
+DeleteNoteErrorAction,
+DeleteNoteSuccessAction,
+updateNoteAction,
+updateNoteErrorAction,
+updateNoteSuccessAction } from '../actions/notes.actions';
 import { NotesService } from '../../services/notes.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -23,6 +35,42 @@ export class NotesEffects {
                         }),
                         catchError((error) => {
                             return of(new AddNoteErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
+
+        @Effect() deleteNote = this.actions$
+        .pipe(
+            ofType<DeleteNoteAction>(NotesActionTypes.DELETE_NOTE),
+            mergeMap(
+                data => this.noteService.DeleteNote(data.payload)
+                    .pipe(
+                        map(data => {
+
+                            return new DeleteNoteSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new DeleteNoteErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
+
+        @Effect() updateNote = this.actions$
+        .pipe(
+            ofType<updateNoteAction>(NotesActionTypes.UPDATE_NOTE),
+            mergeMap(
+                data => this.noteService.UpdateNote(data.payload)
+                    .pipe(
+                        map(data => {
+
+                            return new updateNoteSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new updateNoteErrorAction(error.error))
                         }
                         )
                     )

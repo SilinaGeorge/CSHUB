@@ -9,6 +9,7 @@ import { EditorComponent} from './editor/editor.component';
 import { SocialRedirectComponent } from './social-redirect/social-redirect.component'
 import { DocViewerComponent } from './doc-viewer/doc-viewer.component'
 import {BadRouteComponent} from './bad-route/bad-route.component'
+import {PythonInterComponent} from './python-inter/python-inter.component'
 
 
 
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path:'editor', component: EditorComponent},
   { path:'social-redirect/:id', component: SocialRedirectComponent},
   { path:'doc-viewer', component: DocViewerComponent},
+  { path:'python-inter', component: PythonInterComponent},
   { path:'**', component: BadRouteComponent},
 ];
 
