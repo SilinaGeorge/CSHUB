@@ -14,6 +14,7 @@ export class NotesService {
   constructor(private http: HttpClient) { }
 
   AddNote(addNoteData: AddNote) {
+    console.log(addNoteData)
  
     return this.http.post<Note>(`${this.URL}/${addNoteData.userId}`, addNoteData);
   };

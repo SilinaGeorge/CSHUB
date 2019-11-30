@@ -37,7 +37,7 @@ const isAuthorizedBody = function(req, res, next) {
 // add a new note for a user
 router.post("/:id",isAuthenticated, isAuthorized, [
     check('name', 'name is invalid').trim().escape().isLength({ max: 50 }).not().isEmpty(),
-    check('description', 'description is invalid').trim().escape().isLength({ max: 210 }),
+    check('description', 'description is invalid').optional().escape().isLength({ max: 210 }),
     check('content', 'invalid content'),
     check('topic', 'invalid topic').trim().escape().isLength({ max: 50 }).not().isEmpty(),
     param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()

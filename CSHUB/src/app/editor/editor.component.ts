@@ -144,7 +144,7 @@ export class EditorComponent implements OnInit {
 
     this.editorConfig = {
       disableResizeEditor: true,
-      height: '70vh',
+      height: '60vh',
       placeholder: '',
       tabsize: 2,
       uploadImagePath: '',

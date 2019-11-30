@@ -55,11 +55,11 @@
         </ng-container>
 
         <ng-template #noteNameTitle>
-            <h2>{{selectedNote.name}}</h2>
+            <h2 style='text-align: center'>{{selectedNote.name}}</h2>
         </ng-template>
 
         <ng-template #createNameTitle>
-            <h2>Create New</h2>
+            <h2 style='text-align: center'>Create New</h2>
         </ng-template>
 
         <textarea id="note" [ngxSummernote]='editorConfig' [(ngModel)]="content"></textarea>
@@ -67,7 +67,7 @@
         <div style="margin-left: 46%">
             <button mat-raised-button (click)="openModal();setData()" class="btn btn-primary shadow-sm">Save
             </button>
-            
+
                 <button *ngIf='selectedNote' mat-raised-button (click)="onDeleteClick()" class="btn btn-danger shadow-sm">Delete
                 </button>
           
