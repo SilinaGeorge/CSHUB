@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const NoteSchema = new Schema({
     userId: { type: String, required: true },
     content: { type: String, required: true },
-    description: { type: String, required: true, max: 210 },
+    description: { type: String, required: false, max: 210 },
     name: { type: String, required: true, max: 50 },
     topic:{ type: String, max: 50, required: true },
     dateCreate: {type: Date, required: true},
