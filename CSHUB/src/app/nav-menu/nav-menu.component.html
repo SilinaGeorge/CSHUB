@@ -12,8 +12,8 @@
         Notes
       </a>
       <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-        <a class="dropdown-item" href="#/editor?topic=Python">Python</a>
-        <a class="dropdown-item" href="#/editor?topic=Other">Other</a>
+        <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Python'}">Python</a> 
+        <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Other'}">Other</a>
       </div>
     </li>
 
@@ -33,16 +33,5 @@
       <a class="nav-link" routerLink="/login">Login</a>
       <a class="nav-link" routerLink="/signup">Signup</a>
       <a class="nav-link" routerLink="/about">About</a>
-      <a class="nav-link" routerLink="/login-home">login home</a>
-      <li class="nav-item" ngbDropdown>
-          <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
-            Notes
-          </a>
-          <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#/editor?topic=Python">Python</a>
-            <a class="dropdown-item" href="#/editor?topic=Other">Other</a>
-          </div>
-        </li>      
-      
     </ul>
 </ng-template>

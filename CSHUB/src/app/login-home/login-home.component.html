@@ -10,7 +10,7 @@
 
                             </div>
                             <a href="#" style="width:100%" class="btn btn-primary border-dark">Cliff Notes</a>
-                            <a href="#/editor?topic=Python" style="width:100%" class="btn btn-primary border-dark">Your Python Notes</a>
+                            <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Python'}">Your Python Notes</a>
                             <a href="#" style="width:100%" class="btn btn-primary border-dark">Your Python Documents</a>
                             <a routerLink="/python-inter" style="width:100%" class="btn btn-primary border-dark">Interpreter</a>
                           </div>
@@ -26,7 +26,7 @@
                                     <img src='../../assets/other-shapes.png' style="max-width: 69%; margin-top:7vh;margin-bottom:7vh" >
         
                             </div>
-                            <a href="#/editor?topic=Other" style="width:100%" class="btn btn-primary border-dark">Your Other Notes</a>
+                            <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Other'}">Your Other Notes</a>
                             <a href="#" style="width:100%" class="btn btn-primary border-dark">Your Other Documents</a>
                   
                         </div>
