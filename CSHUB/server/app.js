@@ -9,6 +9,7 @@ const https = require('https');
 const fs = require('fs');
 const passport = require('passport');
 const path = require('path');
+
 require('dotenv').config()
 
 const app = express();
@@ -68,13 +69,19 @@ app.use(
   })
 );
 
+
+
+
+
 // ------------------------------
-var userRoute = require('./routes/auth-api.js');
-var widgetRoute = require('./routes/widgets-api.js');
-var notesRoute = require('./routes/notes-api.js');
+let userRoute = require('./routes/auth-api.js');
+let widgetRoute = require('./routes/widgets-api.js');
+let notesRoute = require('./routes/notes-api.js');
+let docsRoute = require('./routes/docs-api.js');
 app.use('/auth', userRoute);
 app.use('/widgets', widgetRoute);
 app.use('/notes', notesRoute);
+app.use('/docs', docsRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -82,6 +89,9 @@ app.use(function (req, res, next) {
   err.status = 404;
   next(err);
 });
+
+
+
 
 
 module.exports = app;

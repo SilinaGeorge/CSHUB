@@ -67,8 +67,11 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { UserReducer } from './store/reducers/user.reducer';
 import { NotesReducer } from './store/reducers/notes.reducer';
+import { DocsReducer } from './store/reducers/docs.reducer';
+
 import { UsersEffects } from './store/effects/users.effects';
 import { NotesEffects } from './store/effects/notes.effects';
+import { DocsEffects } from './store/effects/docs.effects';
 
 
 import { EditorComponent } from './editor/editor.component';
@@ -116,10 +119,11 @@ import { PythonInterComponent } from './python-inter/python-inter.component';
     MatTooltipModule,
     CountdownModule ,
     CommonModule,
-    EffectsModule.forRoot([UsersEffects, NotesEffects]),
+    EffectsModule.forRoot([UsersEffects, NotesEffects, DocsEffects]),
     StoreModule.forRoot({
       user: UserReducer,
       noteState: NotesReducer,
+      docState: DocsReducer
 
     }),
     MatGridListModule,

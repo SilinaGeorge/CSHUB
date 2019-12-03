@@ -62,6 +62,14 @@
             <h2 style='text-align: center'>Create New</h2>
         </ng-template>
 
+
+         <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
+            <ul >
+                <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li> 
+
+            </ul>
+        </div>
+
         <textarea id="note" [ngxSummernote]='editorConfig' [(ngModel)]="content"></textarea>
 
         <div style="margin-left: 46%">
@@ -107,7 +115,7 @@
                         <div class="modal-footer text-center">
         
                             <button type="submit" [disabled]="saveNoteFormGroup.invalid" class="btn btn-primary mr-auto">Save
-                                <!-- <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner> -->
+                                <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
                             </button>
                             <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
         

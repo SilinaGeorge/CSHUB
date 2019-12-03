@@ -66,6 +66,8 @@ export class EditorComponent implements OnInit {
 
   }
   ngOnInit() {
+
+    this.loading$ = this.store.select(store => store.noteState.loading)
     this.sideNavService.setSidenav(this.sidenav);
 
      this.actroute.queryParams.subscribe(params => {
@@ -239,6 +241,7 @@ onModalSave(){
     }
     console.log(updateNote)
     this.store.dispatch(new updateNoteAction(updateNote));
+    this.error$ = this.store.select(store => store.noteState.getTopicNotesError)
     
 
   }
@@ -253,6 +256,7 @@ onModalSave(){
     }
 
       this.store.dispatch(new AddNoteAction(this.addNewNote));
+      this.error$ = this.store.select(store => store.noteState.addNoteError)
       this.selectedIndex = 0
   }
   this.close()
@@ -264,6 +268,7 @@ onModalSave(){
     this.deleteNote ={userId:this.userID, _id: this.selectedNote._id}
     
     this.store.dispatch(new DeleteNoteAction(this.deleteNote));
+    this.error$ = this.store.select(store => store.noteState.deleteNoteError)
  
       this.selectedIndex = this.selectedIndex - 1
 

@@ -22,7 +22,26 @@
 
 <div >
 
-       
+  <div class="form-group">
+    <label for="file">Choose File</label>
+    <input type="file"
+           id="file"
+           accept=".txt,text/plain,
+            .doc, application/msword,
+             .docx, application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+             .xls, application/excel,application/vnd.ms-excel,application/x-excel, application/x-msexcel,
+             .xlsx, 	
+             application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+             .ppt, application/mspowerpoint,application/powerpoint, application/vnd.ms-powerpoint,
+             application/x-mspowerpoint,
+             .pptx, application/vnd.openxmlformats-officedocument.presentationml.presentation,
+             .pdf, application/pdf"
+           (change)="handleFileInput($event.target.files)">
+</div>
+
+<div class="file-upload-wrapper">
+  <input type="file" id="input-file-max-fs" class="file-upload" data-max-file-size="2M" />
+</div>
 
 
 <ngx-doc-viewer [url]="doc" viewer="google" style="width:100%;height:87.5vh;">
