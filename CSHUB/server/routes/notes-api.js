@@ -136,7 +136,7 @@ router.delete("/:noteId/:id",isAuthenticated,isAuthorized, [
     
     Notes.find(query).sort({dateCreate: -1}).exec(function (err, result) {
       if (err) return res.status(500).json({ msgs: ["Server Error"] });
-      if (!result) return res.status(404).json({ msgs: ["Invalid user"] });
+      if (!result) return res.status(404).json({ msgs: ["Invalid user or topic"] });
   
       return res.status(200).json({
         msg: "Success",

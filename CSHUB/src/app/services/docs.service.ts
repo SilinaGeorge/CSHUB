@@ -13,8 +13,10 @@ export class DocsService {
   constructor(private http: HttpClient) { }
 
   AddDoc(addDocData: AddDoc) {
+    const uploadData = new FormData();
+    uploadData.append('doc', addDocData.file);
   
-    return this.http.post<Doc>(`${this.URL}/${addDocData.userId}`, addDocData);
+    return this.http.post<Doc>(`${this.URL}/${addDocData.userId}`, uploadData);
   };
 }
 
