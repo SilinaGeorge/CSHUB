@@ -45,6 +45,7 @@ module.exports = function (router, passport) {
                         newUser.local = false;
                         newUser.spotifyurl = 'https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx';
                         newUser.notifications = [];
+                        newUser.spaceleft = 90000000;
                         newUser.save(function (err, user) {
                             if (err) throw err;
                             if (user) {
@@ -85,6 +86,7 @@ module.exports = function (router, passport) {
                     newUser.local = false;
                     newUser.spotifyurl = 'https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx',
                     newUser.notifications = [];
+                    newUser.spaceleft = 90000000;
                     newUser.save(function (err, user) {
                         if (err) throw err;
                         if (user) {

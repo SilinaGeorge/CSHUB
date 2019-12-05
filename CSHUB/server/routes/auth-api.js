@@ -140,7 +140,8 @@ router.post("/signup", [
       facebook: false, 
       google: false, 
       spotifyurl: 'https://open.spotify.com/embed/playlist/37i9dQZF1CAjTirSpYapUx',
-      notifications: []
+      notifications: [],
+      spaceleft: 90000000
      });
 
     newUser.save(function (err, user) {

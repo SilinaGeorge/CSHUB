@@ -7,9 +7,9 @@
                 <mat-icon>add</mat-icon>
             
                 <mcc-speed-dial-actions >
-                  <button mat-mini-fab matTooltip="Add new file" matTooltipShowDelay="1000"
+                  <button mat-mini-fab matTooltip="Edit name & description" matTooltipShowDelay="1000"
                   matTooltipHideDelay="0">
-                    <mat-icon>insert_drive_file</mat-icon>
+                    <mat-icon>edit</mat-icon>
                   </button>
                   <button mat-mini-fab matTooltip="Delete file" matTooltipShowDelay="1000"
                   matTooltipHideDelay="0">
@@ -22,10 +22,19 @@
 
 <div >
 
+    <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
+        <ul >
+            <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li> 
+
+        </ul>
+    </div>
+
   <div class="form-group">
     <label for="file">Choose File</label>
     <input type="file"
            id="file"
+           class="file-upload"
+            data-max-file-size="5M"
            accept=".txt,text/plain,
             .doc, application/msword,
              .docx, application/vnd.openxmlformats-officedocument.wordprocessingml.document,
@@ -39,9 +48,8 @@
            (change)="handleFileInput($event.target.files)">
 </div>
 
-<div class="file-upload-wrapper">
-  <input type="file" id="input-file-max-fs" class="file-upload" data-max-file-size="2M" />
-</div>
+
+<button (click)='onUploadClick()'>Upload</button>
 
 
 <ngx-doc-viewer [url]="doc" viewer="google" style="width:100%;height:87.5vh;">

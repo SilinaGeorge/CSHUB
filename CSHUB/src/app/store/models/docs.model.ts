@@ -1,18 +1,18 @@
 export interface Doc{
-    _id: String,
-    userId: String,
+    _id: string,
+    userId: string,
     file: File,
-    name: String,
-    description: String,
-    topic: String
+    name: string,
+    description: string,
+    topic: string
 }
 
 
 export interface AddDoc{
-    userId: String,
+    userId: string,
     file: File,
-    description: String,
-    name: String,
-    topic:String
+    description: string,
+    name: string,
+    topic:string
 }
     

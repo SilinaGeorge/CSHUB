@@ -123,7 +123,7 @@ import { PythonInterComponent } from './python-inter/python-inter.component';
     StoreModule.forRoot({
       user: UserReducer,
       noteState: NotesReducer,
-      docState: DocsReducer
+      docsState: DocsReducer
 
     }),
     MatGridListModule,

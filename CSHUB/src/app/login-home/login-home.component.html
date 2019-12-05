@@ -11,7 +11,7 @@
                             </div>
                             <a href="#" style="width:100%" class="btn btn-primary border-dark">Cliff Notes</a>
                             <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Python'}">Your Python Notes</a>
-                            <a href="#" style="width:100%" class="btn btn-primary border-dark">Your Python Documents</a>
+                            <a [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Python'}" style="width:100%" class="btn btn-primary border-dark">Your Python Documents</a>
                             <a routerLink="/python-inter" style="width:100%" class="btn btn-primary border-dark">Interpreter</a>
                           </div>
             </mat-grid-tile>
