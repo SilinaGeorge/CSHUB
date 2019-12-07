@@ -1,9 +1,12 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 
-<div class="card bg-light mb-3 shadow-sm" style="max-width: 40%; margin:auto; margin-top: 20vh">
+<div class="card bg-light  mb-3 shadow-sm" style="width: 30vw; margin:auto; margin-top: 20vh">
 
-    <div class="card-header">Login into CS HUB</div>
+    <div class="card-header">
+        <span class="material-icons">person</span>
+        Login into CS HUB
+    </div>
     <div class="card-body">
 
         <div *ngIf="error$ | async as error">
@@ -28,7 +31,7 @@
             </div>
             <div style="text-align: center;">
 
-                <button mat-raised-button type='submit' [disabled]="loginFormGroup.invalid"
+                <button  type='submit' [disabled]="loginFormGroup.invalid"
                     class="btn btn-primary shadow-sm">Login
                     <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
                 </button>
@@ -44,12 +47,12 @@
         </form>
 
         <a class="nav-link" href="/auth/facebook">
-            <img src='../../assets/fb_login.png' style="width: 220px; height:68px" >
+            <img src='../../assets/images/fb_login.png' style="width: 220px; height:68px" >
         </a>
 
 
         <a class="nav-link" href="/auth/google">
-            <img src='../../assets/google_signin.png' style="width: 200px; height:40px; margin-left:8px" >
+            <img src='../../assets/images/google_signin.png' style="width: 200px; height:40px; margin-left:8px" >
         </a>
 
 

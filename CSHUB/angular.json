@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/css/bootstrap.min.css",
               "src/custom-theme.scss",
               "src/styles.css",
               "node_modules/summernote/dist/summernote-lite.css"
@@ -30,7 +31,13 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/summernote/dist/summernote-lite.js"
+              "node_modules/summernote/dist/summernote-lite.js",
+              "src/assets/landingpage/js/jquery.scrollex.min.js",
+              "src/assets/landingpage/js/jquery.scrolly.min.js",
+              "src/assets/landingpage/js/browser.min.js",
+              "src/assets/landingpage/js/breakpoints.min.js",
+              "src/assets/landingpage/js/util.js",
+              "src/assets/landingpage/js/main.js"
             ]
           },
           "configurations": {
@@ -93,6 +100,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/css/bootstrap.min.css",
               "src/custom-theme.scss",
               "src/styles.css",
               "node_modules/summernote/dist/summernote-lite.css"
@@ -101,7 +109,13 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/summernote/dist/summernote-lite.js"
+              "node_modules/summernote/dist/summernote-lite.js",
+              "src/assets/landingpage/js/jquery.scrollex.min.js",
+              "src/assets/landingpage/js/jquery.scrolly.min.js",
+              "src/assets/landingpage/js/browser.min.js",
+              "src/assets/landingpage/js/breakpoints.min.js",
+              "src/assets/landingpage/js/util.js",
+              "src/assets/landingpage/js/main.js"
             ]
           }
         },

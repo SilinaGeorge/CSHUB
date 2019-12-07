@@ -1,6 +1,8 @@
 <div class="card bg-light mb-3 shadow-sm" style="max-width: 40%; margin:auto;  margin-top: 10vh">
 
-    <div class="card-header">Sign up to CS HUB</div>
+    <div class="card-header">
+            <span class="material-icons">person_add</span>
+        Sign up to CS HUB</div>
     <div class="card-body">
 
         <div *ngIf="error$ | async as error">
@@ -52,16 +54,16 @@
             </div>
 
             <div style="text-align: center; margin-top:3em">
-                <button mat-raised-button type="submit" [disabled]="signupFormGroup.invalid"
+                <button type="submit" [disabled]="signupFormGroup.invalid"
                     class="btn btn-primary shadow-sm">Sign up
                     <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
                 </button>
             </div>
 
         </form>
-        <div><input type="image" style="width: 220px; height:68px" src="../../assets/fb_login.png"></div>
+        <div><input type="image" style="width: 220px; height:68px" src="../../assets/images/fb_login.png"></div>
         <div><input type="image" style="width: 200px; height:40px; margin-left:8px"
-                src="../../assets/google_signin.png"></div>
+                src="../../assets/images/google_signin.png"></div>
 
     </div>
 </div>

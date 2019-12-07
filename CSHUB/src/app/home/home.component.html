@@ -1,92 +1,115 @@
-<!-- <div parallax [config]="{axis: 'Y', speed: -.3}" class="parallax-directive">
+<!--   <img src="../../assets/front-page.png" style="width:100vw;height:88vh" > -->
 
-        <div style="padding-bottom:60vh; background: transparent !important;"></div>
-
-
-        <div class="card text-white bg-dark mb-3" style="width: 100%; height:30vh">
-
-                <div class="card-body">
-                        <h4 class="card-title">Secondary card title</h4>
-                        <p class="card-text">
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in scelerisque tellus, eget sollicitudin libero. Duis lacinia metus id erat egestas, sit amet rhoncus ex luctus. Donec sodales, justo at blandit laoreet, arcu turpis cursus nulla, vitae sollicitudin orci libero iaculis felis. Duis eget diam ex. Integer et consectetur ligula. Nulla pellentesque vulputate ultrices. Nunc id tortor eleifend, lacinia arcu non, hendrerit nunc. Nullam diam orci, tempor non rutrum quis, sodales a nulla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam facilisis erat ac ipsum semper, quis finibus tortor malesuada. Donec blandit diam quam, ultricies eleifend eros pellentesque ac. Sed vel velit a magna cursus luctus. Maecenas augue turpis, cursus id pellentesque ac, fermentum ut enim. Proin sed leo euismod, auctor dolor posuere, tristique dolor.
-                        </p>
-                </div>
-        </div>
-
-        <div style="padding-bottom:60vh; background: transparent !important;"></div>
-
-
-        <div class="card text-white bg-dark mb-3" style="width: 100%; height:30vh">
-
-                <div class="card-body">
-                        <h4 class="card-title">Secondary card title</h4>
-                        <p class="card-text">
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in scelerisque tellus, eget sollicitudin libero. Duis lacinia metus id erat egestas, sit amet rhoncus ex luctus. Donec sodales, justo at blandit laoreet, arcu turpis cursus nulla, vitae sollicitudin orci libero iaculis felis. Duis eget diam ex. Integer et consectetur ligula. Nulla pellentesque vulputate ultrices. Nunc id tortor eleifend, lacinia arcu non, hendrerit nunc. Nullam diam orci, tempor non rutrum quis, sodales a nulla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam facilisis erat ac ipsum semper, quis finibus tortor malesuada. Donec blandit diam quam, ultricies eleifend eros pellentesque ac. Sed vel velit a magna cursus luctus. Maecenas augue turpis, cursus id pellentesque ac, fermentum ut enim. Proin sed leo euismod, auctor dolor posuere, tristique dolor.
-                        </p>
-                </div>
-        </div>        <div style="padding-bottom:60vh; background: transparent !important;"></div>
-
-
-        <div class="card text-white bg-dark mb-3" style="width: 100%; height:30vh">
-
-                <div class="card-body">
-                        <h4 class="card-title">Secondary card title</h4>
-                        <p class="card-text">
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in scelerisque tellus, eget sollicitudin libero. Duis lacinia metus id erat egestas, sit amet rhoncus ex luctus. Donec sodales, justo at blandit laoreet, arcu turpis cursus nulla, vitae sollicitudin orci libero iaculis felis. Duis eget diam ex. Integer et consectetur ligula. Nulla pellentesque vulputate ultrices. Nunc id tortor eleifend, lacinia arcu non, hendrerit nunc. Nullam diam orci, tempor non rutrum quis, sodales a nulla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam facilisis erat ac ipsum semper, quis finibus tortor malesuada. Donec blandit diam quam, ultricies eleifend eros pellentesque ac. Sed vel velit a magna cursus luctus. Maecenas augue turpis, cursus id pellentesque ac, fermentum ut enim. Proin sed leo euismod, auctor dolor posuere, tristique dolor.
-                        </p>
-                </div>
-        </div>
-
-</div> -->
-
-
-
-<!-- 
-<ngb-carousel #carousel interval="2000" showNavigationArrows="false"
-
-pauseOnHover="false">
-    <ng-template ngbSlide >
-      <div class="carousel-caption">
-        <h3>My slide {{i + 1}} title</h3>
+<body >
+  <div id="wrapper" style='display:block'>
+    <section id="intro" class="wrapper style1 fullscreen fade-up">
+      <div class="inner fadeInCustom" >
+        <h1>CS HUB</h1>
+        <p>
+          All your CS studying material and needs in one place
+        </p>
+        <ul class="actions">
+            
+          <li><a class="nav-link" routerLink="/about" class="button scrolly">Learn more</a></li>
+        </ul>
       </div>
-        <div >
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxpIRD1OlRKKK5W_g_7I7HMvq9xsMGgnjjWn7WxqiZJvM-1Pg4" style="width:100vw;height:87.10vh">
-        </div>
-     
-    </ng-template>
-    <ng-template ngbSlide >
-        <div class="carousel-caption">
-          <h3>My slide {{i + 1}} title</h3>
-        </div>
-          <div >
-            <img src="https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-038.jpg" style="width:100vw;height:87.10vh">
-          </div>
-       
-      </ng-template>
+    </section>
 
-      <ng-template ngbSlide >
-          <div class="carousel-caption">
-            <h3>My slide {{i + 1}} title</h3>
+    <section id="one" class="wrapper style2 spotlights">
+      <section>
+     <img src="../../assets/images/landingpage-topics.png" style='width:20%;height:30%;margin-top: 5%;margin-left:5%' data-position="center center" />
+        <div class="content">
+          <div class="inner">
+            <h2>Topics</h2>
+            <p>
+              A variety of topics to learn: Python, Java etc. with cliffnotes for each  
+            </p>
+            <ul class="actions"></ul>
           </div>
-            <div >
-              <img src="https://images.wallpaperscraft.com/image/purple_white_background_stains_abstract_65537_1920x1080.jpg" style="width:100vw;height:87.10vh" >
-            </div>
-       
-        </ng-template>
+        </div>
+      </section>
 
-        <ng-template ngbSlide >
-            <div class="carousel-caption">
-              <h3>My slide {{i + 1}} title</h3>
-            </div>
-              <div >
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeFH1Jg4GuGz1CxoGKlcqny0O996ibBbvdk165-v_8Blk4NrIH" style="width:100vw;height:87.10vh" >
-              </div>
+      <section>
+        <!-- <a href="#" class="image"><img src="images/pic02.jpg" alt="" data-position="top center" /></a> -->
+        <img src="../../assets/images/landingpage-notes.png" style='width:20%;height:30%;margin-top: 5%;margin-left:5%' data-position="top center" />
+        <div class="content">
+          <div class="inner">
+            <h2>Custom Notes</h2>
+            <p>
+              Add your own notes for each topic. Embed and play youtube videos right on your notes 
+            </p>
+            <ul class="actions"></ul>
+            
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <!-- <a href="#" class="image"><img src="images/pic03.jpg" alt="" data-position="25% 25%" /></a> -->
+        <img src="../../assets/images/landingpage-docs.png" style='width:15%;height:30%;margin-top: 5%;margin-left:5%' data-position="center center" />
+        <div class="content">
+          <div class="inner">
+            <h2>Document Viewer</h2>
+            <p>
+              Upload and view PDF, MS Word, MS PowerPoint, MS Excel, and text files
+            </p>
+            <ul class="actions"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="two" class="wrapper style3 fade-up">
+        <div class="inner">
+          <h2>Make your life easy</h2>
+          <p>
+            Widgets that will save you time
+          </p>
+          <div class="features">
+            <section>
+              <span class="fab fa-spotify fa-5x"></span>
          
-          </ng-template>
+              <h3>Spotify</h3>
+              <p>
+                Listen to your favorite playlist with studying
+              </p>
+            </section>
+            <section>
+              <span class="far fa-envelope fa-5x"></span>
+             
+              <h3>Set Reminders</h3>
+              <p>
+                Send yourself emails reminding you when your next study session is
+              </p>
+            </section>
+            <section>
+              <span class="fas fa-stopwatch fa-5x"></span>
+             
+            
+              <h3>Break Time!</h3>
+              <p>
+                Forget to take breaks? Set a stop watch timer to notify you
+              </p>
+            </section>
+            <section>
+              <span class="fab fa-google fa-5x"></span>
+              <h3>Google Search</h3>
+              <p>
+                No need to open a new tab to search for something, search right in CSHUB!
+              </p>
+            </section>
+    
+          </div>
+          <ul class="actions"></ul>
+        </div>
+      </section>
+    </section>
 
-          
-  </ngb-carousel> -->
-  <img src="../../assets/front-page.png" style="width:100vw;height:88vh" >
-
-
-
+    <footer id="footer" class="wrapper style1-alt">
+      <div class="inner">
+        <ul class="menu">
+          <li>Made By Silina George</li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+</body>
