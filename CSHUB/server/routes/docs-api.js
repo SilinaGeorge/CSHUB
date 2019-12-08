@@ -219,6 +219,7 @@ router.get(
       .escape()
   ],
   (req, res, next) => {
+
     // returns validation errors if there are any
     const result = validationResult(req).formatWith(errorFormatter);
     if (!result.isEmpty()) {

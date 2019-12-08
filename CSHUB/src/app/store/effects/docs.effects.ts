@@ -4,7 +4,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators'
 import { DocsService } from '../../services/docs.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
-import { AddDocAction, DocsActionTypes, AddDocSuccessAction, AddDocErrorAction } from '../actions/docs.actions';
+import { AddDocAction, DocsActionTypes, AddDocSuccessAction, AddDocErrorAction, GetDocsAction, GetDocsSuccessAction, GetDocsErrorAction } from '../actions/docs.actions';
 
 
 @Injectable()
@@ -22,6 +22,24 @@ export class DocsEffects {
                         }),
                         catchError((error) => {
                             return of(new AddDocErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
+
+        @Effect() getDocs = this.actions$
+        .pipe(
+            ofType<GetDocsAction>(DocsActionTypes.GET_DOCS),
+            mergeMap(
+                data => this.docsService.GetDocs(data.payload)
+                    .pipe(
+                        map(data => {
+
+                            return new GetDocsSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new GetDocsErrorAction(error.error))
                         }
                         )
                     )

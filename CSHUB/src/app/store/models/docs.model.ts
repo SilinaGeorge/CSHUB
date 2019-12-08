@@ -1,10 +1,14 @@
 export interface Doc{
+    msg?: string
     _id: string,
     userId: string,
-    file: File,
-    name: string,
+    filename: string,
+    filesize: string,
     description: string,
-    topic: string
+    name: string,
+    topic: string,
+    dateCreate: Date,
+    dateModifiedString: string
 }
 
 
@@ -15,4 +19,13 @@ export interface AddDoc{
     name: string,
     topic:string
 }
-    
+
+export interface GetMetaDocs{
+    userId: string,
+    topic?: string
+}
+
+export interface ReturnedMetaDocs{
+docs: Array<Doc>
+
+}

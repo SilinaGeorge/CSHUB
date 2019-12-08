@@ -1,62 +1,159 @@
-<div style="position: absolute;" cdkDrag>
-        <mcc-speed-dial direction='right' animation="scale" mouseHover= 'false' spin='true'
-        matTooltip="Drag me" matTooltipShowDelay="1000"
-        matTooltipHideDelay="0">
-        
-                <!-- This icon can be anything you want -->
-                <mat-icon>add</mat-icon>
-            
-                <mcc-speed-dial-actions >
-                  <button mat-mini-fab matTooltip="Edit name & description" matTooltipShowDelay="1000"
-                  matTooltipHideDelay="0">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-mini-fab matTooltip="Delete file" matTooltipShowDelay="1000"
-                  matTooltipHideDelay="0">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </mcc-speed-dial-actions>
-              </mcc-speed-dial>
-            
-</div>
+<mat-drawer-container style="z-index:0!important;height:85vh;width:100vw!important">
 
-<div >
+  <mat-drawer #docsidenav mode="side" opened='true'>
+    <div style="overflow-y:auto; height:100%;width:25vw; word-wrap: break-word;" class="bg-dark">
+      <ul class="list-group">
 
-    <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
-        <ul >
-            <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li> 
 
-        </ul>
+        <div *ngIf="metaDocs">
+          <li class="list-group-item list-group-item-action flex-column align-items-start disabled">
+
+            <h4 class="mb-1">{{topic}} Documents</h4>
+          </li>
+          <li class="list-group-item list-group-item-action flex-column align-items-start" (click)="openUploadDocModal()"
+            [ngClass]="{'active': selectedIndex == -1 || metaDocs.docs.length == 0}">
+
+            <h5>Upload New Document</h5>
+          </li>
+
+          <li (click)="onDocClick(doc, i)" *ngFor="let doc of metaDocs.docs; let i=index"
+            [ngClass]="{'active': selectedIndex == i}"
+            class="list-group-item list-group-item-action flex-column align-items-start">
+
+            <!--   <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1">{{notse.name}}</h5>
+                                                        <small maxlength="10" class="text-muted">{{note.dateModified}}</small>
+                                                </div> -->
+            <div class="d-flex justify-content-end">
+              <small class="text-muted">{{doc.dateModifiedString}}</small>
+
+            </div>
+
+            <h5 class="mb-1">{{doc.name}}</h5>
+            <h5 class="mb-1">{{doc._id}}</h5>
+
+            <p class="mb-1">{{doc.description}}</p>
+
+          </li>
+        </div>
+      </ul>
     </div>
 
-  <div class="form-group">
-    <label for="file">Choose File</label>
-    <input type="file"
-           id="file"
-           class="file-upload"
-            data-max-file-size="5M"
-           accept=".txt,text/plain,
-            .doc, application/msword,
-             .docx, application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-             .xls, application/excel,application/vnd.ms-excel,application/x-excel, application/x-msexcel,
-             .xlsx, 	
-             application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
-             .ppt, application/mspowerpoint,application/powerpoint, application/vnd.ms-powerpoint,
-             application/x-mspowerpoint,
-             .pptx, application/vnd.openxmlformats-officedocument.presentationml.presentation,
-             .pdf, application/pdf"
-           (change)="handleFileInput($event.target.files)">
-</div>
 
 
-<button (click)='onUploadClick()'>Upload</button>
 
+  </mat-drawer>
 
-<ngx-doc-viewer [url]="doc" viewer="google" style="width:100%;height:87.5vh;">
+  <mat-drawer-content>
+    <div style="position: absolute;" cdkDrag>
+      <mcc-speed-dial direction='right' animation="scale" mouseHover='false' spin='true' matTooltip="Drag me"
+        matTooltipShowDelay="1000" matTooltipHideDelay="0">
 
+        <!-- This icon can be anything you want -->
+        <mat-icon>add</mat-icon>
 
-</ngx-doc-viewer>
+        <mcc-speed-dial-actions>
+          <button mat-mini-fab matTooltip="Edit name & description" matTooltipShowDelay="1000" matTooltipHideDelay="0">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab matTooltip="Delete file" matTooltipShowDelay="1000" matTooltipHideDelay="0">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mcc-speed-dial-actions>
+      </mcc-speed-dial>
 
-</div>    
+    </div>
 
+    <div>
 
+      <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
+        <ul>
+          <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
+
+        </ul>
+      </div>
+
+  
+      <ngx-doc-viewer [url]="url" viewer="google" style="width:100vw;height:87.5vh;"></ngx-doc-viewer>
+
+    </div>
+
+            <!-- upload new doc modal -->
+            <div id="uploadDocModal" class="modal" style="display:none; background: rgba(0,0,0,0.6);" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Upload Document</h5>
+                            <button type="button" class="close" (click)="closeUploadDocModal()" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="file">Accepted extensions: .pdf, .doc(x), xls(x), ppt(x), .txt</label> <br>
+                                <input type="file" id="file" class="file-upload btn btn-primary mr-auto" data-max-file-size="5M" accept=".txt,text/plain,
+                                    .doc, application/msword,
+                                     .docx, application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                                     .xls, application/excel,application/vnd.ms-excel,application/x-excel, application/x-msexcel,
+                                     .xlsx, 	
+                                     application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+                                     .ppt, application/mspowerpoint,application/powerpoint, application/vnd.ms-powerpoint,
+                                     application/x-mspowerpoint,
+                                     .pptx, application/vnd.openxmlformats-officedocument.presentationml.presentation,
+                                     .pdf, application/pdf" (change)="handleFileInput($event.target.files)">
+                              </div>
+                        
+                        
+                              
+                        </div>
+
+                        <div class="modal-footer text-center">
+
+                            <button class="btn btn-primary mr-auto" (click)='onUploadClick()'>Upload
+                                <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
+                            </button>
+            
+                            <button type="button" class="btn btn-secondary" (click)="closeUploadDocModal()">Close</button>
+        
+        
+                        </div>
+<!--                         <form [formGroup]="uploadDocFormGroup" (ngSubmit)="onuploadDocModalSave()">
+                            <div class="modal-body">
+            
+            
+                                <mat-form-field style="width: 90%!important">
+                                    <input matInput type="text" placeholder="Name" autocomplete="off" maxlength="50"
+                                        formControlName="name">
+                                </mat-form-field>
+                                <br>
+            
+                                <mat-form-field style="width: 90%!important">
+            
+                                    <textarea style='resize: none;' matInput type="text" placeholder="Description" rows='4'
+                                        maxlength="210" formControlName="description"></textarea>
+            
+                                </mat-form-field>
+            
+            
+            
+            
+                            </div>
+                            <div class="modal-footer text-center">
+            
+                                <button type="submit" [disabled]="uploadDocFormGroup.invalid" class="btn btn-primary mr-auto">Save
+                                    <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
+                                </button>
+                                <button type="button" class="btn btn-secondary" (click)="closeUploadDocModal()">Close</button>
+            
+            
+                            </div>
+                        </form> -->
+            
+                    </div>
+                </div>
+            </div>
+    
+
+  </mat-drawer-content>
+</mat-drawer-container>

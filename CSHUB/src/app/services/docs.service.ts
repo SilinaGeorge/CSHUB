@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AddDoc, Doc } from '../store/models/docs.model';
+import { AddDoc, Doc, GetMetaDocs, ReturnedMetaDocs } from '../store/models/docs.model';
 import { HttpClient } from '@angular/common/http'
 import { delay } from 'rxjs/operators';
 
@@ -21,6 +21,11 @@ export class DocsService {
   
     return this.http.post<Doc>(`${this.URL}/${addDocData.userId}`, uploadData);
   };
+
+  GetDocs(getDocsData: GetMetaDocs) {
+    return this.http.get<ReturnedMetaDocs>(`${this.URL}/user/${getDocsData.userId}?topic=${getDocsData.topic}`);
+  };
+
 }
 
 

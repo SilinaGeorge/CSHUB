@@ -33,7 +33,7 @@
                         </div>
 
                         <h5 class="mb-1">{{note.name}}</h5>
-                        <h5 class="mb-1">{{note._id}}</h5>
+    
 
                         <p class="mb-1">{{note.description}}</p>
 
@@ -73,15 +73,15 @@
         <textarea id="note" [ngxSummernote]='editorConfig' [(ngModel)]="content"></textarea>
 
         <div style="margin-left: 46%">
-            <button mat-raised-button (click)="openModal();setData()" class="btn btn-primary shadow-sm">Save
+            <button  (click)="openModal();setData()" class="btn btn-primary shadow-sm">Save
             </button>
             &nbsp;&nbsp;&nbsp;
-                <button *ngIf='selectedNote' mat-raised-button (click)="onDeleteClick()" class="btn btn-danger shadow-sm">Delete
+                <button *ngIf='selectedNote'  (click)="onDeleteClick()" class="btn btn-danger shadow-sm">Delete
                 </button>
           
         </div>
 
-
+        <!-- save note modal -->
         <div id="saveNote" class="modal" style="display:none; background: rgba(0,0,0,0.6);" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">

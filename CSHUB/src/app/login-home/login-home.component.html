@@ -23,11 +23,11 @@
                                     <img src='../../assets/images/other-icon.png' style="width: 30px" >
                             </div>
                             <div class="card-body text-center">
-                                    <img src='../../assets/images/other-shapes.png' style="max-width: 69%; margin-top:7vh;margin-bottom:7vh" >
+                                    <img src='../../assets/images/other.png' style="max-width: 69%; margin-top:7vh;margin-bottom:7vh" >
         
                             </div>
                             <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Other'}">Your Other Notes</a>
-                            <a href="#" style="width:100%" class="btn btn-primary border-dark">Your Other Documents</a>
+                            <a [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Other'}" style="width:100%" class="btn btn-primary border-dark">Your Other Documents</a>
                   
                         </div>
 
