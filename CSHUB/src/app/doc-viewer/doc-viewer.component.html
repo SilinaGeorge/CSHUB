@@ -90,69 +90,66 @@
                         </div>
 
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label for="file">Accepted extensions: .pdf, .doc(x), xls(x), ppt(x), .txt</label> <br>
-                                <input type="file" id="file" class="file-upload btn btn-primary mr-auto" data-max-file-size="5M" accept=".txt,text/plain,
-                                    .doc, application/msword,
-                                     .docx, application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                                     .xls, application/excel,application/vnd.ms-excel,application/x-excel, application/x-msexcel,
-                                     .xlsx, 	
-                                     application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
-                                     .ppt, application/mspowerpoint,application/powerpoint, application/vnd.ms-powerpoint,
-                                     application/x-mspowerpoint,
-                                     .pptx, application/vnd.openxmlformats-officedocument.presentationml.presentation,
-                                     .pdf, application/pdf" (change)="handleFileInput($event.target.files)">
-                              </div>
-                        
-                        
-                              
-                        </div>
 
-                        <div class="modal-footer text-center">
 
-                            <button class="btn btn-primary mr-auto" (click)='onUploadClick()'>Upload
-                                <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
-                            </button>
-            
-                            <button type="button" class="btn btn-secondary" (click)="closeUploadDocModal()">Close</button>
-        
-        
-                        </div>
-<!--                         <form [formGroup]="uploadDocFormGroup" (ngSubmit)="onuploadDocModalSave()">
-                            <div class="modal-body">
-            
-            
-                                <mat-form-field style="width: 90%!important">
-                                    <input matInput type="text" placeholder="Name" autocomplete="off" maxlength="50"
-                                        formControlName="name">
-                                </mat-form-field>
-                                <br>
-            
-                                <mat-form-field style="width: 90%!important">
-            
-                                    <textarea style='resize: none;' matInput type="text" placeholder="Description" rows='4'
-                                        maxlength="210" formControlName="description"></textarea>
-            
-                                </mat-form-field>
-            
-            
-            
-            
-                            </div>
-                            <div class="modal-footer text-center">
-            
-                                <button type="submit" [disabled]="uploadDocFormGroup.invalid" class="btn btn-primary mr-auto">Save
-                                    <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
-                                </button>
-                                <button type="button" class="btn btn-secondary" (click)="closeUploadDocModal()">Close</button>
-            
-            
-                            </div>
-                        </form> -->
+
+                            <form [formGroup]="uploadDocFormGroup" (ngSubmit)="onUploadClick()">
+                                <div class="modal-body">
+
+
+                
+                
+                                    <mat-form-field style="width: 90%!important">
+                                        <input matInput type="text" placeholder="Name" autocomplete="off" maxlength="50"
+                                            formControlName="name">
+                                            <mat-error>Please enter name</mat-error>
+                                    </mat-form-field>
+                                    <br>
+                
+                                    <mat-form-field style="width: 90%!important">
+                
+                                        <textarea style='resize: none;' matInput type="text" placeholder="Description" rows='4'
+                                            maxlength="210" formControlName="description"></textarea>
+                
+                                    </mat-form-field>
+
+                                    <label for="file">Accepted extensions: .pdf, .doc(x), xls(x), ppt(x), .txt</label> <br>
+                                    
+                                    <input type="file"  id="file" formControlName="file" class="file-upload" data-max-file-size="5M" accept=".txt,text/plain,
+                                        .doc, application/msword,
+                                         .docx, application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                                         .xls, application/excel,application/vnd.ms-excel,application/x-excel, application/x-msexcel,
+                                         .xlsx, 	
+                                         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+                                         .ppt, application/mspowerpoint,application/powerpoint, application/vnd.ms-powerpoint,
+                                         application/x-mspowerpoint,
+                                         .pptx, application/vnd.openxmlformats-officedocument.presentationml.presentation,
+                                         .pdf, application/pdf" (change)="handleFileInput($event.target.files)" (input)='checkFile()'
+                                         >
+
+                                         <span style='color:red' *ngIf="file?.invalid && file?.touched">
+                                            Invalid file format
+                                          </span>
+                                
+                             
+                  
+                                </div>
+                                <div class="modal-footer text-center">
+                
+                                    <button type="submit" [disabled]="uploadDocFormGroup.invalid" class="btn btn-primary mr-auto">Upload
+                                        <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" (click)="closeUploadDocModal()">Close</button>
+                
+                
+                                </div>
+                            </form>
+
             
                     </div>
                 </div>
             </div>
+          </div>
     
 
   </mat-drawer-content>

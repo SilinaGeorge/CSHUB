@@ -130,13 +130,17 @@ router.post(
       if (req.files.doc.size > 5000000)
         return res.status(400).json({ msgs: ["file must be less than 5MB"] });
     } else return res.status(400).json({ msgs: ["File is not present"] });
+
+    
     let id = req.params.id;
     //add doc - query
     Users.findOneAndUpdate(
       { _id: id, spaceleft: { $gte: req.files.doc.size } },
       { $inc: { spaceleft: -req.files.doc.size } }
     ).exec(function (err, user) {
-      if (err) return res.status(500).json({ msgs: ["Server Error"] });
+      if (err) {
+        
+        return res.status(500).json({ msgs: ["Error updating user space"] });}
 
       if (!user)
         return res.status(404).json({
@@ -161,7 +165,8 @@ router.post(
       });
 
       newDoc.save(function (err, result) {
-        if (err) return res.status(500).json({ msgs: [err] });
+        if (err) return res.status(500).json({ msgs: ['Error saving doc'] });
+      
 
         if (result) {
           return res.status(200).json({
