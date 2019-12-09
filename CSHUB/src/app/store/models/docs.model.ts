@@ -27,5 +27,9 @@ export interface GetMetaDocs{
 
 export interface ReturnedMetaDocs{
 docs: Array<Doc>
+}
 
+export interface DeleteDoc{
+    _id:string,
+    userId: string
 }

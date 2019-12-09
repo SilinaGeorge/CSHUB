@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { AddDocAction, GetDocsAction } from '../store/actions/docs.actions';
 import { Subscription, Observable } from 'rxjs';
-import { AddDoc, GetMetaDocs, ReturnedMetaDocs, Doc } from '../store/models/docs.model';
+import { AddDoc, GetMetaDocs, ReturnedMetaDocs, Doc, DeleteDoc } from '../store/models/docs.model';
 import { Error } from '../store/models/error.model';
 import { MatDrawer } from '@angular/material';
 import { SideNavToggleService } from '../services/side-nav-toggle.service';
@@ -166,7 +166,7 @@ get file() {
       name: this.name.value,
       topic: this.topic
     }
-    console.log(upload)
+
     this.store.dispatch(new AddDocAction(upload));
     this.error$ = this.store.select(store => store.docsState.addDocError)
   }
@@ -185,25 +185,21 @@ onDocClick(doc, i){
  this.url = this.baseURL + doc._id;
  this.selectedIndex = i;
 
+ this.closeUploadDocModal();
 
 }
-onNewDocClick(){
-   this.selectedDoc = null;
- this.url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf';
 
- this.selectedIndex = -1; 
-
-}
 
 openUploadDocModal(){
 
+  this.selectedDoc = null;
+  this.selectedIndex = -1;
+  this.url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf';
+
 
   let uploadDocModal = document.getElementById("uploadDocModal");
- if (uploadDocModal.style.display === "none") {
   uploadDocModal.style.display = "block";
- } else {
-  uploadDocModal.style.display = "none";
- } 
+
 }
 
 closeUploadDocModal(){
@@ -211,6 +207,21 @@ closeUploadDocModal(){
   uploadDocModal.style.display = "none"; 
  
 }
+
+onDeleteClick(){
+  if(confirm("Delete "+ this.selectedDoc.name + "?")) {
+ /*    let deleteDoc: DeleteDoc = {userId:this.getMetaDocs.userId, _id: this.selectedDoc._id}
+    
+    this.store.dispatch(new DeleteDocAction(this.deleteDoc));
+    this.error$ = this.store.select(store => store.docsState.deleteDocError)
+  */
+      this.selectedIndex = this.selectedIndex - 1
+    }
+
+
+}
+
+
 }
 
 // check password and verify password are the same

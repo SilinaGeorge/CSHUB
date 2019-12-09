@@ -272,10 +272,9 @@ onModalSave(){
  
       this.selectedIndex = this.selectedIndex - 1
 
-      this.selectedIndex = -1
+    
     }
 
-  
 }
 
 
