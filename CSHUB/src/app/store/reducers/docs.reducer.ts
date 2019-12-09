@@ -1,4 +1,4 @@
-import { AddDoc, Doc, ReturnedMetaDocs, GetMetaDocs } from "../models/docs.model";
+import { AddDoc, Doc, ReturnedMetaDocs, GetMetaDocs, DeleteDoc, UpdateDoc } from "../models/docs.model";
 import { Error } from "../models/error.model";
 import { DocsActionTypes, DocsAction, GetDocsErrorAction } from "../actions/docs.actions";
 import { ACTIONS_SUBJECT_PROVIDERS } from "@ngrx/store/src/actions_subject";
@@ -10,6 +10,12 @@ export interface DocsState {
   getMetaDocs: GetMetaDocs,
   returnedMetaDocs: ReturnedMetaDocs,
   getMetaDocsError: Error,
+  docToBeDeleted: DeleteDoc,
+  deletedDoc: Doc,
+  deleteDocError: Error,
+  docToUpdate: UpdateDoc,
+  updatedDoc: Doc,
+  updateDocError: Error,
   loading: boolean,
 }
 
@@ -20,6 +26,12 @@ const intialState: DocsState = {
     getMetaDocs: null,
     returnedMetaDocs: null,
     getMetaDocsError: null,
+    docToBeDeleted: null,
+    deletedDoc: null,
+    deleteDocError: null,
+    docToUpdate: null,
+    updatedDoc: null,
+    updateDocError: null,
     loading: false
 };
 
@@ -54,6 +66,42 @@ export function DocsReducer(
     case DocsActionTypes.GET_DOCS_ERROR:
       return { ...state, getMetaDocsError: action.payload, loading: false };  
 
+
+
+      case DocsActionTypes.DELETE_DOC:
+        return { ...state, docToBeDeleted: action.payload, loading: true };
+      case DocsActionTypes.DELETE_DOC_SUCCESS:
+        let prevDocDelete = state.returnedMetaDocs;
+        let index = prevDocDelete.docs.findIndex(
+          note => note._id == action.payload._id
+        );
+        prevDocDelete.docs.splice(index, 1);
+        return {
+          ...state,
+          deletedNote: action.payload,
+          returnedMetaDocs: prevDocDelete,
+          loading: false
+        };
+      case DocsActionTypes.DELETE_DOC_ERROR:
+        return { ...state, deleteDocError: action.payload, loading: false };
+
+      
+        case DocsActionTypes.UPDATE_DOC:
+          return { ...state, docToUpdate: action.payload, loading: true };
+        case DocsActionTypes.UPDATE_DOC_SUCCESS:
+          let prevDocUpdate = state.returnedMetaDocs;
+          let indexUpdate = prevDocUpdate.docs.findIndex(
+            note => note._id == action.payload._id
+          );
+          prevDocUpdate.docs[indexUpdate] = action.payload;
+          return {
+            ...state,
+            updatedDoc: action.payload,
+            returnedMetaDocs: prevDocUpdate,
+            loading: false
+          };
+        case DocsActionTypes.UPDATE_DOC_ERROR:
+          return { ...state, updateDocError: action.payload, loading: false };
 
 
     default:

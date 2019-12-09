@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
-import { AddDocAction, GetDocsAction } from '../store/actions/docs.actions';
+import { AddDocAction, GetDocsAction, DeleteDocAction, UpdateDocAction } from '../store/actions/docs.actions';
 import { Subscription, Observable } from 'rxjs';
-import { AddDoc, GetMetaDocs, ReturnedMetaDocs, Doc, DeleteDoc } from '../store/models/docs.model';
+import { AddDoc, GetMetaDocs, ReturnedMetaDocs, Doc, DeleteDoc, UpdateDoc } from '../store/models/docs.model';
 import { Error } from '../store/models/error.model';
 import { MatDrawer } from '@angular/material';
 import { SideNavToggleService } from '../services/side-nav-toggle.service';
@@ -31,6 +31,7 @@ export class DocViewerComponent implements OnInit {
   selectedDoc: Doc
   selectedIndex = -1
   uploadDocFormGroup: FormGroup;
+  updateDocFormGroup: FormGroup;
   
 
   @ViewChild('docsidenav', {static: true}) public sidenav: MatDrawer;
@@ -127,6 +128,17 @@ export class DocViewerComponent implements OnInit {
       file:  ['', [Validators.required]],
     },{ validator: fileExentionValidator }
     );
+
+    this.updateDocFormGroup = this.fb.group({
+      updatename: ['', [
+        Validators.required
+      ]],
+      updatedescription: ['', [
+      ]],
+
+    });
+
+
     this.loading$ = this.store.select(store => store.docsState.loading)
   }
 checkFile(){
@@ -157,6 +169,14 @@ get file() {
   return this.uploadDocFormGroup.get('file');
 }
 
+get updatename() {
+  return this.updateDocFormGroup.get('updatename');
+}
+
+get updatedescription() {
+  return this.updateDocFormGroup.get('updatedescription');
+}
+
  onUploadClick() {
   if (this.fileToUpload){
     let upload: AddDoc ={
@@ -169,6 +189,11 @@ get file() {
 
     this.store.dispatch(new AddDocAction(upload));
     this.error$ = this.store.select(store => store.docsState.addDocError)
+    this.selectedIndex = this.selectedIndex + 1;
+
+    this.name.setValue("");
+    this.description.setValue("")
+    this.closeUploadDocModal();
   }
   
 } 
@@ -181,24 +206,41 @@ ngOnDestroy(){
 }
 
 onDocClick(doc, i){
+  if (this.selectedIndex == -1){
+    this.closeUploadDocModal();
+  }
   this.selectedDoc = doc;
  this.url = this.baseURL + doc._id;
  this.selectedIndex = i;
 
- this.closeUploadDocModal();
+ 
 
 }
 
 
 openUploadDocModal(){
 
+  let uploadDocModal = document.getElementById("uploadDocModal");
+  uploadDocModal.style.display = "block";
+
   this.selectedDoc = null;
   this.selectedIndex = -1;
   this.url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf';
 
 
-  let uploadDocModal = document.getElementById("uploadDocModal");
-  uploadDocModal.style.display = "block";
+
+}
+
+setUploadModalData(){
+  if (this.selectedDoc){
+    this.updatename.setValue(this.selectedDoc.name);
+    this.updatedescription.setValue(this.selectedDoc.description);    
+  }
+  else{
+    this.name.setValue("");
+    this.description.setValue("")
+
+  }
 
 }
 
@@ -210,16 +252,43 @@ closeUploadDocModal(){
 
 onDeleteClick(){
   if(confirm("Delete "+ this.selectedDoc.name + "?")) {
- /*    let deleteDoc: DeleteDoc = {userId:this.getMetaDocs.userId, _id: this.selectedDoc._id}
+     let deleteDoc: DeleteDoc = {userId:this.getMetaDocs.userId, _id: this.selectedDoc._id}
     
-    this.store.dispatch(new DeleteDocAction(this.deleteDoc));
+    this.store.dispatch(new DeleteDocAction(deleteDoc));
     this.error$ = this.store.select(store => store.docsState.deleteDocError)
-  */
-      this.selectedIndex = this.selectedIndex - 1
+  
+    this.selectedIndex = this.selectedIndex - 1
     }
+}
+
+openUpdateDocModal(){
+  let updateDocModal = document.getElementById("updateDocModal");
+  updateDocModal.style.display = "block";
+
+  this.setUploadModalData();
+}
+
+closeUpdateDocModal(){
+  let updateDocModal = document.getElementById("updateDocModal");
+  updateDocModal.style.display = "none";
+}
+
+onUpdateClick(){
+  let updateDoc: UpdateDoc ={
+    _id:this.selectedDoc._id,
+    userId: this.getMetaDocs.userId,
+    description: this.updatedescription.value,
+    name: this.updatename.value
+  }
+  console.log(updateDoc)
+  this.store.dispatch(new UpdateDocAction(updateDoc));
+  this.error$ = this.store.select(store => store.docsState.updateDocError)
+  this.closeUpdateDocModal();
+  
 
 
 }
+
 
 
 }

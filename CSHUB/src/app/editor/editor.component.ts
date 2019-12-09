@@ -174,14 +174,8 @@ export class EditorComponent implements OnInit {
 
 
   openModal(){
-    //if (this.selectedNote)
-
     var saveNotepopup = document.getElementById("saveNote");
-   if (saveNotepopup.style.display === "none") {
     saveNotepopup.style.display = "block";
-   } else {
-    saveNotepopup.style.display = "none";
-   } 
   }
 
    close(){
@@ -239,7 +233,6 @@ onModalSave(){
       name: this.name.value,
       content: this.content
     }
-    console.log(updateNote)
     this.store.dispatch(new updateNoteAction(updateNote));
     this.error$ = this.store.select(store => store.noteState.getTopicNotesError)
     

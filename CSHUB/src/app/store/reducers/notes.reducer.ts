@@ -94,8 +94,6 @@ export function NotesReducer(
       let indexUpdate = prevTopicNotesUpdate.notes.findIndex(
         note => note._id == action.payload._id
       );
-      console.log(indexUpdate)
-      console.log(action.payload._id)
       prevTopicNotesUpdate.notes[indexUpdate] = action.payload;
       return {
         ...state,

@@ -71,7 +71,7 @@ var path = require("path");
 
 router.post(
   "/:id",
-  isAuthenticated,
+
   isAuthorized,
   [
     check("name", "name is invalid")
@@ -208,7 +208,7 @@ router.get("/:docId", (req, res, next) => {
 // return meta data for all files for a specified user
 router.get(
   "/user/:id",
-  isAuthenticated,
+
   isAuthorized,
   [
     param("id", "Invalid ID")
@@ -255,7 +255,7 @@ router.get(
 // delete a doc for a user
 router.delete(
   "/:id/:docId",
-  isAuthenticated,
+
   isAuthorized,
   [
     param("docId", "document id is invalid")
@@ -303,11 +303,13 @@ router.delete(
           msg: "Success",
           _id: result._id,
           userId: result.userId,
+          filename: result.filename,
+          filesize: result.filesize,
           description: result.description,
           name: result.name,
           topic: result.topic,
           dateCreate: result.dateCreate,
-          dateModifiedString: result.dateCreateString
+          dateModifiedString: result.dateModifiedString
         });
       });
     });
@@ -317,7 +319,7 @@ router.delete(
 // update doc
 router.patch(
   "/:id",
-  isAuthenticated,
+
   isAuthorizedBody,
   [
     param("id", "Invalid ID").isAlphanumeric().trim().escape()
@@ -372,11 +374,13 @@ router.patch(
         msg: "Success",
         _id: result._id,
         userId: result.userId,
+        filename: result.filename,
+        filesize: result.filesize,
         description: result.description,
         name: result.name,
         topic: result.topic,
         dateCreate: result.dateCreate,
-        dateModifiedString: result.dateCreateString
+        dateModifiedString: result.dateModifiedString
       });
     });
   }

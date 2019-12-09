@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { AddDoc, Doc, GetMetaDocs, ReturnedMetaDocs } from '../models/docs.model';
+import { AddDoc, Doc, GetMetaDocs, ReturnedMetaDocs, DeleteDoc, UpdateDoc } from '../models/docs.model';
 
 export enum DocsActionTypes{
     ADD_DOC = '[DOC] Add',
@@ -10,6 +10,13 @@ export enum DocsActionTypes{
     GET_DOCS_SUCCESS = '[DOC] Get Success',
     GET_DOCS_ERROR = '[DOC] Get Error',
 
+    DELETE_DOC = '[DOC] Delete',
+    DELETE_DOC_SUCCESS = '[DOC] Delete Success',
+    DELETE_DOC_ERROR = '[DOC] Delete Error',
+
+    UPDATE_DOC = '[DOC] Update',
+    UPDATE_DOC_SUCCESS = '[DOC] Update Success',
+    UPDATE_DOC_ERROR = '[DOC] Update Error',
 
 }
 
@@ -42,11 +49,47 @@ export class GetDocsErrorAction implements Action{
     constructor(public payload: Error){};
 }
 
+
+export class DeleteDocAction implements Action{
+    readonly type = DocsActionTypes.DELETE_DOC;
+    constructor(public payload: DeleteDoc){};
+}
+
+export class DeleteDocSuccessAction implements Action{
+    readonly type = DocsActionTypes.DELETE_DOC_SUCCESS;
+    constructor(public payload: Doc){};
+}
+export class DeleteDocErrorAction implements Action{
+    readonly type = DocsActionTypes.DELETE_DOC_ERROR;
+    constructor(public payload: Error){};
+}
+
+
+export class UpdateDocAction implements Action{
+    readonly type = DocsActionTypes.UPDATE_DOC;
+    constructor(public payload: UpdateDoc){};
+}
+
+export class UpdateDocSuccessAction implements Action{
+    readonly type = DocsActionTypes.UPDATE_DOC_SUCCESS;
+    constructor(public payload: Doc){};
+}
+export class UpdateDocErrorAction implements Action{
+    readonly type = DocsActionTypes.UPDATE_DOC_ERROR;
+    constructor(public payload: Error){};
+}
+
 export type DocsAction = 
 AddDocAction|
 AddDocSuccessAction |  
 AddDocErrorAction|
 GetDocsAction |
 GetDocsSuccessAction |
-GetDocsErrorAction
+GetDocsErrorAction |
+DeleteDocAction | 
+DeleteDocSuccessAction |
+DeleteDocErrorAction |
+UpdateDocAction |
+UpdateDocSuccessAction |
+UpdateDocErrorAction
 ;

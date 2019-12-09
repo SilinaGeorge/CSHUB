@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 mongoose.set('useFindAndModify', false);
 const { check, validationResult } = require('express-validator');
-const cookie = require("cookie");
+const cookieParser = require("cookie-parser");
 const https = require('https');
 const fs = require('fs');
 const passport = require('passport');
@@ -13,6 +13,13 @@ const path = require('path');
 require('dotenv').config()
 
 const app = express();
+
+var cors = require('cors');
+var corsOptions = {
+    origin: 'https://localhost:4200',
+    credentials: true };
+
+app.use(cors(corsOptions));
 
 
 
@@ -56,16 +63,17 @@ const session = require("express-session");
 
 
 const MongoStore = require("connect-mongo")(session);
+app.use(cookieParser())
 app.use(
   session({
     secret: process.env.SESSIONSECRET,
     store: new MongoStore({
       url: mongoDB,
-      ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+      //ttl: 14 * 24 * 60 * 60 // = 14 days. Default
     }),
     resave: false,
     saveUninitialized: true,
-    cookie: { httpOnly: true, sameSite: true, secure: true, maxAge: 60000 }
+    cookie: { httpOnly: true, sameSite: true, secure: true }
   })
 );
 

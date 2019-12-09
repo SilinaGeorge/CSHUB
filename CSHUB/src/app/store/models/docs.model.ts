@@ -33,3 +33,10 @@ export interface DeleteDoc{
     _id:string,
     userId: string
 }
+
+export interface UpdateDoc{
+    _id: string,
+    userId: string,
+    description: string,
+    name: string
+}
