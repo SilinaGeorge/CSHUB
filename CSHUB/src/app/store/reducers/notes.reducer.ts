@@ -6,7 +6,7 @@ import {
   DeleteNote,
   UpdateNote
 } from "../models/note.model";
-import { GetTopicNotes, ReturnedTopicNotes } from "../models/get-notes.model";
+import { GetNotes, ReturnedNotes } from "../models/get-notes.model";
 import { NotesActionTypes, NotesAction } from "../actions/notes.actions";
 import { ACTIONS_SUBJECT_PROVIDERS } from "@ngrx/store/src/actions_subject";
 
@@ -21,9 +21,9 @@ export interface NotesState {
   updatedNote: Note;
   updateNoteError: Error;
   allNotes: Array<Note>;
-  getTopicNotes: GetTopicNotes;
-  returnedTopicNotes: ReturnedTopicNotes;
-  getTopicNotesError: Error;
+  getNotes: GetNotes;
+  returnedNotes: ReturnedNotes;
+  getNotesError: Error;
   selectedNote: SelectedNote;
   selectedCreatNewNote: boolean;
   loading: boolean;
@@ -40,12 +40,12 @@ const intialState: NotesState = {
   updatedNote: null,
   updateNoteError: null,
   allNotes: null,
-  getTopicNotes: null,
-  returnedTopicNotes: null,
+  getNotes: null,
+  returnedNotes: null,
   selectedCreatNewNote: true,
   selectedNote: null,
 
-  getTopicNotesError: null,
+  getNotesError: null,
   loading: false
 };
 
@@ -57,12 +57,12 @@ export function NotesReducer(
     case NotesActionTypes.ADD_NOTE:
       return { ...state, noteToBeAdded: action.payload, loading: true };
     case NotesActionTypes.ADD_NOTE_SUCCESS:
-      let prevTopicNotes = state.returnedTopicNotes;
+      let prevTopicNotes = state.returnedNotes;
       prevTopicNotes.notes.unshift(action.payload);
       return {
         ...state,
         addedNote: action.payload,
-        returnedTopicNotes: prevTopicNotes,
+        returnedNotes: prevTopicNotes,
         loading: false
       };
     case NotesActionTypes.ADD_NOTE_ERROR:
@@ -72,7 +72,7 @@ export function NotesReducer(
     case NotesActionTypes.DELETE_NOTE:
       return { ...state, noteToDelete: action.payload, loading: true };
     case NotesActionTypes.DELETE_NOTE_SUCCESS:
-      let prevTopicNotesDelete = state.returnedTopicNotes;
+      let prevTopicNotesDelete = state.returnedNotes;
       let index = prevTopicNotesDelete.notes.findIndex(
         note => note._id == action.payload._id
       );
@@ -80,7 +80,7 @@ export function NotesReducer(
       return {
         ...state,
         deletedNote: action.payload,
-        returnedTopicNotes: prevTopicNotesDelete,
+        returnedNotes: prevTopicNotesDelete,
         loading: false
       };
     case NotesActionTypes.DELETE_NOTE_ERROR:
@@ -90,7 +90,7 @@ export function NotesReducer(
     case NotesActionTypes.UPDATE_NOTE:
       return { ...state, noteToUpdate: action.payload, loading: true };
     case NotesActionTypes.UPDATE_NOTE_SUCCESS:
-      let prevTopicNotesUpdate = state.returnedTopicNotes;
+      let prevTopicNotesUpdate = state.returnedNotes;
       let indexUpdate = prevTopicNotesUpdate.notes.findIndex(
         note => note._id == action.payload._id
       );
@@ -98,7 +98,7 @@ export function NotesReducer(
       return {
         ...state,
         updatedNote: action.payload,
-        returnedTopicNotes: prevTopicNotesUpdate,
+        returnedNotes: prevTopicNotesUpdate,
         loading: false
       };
     case NotesActionTypes.UPDATE_NOTE_ERROR:
@@ -106,11 +106,11 @@ export function NotesReducer(
 
 
     case NotesActionTypes.GET_TOPIC_NOTES:
-      return { ...state, getTopicNotes: action.payload, loading: true };
+      return { ...state, getNotes: action.payload, loading: true };
     case NotesActionTypes.GET_TOPIC_NOTES_SUCCESS:
-      return { ...state, returnedTopicNotes: action.payload, loading: false };
+      return { ...state, returnedNotes: action.payload, loading: false };
     case NotesActionTypes.GET_TOPIC_NOTES_ERROR:
-      return { ...state, getTopicNotesError: action.payload, loading: false };
+      return { ...state, getNotesError: action.payload, loading: false };
 
     case NotesActionTypes.SELECT_NOTE:
       return { ...state, selectedNote: action.payload, loading: false };

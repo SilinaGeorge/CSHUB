@@ -5,12 +5,12 @@ export interface GetAllUserNotes{
 }
     
 
-export interface GetTopicNotes{
+export interface GetNotes{
     userId: String
-    topic: String
+    topic?: String
 }
 
 
-export interface ReturnedTopicNotes{
+export interface ReturnedNotes{
     notes: Array<Note>
 }

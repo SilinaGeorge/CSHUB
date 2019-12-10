@@ -10,6 +10,7 @@ import { SocialRedirectComponent } from './social-redirect/social-redirect.compo
 import { DocViewerComponent } from './doc-viewer/doc-viewer.component'
 import {BadRouteComponent} from './bad-route/bad-route.component'
 import {PythonInterComponent} from './python-inter/python-inter.component'
+import {ManageDocsNotesComponent} from './manage-docs-notes/manage-docs-notes.component'
 
 
 
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path:'social-redirect/:id', component: SocialRedirectComponent},
   { path:'doc-viewer', component: DocViewerComponent},
   { path:'python-inter', component: PythonInterComponent},
+  { path:'manage-docs-notes', component: ManageDocsNotesComponent},
   { path:'**', component: BadRouteComponent},
 ];
 

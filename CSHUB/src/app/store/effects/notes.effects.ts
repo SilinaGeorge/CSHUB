@@ -6,9 +6,9 @@ import { AddNoteAction,
     AddNoteErrorAction, 
     AddNoteSuccessAction, 
     NotesActionTypes, 
-    GetTopicNotesAction, 
-    GetTopicNotesErrorAction, 
-    GetTopicNotesSuccessAction,
+    GetNotesAction, 
+    GetNotesErrorAction, 
+    GetNotesSuccessAction,
 DeleteNoteAction,
 DeleteNoteErrorAction,
 DeleteNoteSuccessAction,
@@ -79,16 +79,16 @@ export class NotesEffects {
 
         @Effect() getTopicNotes = this.actions$
         .pipe(
-            ofType<GetTopicNotesAction>(NotesActionTypes.GET_TOPIC_NOTES),
+            ofType<GetNotesAction>(NotesActionTypes.GET_TOPIC_NOTES),
             mergeMap(
-                data => this.noteService.GetTopicNotes(data.payload)
+                data => this.noteService.GetNotes(data.payload)
                     .pipe(
                         map(data => {
 
-                            return new GetTopicNotesSuccessAction(data)
+                            return new GetNotesSuccessAction(data)
                         }),
                         catchError((error) => {
-                            return of(new GetTopicNotesErrorAction(error.error))
+                            return of(new GetNotesErrorAction(error.error))
                         }
                         )
                     )

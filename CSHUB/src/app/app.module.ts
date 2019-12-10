@@ -46,7 +46,9 @@ import {
    MatSidenavModule, 
    MatDialogModule,
    MatTableModule,
-   MatGridListModule
+   MatGridListModule,
+   MatPaginatorModule,
+   MatSortModule
   } from '@angular/material';
   
 
@@ -82,6 +84,10 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { TitleComponent } from './title/title.component';
 import { BadRouteComponent } from './bad-route/bad-route.component';
 import { PythonInterComponent } from './python-inter/python-inter.component';
+import { ManageDocsNotesComponent } from './manage-docs-notes/manage-docs-notes.component';
+import { ManageNotesComponent } from './manage-notes/manage-notes.component';
+import { ManageDocsComponent } from './manage-docs/manage-docs.component';
+import { ManageNotesDialogBoxComponent } from './manage-notes-dialog-box/manage-notes-dialog-box.component';
 
 
 @NgModule({
@@ -109,6 +115,10 @@ import { PythonInterComponent } from './python-inter/python-inter.component';
     TitleComponent,
     BadRouteComponent,
     PythonInterComponent,
+    ManageDocsNotesComponent,
+    ManageNotesComponent,
+    ManageDocsComponent,
+    ManageNotesDialogBoxComponent,
   ],
   imports: [
     NgxSummernoteModule,
@@ -142,16 +152,19 @@ import { PythonInterComponent } from './python-inter/python-inter.component';
     MatIconModule,
     MatCheckboxModule,
     MatInputModule, 
+    MatPaginatorModule,
+    MatSortModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
     BrowserModule,
-    AppRoutingModule,    
+    AppRoutingModule,   
+   
   ],
   providers: [
   ],
   bootstrap: [AppComponent],
-  entryComponents:[NotifDialogPopupComponent,],
+  entryComponents:[NotifDialogPopupComponent,ManageNotesDialogBoxComponent],
 })
 export class AppModule { }

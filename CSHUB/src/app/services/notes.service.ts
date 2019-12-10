@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AddNote } from '../store/models/add-note.model';
-import { ReturnedTopicNotes, GetTopicNotes } from '../store/models/get-notes.model';
+import { ReturnedNotes, GetNotes } from '../store/models/get-notes.model';
 import { Note, DeleteNote, UpdateNote } from '../store/models/note.model';
 import { HttpClient } from '@angular/common/http'
 import { delay } from 'rxjs/operators';
@@ -28,9 +28,12 @@ export class NotesService {
     return this.http.patch<Note>(`${this.URL}/${updateNoteData._id}`,updateNoteData);
   };
 
-  GetTopicNotes(getTopicNotesData: GetTopicNotes) {
- 
-    return this.http.get<ReturnedTopicNotes>(`${this.URL}/${getTopicNotesData.userId}?topic=${getTopicNotesData.topic}`);
+  GetNotes(getTopicNotesData: GetNotes) {
+    if ('topic' in getTopicNotesData)
+      return this.http.get<ReturnedNotes>(`${this.URL}/${getTopicNotesData.userId}?topic=${getTopicNotesData.topic}`);
+
+      return this.http.get<ReturnedNotes>(`${this.URL}/${getTopicNotesData.userId}`);
+    
   };
 
 

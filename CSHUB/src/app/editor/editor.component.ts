@@ -6,8 +6,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
-import { GetTopicNotes, ReturnedTopicNotes } from '../store/models/get-notes.model';
-import { GetTopicNotesAction, AddNoteAction, DeleteNoteAction, updateNoteAction } from '../store/actions/notes.actions';
+import { GetNotes, ReturnedNotes } from '../store/models/get-notes.model';
+import { GetNotesAction, AddNoteAction, DeleteNoteAction, updateNoteAction } from '../store/actions/notes.actions';
 import { Error } from '../store/models/error.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Topics} from '../topics'
@@ -33,8 +33,8 @@ export class EditorComponent implements OnInit {
   error$: Observable<Error>;
   selectedNote: Note;
   isCreateNewNote: boolean = true;
-  getTopicNotes: GetTopicNotes = {userId: null, topic: null}
-  topicNotes: ReturnedTopicNotes;
+  getTopicNotes: GetNotes = {userId: null, topic: null}
+  topicNotes: ReturnedNotes;
   //selectedNoteId: String = "-1";
   initialSelectedNoteId: String = "";
   selectedIndex: number = -1;
@@ -88,7 +88,7 @@ export class EditorComponent implements OnInit {
       if (state){
         this.userID = state.user.user._id
          this.getTopicNotes.userId = this.userID;
-         this.topicNotes = state.noteState.returnedTopicNotes
+         this.topicNotes = state.noteState.returnedNotes
 
   
          if (this.initialSelectedNoteId && this.topicNotes){
@@ -128,9 +128,9 @@ export class EditorComponent implements OnInit {
       }
       }); 
 
-    this.store.dispatch(new GetTopicNotesAction(this.getTopicNotes));
+    this.store.dispatch(new GetNotesAction(this.getTopicNotes));
     //this.topicNotes$ = this.store.select(store => store.noteState.returnedTopicNotes)
-    this.error$ = this.store.select(store => store.noteState.getTopicNotesError)
+    this.error$ = this.store.select(store => store.noteState.getNotesError)
     
 
     let hamburgerIcon = document.getElementById("hamburgerIcon");
@@ -234,7 +234,7 @@ onModalSave(){
       content: this.content
     }
     this.store.dispatch(new updateNoteAction(updateNote));
-    this.error$ = this.store.select(store => store.noteState.getTopicNotesError)
+    this.error$ = this.store.select(store => store.noteState.updateNoteError)
     
 
   }

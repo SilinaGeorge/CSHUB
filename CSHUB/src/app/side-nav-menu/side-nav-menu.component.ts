@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReturnedTopicNotes, GetTopicNotes } from '../store/models/get-notes.model';
+import { ReturnedNotes, GetNotes } from '../store/models/get-notes.model';
 import { Observable } from 'rxjs/internal/Observable';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
@@ -14,8 +14,8 @@ import { SelectedNote } from '../store/models/note.model';
   styleUrls: ['./side-nav-menu.component.css']
 })
 export class SideNavMenuComponent implements OnInit {
-  topicNotes$: Observable<ReturnedTopicNotes>;
-  topic$: Observable<GetTopicNotes>;
+  topicNotes$: Observable<ReturnedNotes>;
+  topic$: Observable<GetNotes>;
   selectedNoteId: number = -1;
   selectedNote: SelectedNote = {note:null, newNote:null};
 
@@ -25,8 +25,8 @@ export class SideNavMenuComponent implements OnInit {
 
   ngOnInit() {
 
-    this.topicNotes$ = this.store.select(store => store.noteState.returnedTopicNotes)
-    this.topic$ = this.store.select(store => store.noteState.getTopicNotes)
+    this.topicNotes$ = this.store.select(store => store.noteState.returnedNotes)
+    this.topic$ = this.store.select(store => store.noteState.getNotes)
 
   }
 

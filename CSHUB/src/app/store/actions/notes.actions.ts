@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { AddNote } from '../models/add-note.model';
-import { GetAllUserNotes, GetTopicNotes, ReturnedTopicNotes } from '../models/get-notes.model';
+import { GetAllUserNotes, GetNotes, ReturnedNotes } from '../models/get-notes.model';
 import { Note, SelectedNote, DeleteNote, UpdateNote } from '../models/note.model';
 import { Error } from '../models/error.model';
 
@@ -52,16 +52,16 @@ export class DeleteNoteErrorAction implements Action{
     constructor(public payload: Error){};
 }
 
-    export class GetTopicNotesAction implements Action{
+    export class GetNotesAction implements Action{
     readonly type = NotesActionTypes.GET_TOPIC_NOTES;
-    constructor(public payload: GetTopicNotes){};
+    constructor(public payload: GetNotes){};
 }
 
-export class GetTopicNotesSuccessAction implements Action{
+export class GetNotesSuccessAction implements Action{
     readonly type = NotesActionTypes.GET_TOPIC_NOTES_SUCCESS;
-    constructor(public payload: ReturnedTopicNotes){};
+    constructor(public payload: ReturnedNotes){};
 }
-export class GetTopicNotesErrorAction implements Action{
+export class GetNotesErrorAction implements Action{
     readonly type = NotesActionTypes.GET_TOPIC_NOTES_ERROR;
     constructor(public payload: Error){};
 }
@@ -89,9 +89,9 @@ export type NotesAction =
 AddNoteAction|
 AddNoteSuccessAction | 
 AddNoteErrorAction | 
-GetTopicNotesAction |
-GetTopicNotesSuccessAction |
-GetTopicNotesErrorAction |
+GetNotesAction |
+GetNotesSuccessAction |
+GetNotesErrorAction |
 SelectNoteAction |
 DeleteNoteAction |
 DeleteNoteSuccessAction |

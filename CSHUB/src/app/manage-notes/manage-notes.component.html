@@ -1,0 +1,81 @@
+
+<br>
+
+<div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
+    <ul >
+        <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li> 
+
+    </ul>
+</div>
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    <mat-hint>search for content in your notes, name, description, topic, date created and date modified</mat-hint>
+  </mat-form-field>
+
+  <br>
+  
+<div class="mat-elevation-z8" >
+<table mat-table [dataSource]="dataSource" matSort #mytable class="my-table mat-elevation-z8" style='width:100%; height:100%'>
+ 
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+ 
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID. </th>
+      <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+    </ng-container>
+ 
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+
+                  <!-- Topic Column -->
+        <ng-container matColumnDef="topic">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> topic </th>
+            <td mat-cell *matCellDef="let element"> {{element.topic}} </td>
+          </ng-container>
+
+                                    <!-- Date Created Column -->
+        <ng-container matColumnDef="dateCreated">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Created </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateCreate}} </td>
+          </ng-container>
+
+                  <!-- Date Modified Column -->
+        <ng-container matColumnDef="dateModified">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Modified</th>
+            <td mat-cell *matCellDef="let element"> {{element.dateModifiedString}} </td>
+          </ng-container>
+
+                            <!-- content  Column -->
+        <ng-container matColumnDef="content">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Modified</th>
+            <td mat-cell *matCellDef="let element"> {{element.content}} </td>
+          </ng-container>
+
+ 
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element"> 
+        <a (click)="openDialog('Update',element)" class='link'>Edit</a> | 
+        <a (click)="openDialog('Delete',element)" class='link'>Delete</a>  
+      </td>
+    </ng-container>
+ 
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 15, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
