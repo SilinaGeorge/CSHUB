@@ -7,7 +7,7 @@ import { ManageNotesDialogBoxComponent } from '../manage-notes-dialog-box/manage
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { Subscription, Observable } from 'rxjs';
-import { GetNotesAction, DeleteNoteAction } from '../store/actions/notes.actions';
+import { GetNotesAction, DeleteNoteAction, updateNoteAction } from '../store/actions/notes.actions';
 import { GetNotes, ReturnedNotes } from '../store/models/get-notes.model';
 import { Note } from '../store/models/note.model';
 import { Error } from '../store/models/error.model';
@@ -21,7 +21,6 @@ import * as moment from 'moment';
 })
 export class ManageNotesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'description', 'topic', 'dateCreated', 'dateModified' ,'action'];
-  //dataSource = ELEMENT_DATA;
   dataSource = new MatTableDataSource<Note>();
  
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
@@ -48,9 +47,14 @@ export class ManageNotesComponent implements OnInit {
         this.userId = state.user.user._id;
         this.notes = state.noteState.returnedNotes;
         if (this.notes){
-          this.dataSource = new MatTableDataSource(this.notes.notes);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          this.notes.notes.forEach(element => {
+            element.dateCreate = moment(element.dateCreate).format(("D/M/YYYY h:mm:ss a"))
+
+            this.dataSource = new MatTableDataSource(this.notes.notes);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
+         
         }
          
 
@@ -63,11 +67,15 @@ export class ManageNotesComponent implements OnInit {
      
   }
 
+  
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   openDialog(action,obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(ManageNotesDialogBoxComponent, {
-      width: '250px',
+      width: '40%',
       data:obj
     });
  
@@ -82,12 +90,10 @@ export class ManageNotesComponent implements OnInit {
  
 
   updateRowData(row_obj){
-    this.dataSource.data = this.dataSource.data.filter((value,key)=>{
-      if(value._id == row_obj._id){
-        value.name = row_obj.name;
-      }
-      return true;
-    });
+    let update = {userId: this.userId, _id: row_obj._id, name: row_obj.name, description:row_obj.description}
+    this.store.dispatch(new updateNoteAction(update));
+    this.error$ = this.store.select(store => store.noteState.updateNoteError)
+    
   }
   deleteRowData(row_obj){
 

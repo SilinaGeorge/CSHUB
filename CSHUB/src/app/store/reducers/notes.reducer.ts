@@ -106,11 +106,11 @@ export function NotesReducer(
 
 
     case NotesActionTypes.GET_TOPIC_NOTES:
-      return { ...state, getNotes: action.payload, loading: true };
+      return { ...state, getNotes: action.payload, loading: true, returnedNotes:null, getNotesError:null };
     case NotesActionTypes.GET_TOPIC_NOTES_SUCCESS:
-      return { ...state, returnedNotes: action.payload, loading: false };
+      return { ...state, returnedNotes: action.payload, loading: false, getNotesError:null };
     case NotesActionTypes.GET_TOPIC_NOTES_ERROR:
-      return { ...state, getNotesError: action.payload, loading: false };
+      return { ...state, getNotesError: action.payload, loading: false , returnedNotes:null};
 
     case NotesActionTypes.SELECT_NOTE:
       return { ...state, selectedNote: action.payload, loading: false };

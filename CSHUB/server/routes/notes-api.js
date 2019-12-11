@@ -153,7 +153,7 @@ router.delete("/:noteId/:id",isAuthenticated,isAuthorized, [
       check('userId', 'userId is invalid').isAlphanumeric().trim().escape().not().isEmpty(),
       check('name', 'name is invalid').trim().escape().isLength({ max: 50 }).not().isEmpty(),
       check('description', 'description is invalid').trim().escape().isLength({ max: 210 }),
-      check('content', 'invalid content'),
+      check('content', 'invalid content').optional(),
     ], (req, res, next) => {
   
     
@@ -167,13 +167,14 @@ router.delete("/:noteId/:id",isAuthenticated,isAuthorized, [
       const userId = req.body.userId;
 
       const date = new Date();
-      
-      const update = {
+      let update = {
         name: req.body.name,
-        content: req.body.content,
         description: req.body.description,
         dateModifiedString: moment(date).format(("D/M/YYYY h:mm:ss a"))
-      }
+    }
+
+      if (req.body.content) update.content = req.body.content
+  
       
       Notes.findOneAndUpdate({_id: noteId, userId: userId}, update, {new: true}).exec(function (err, result) {
         if (err) return res.status(500).json({ msgs: ["Server Error"] });
@@ -188,7 +189,7 @@ router.delete("/:noteId/:id",isAuthenticated,isAuthorized, [
           name: result.name,
           topic: result.topic,
           dateCreate: result.dateCreate,
-          dateModifiedString: result.dateCreateString
+          dateModifiedString: result.dateModifiedString
           
         });
       });

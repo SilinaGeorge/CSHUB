@@ -1,13 +1,45 @@
-<h1 mat-dialog-title>Row Action :: <strong>{{action}}</strong></h1>
-<div mat-dialog-content>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} Name" matInput [(ngModel)]="local_data.name">
-  </mat-form-field>
+<h1 mat-dialog-title>{{action}}:{{local_data.name}}</h1>
+<div mat-dialog-content style="min-height: 20vh!important">
+  <div *ngIf="action != 'Delete'; else elseTemplate" >
+        <form [formGroup]="saveNoteFormGroup" (ngSubmit)="UpdateClick()">
+            <div class="modal-body">
+
+
+                <mat-form-field style="width: 90%!important">
+                    <input matInput type="text" placeholder="Name" autocomplete="off" maxlength="50"
+                        formControlName="name">
+                        <mat-error>Please enter name</mat-error>
+                </mat-form-field>
+                
+                <br>
+
+                <mat-form-field style="width: 90%!important">
+
+                    <textarea style='resize: none;' matInput type="text" placeholder="Description" rows='4'
+                        maxlength="210" formControlName="description"></textarea>
+
+                </mat-form-field>
+
+                <div mat-dialog-actions>
+                    <button type='submit' mat-button  [disabled]="saveNoteFormGroup.invalid">{{action}}</button>
+                    
+                    <button type='button' mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+                  </div>
+
+            </div>
+        </form>
+
+
+  
+  </div>
   <ng-template #elseTemplate>
-    Sure to delete <b>{{local_data.name}}</b>?
+    Are you sure you want to delete <b>{{local_data.name}}</b>?
+
+    <div mat-dialog-actions>
+        <button mat-button (click)="DeleteClick()">{{action}}</button>
+        <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+      </div>
+
   </ng-template>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="doAction()">{{action}}</button>
-  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
-</div>
+

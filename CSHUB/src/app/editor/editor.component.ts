@@ -51,6 +51,10 @@ export class EditorComponent implements OnInit {
     private router: Router) { 
 
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
+          
+    
+
     }
 
   ngOnDestroy(){
@@ -67,71 +71,67 @@ export class EditorComponent implements OnInit {
   }
   ngOnInit() {
 
-    this.loading$ = this.store.select(store => store.noteState.loading)
     this.sideNavService.setSidenav(this.sidenav);
 
-     this.actroute.queryParams.subscribe(params => {
-      this.topic = params.topic;
+    this.actroute.queryParams.subscribe(params => {
+     this.topic = params.topic;
+    
+     if (params.noteId) {
+
+       this.initialSelectedNoteId = params.noteId
+       //this.selectedNoteId = this.initialSelectedNoteId
+
+     }
      
-      if (params.noteId) {
+     if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/login-home'])
+     else this.getTopicNotes.topic = this.topic
+ });
+   
+   this.subscription = this.store.select(store => store).subscribe(state =>   {
+     if (state){
+       this.userID = state.user.user._id
+        this.getTopicNotes.userId = this.userID;
+       
+     }
+     }); 
+     this.loading$ = this.store.select(store => store.noteState.loading)
+   this.store.dispatch(new GetNotesAction(this.getTopicNotes))
+   //this.topicNotes$ = this.store.select(store => store.noteState.returnedTopicNotes)
+   this.error$ = this.store.select(store => store.noteState.getNotesError)
 
-        this.initialSelectedNoteId = params.noteId
-        //this.selectedNoteId = this.initialSelectedNoteId
+   this.store.select(store => store.noteState.returnedNotes).subscribe(notes =>{
+     if (notes){
 
-      }
-      
-      if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/login-home'])
-      else this.getTopicNotes.topic = this.topic
-  });
-    
-    this.subscription = this.store.select(store => store).subscribe(state =>   {
-      if (state){
-        this.userID = state.user.user._id
-         this.getTopicNotes.userId = this.userID;
-         this.topicNotes = state.noteState.returnedNotes
-
+      this.topicNotes = notes
   
-         if (this.initialSelectedNoteId && this.topicNotes){
-          
-          
-          for(let i=0; i< this.topicNotes.notes.length; i++) {
-             if (this.topicNotes.notes[i]._id == this.initialSelectedNoteId) {
-               this.selectedNote = this.topicNotes.notes[i];
-               this.content = this.topicNotes.notes[i].content;
-               this.selectedIndex = i;
-               this.initialSelectedNoteId = null;
-               break;
-             }
+      if (this.initialSelectedNoteId && this.topicNotes){
 
-           };
-           if (this.selectedNote == null){
-            //this.selectedNoteId = "-1"
+       for(let i=0; i< this.topicNotes.notes.length; i++) {
+          if (this.topicNotes.notes[i]._id == this.initialSelectedNoteId) {
+            this.selectedNote = this.topicNotes.notes[i];
+            this.content = this.topicNotes.notes[i].content;
+            this.selectedIndex = i;
             this.initialSelectedNoteId = null;
-            this.selectedIndex = -1;
+            break;
+          }
 
-           }
-         }
-          else if (this.selectedIndex != -1){
-          this.selectedNote = this.topicNotes.notes[this.selectedIndex]
-          this.content = this.selectedNote.content;
-          //this.selectedNoteId = this.selectedNote._id
+        };
+        if (this.selectedNote == null){
+         //this.selectedNoteId = "-1"
+         this.initialSelectedNoteId = null;
+         this.selectedIndex = -1;
 
-         }  
-          else{
-          //this.selectedNoteId = "-1"
-          //this.selectedIndex = -1;
-          this.selectedNote = null
-          this.content = "";
-
-         } 
-         
+        }
       }
-      }); 
+      else{
+        this.initialSelectedNoteId = null;
+        this.selectedIndex = -1;
+        this.content =""
 
-    this.store.dispatch(new GetNotesAction(this.getTopicNotes));
-    //this.topicNotes$ = this.store.select(store => store.noteState.returnedTopicNotes)
-    this.error$ = this.store.select(store => store.noteState.getNotesError)
-    
+      }
+     }
+   })
+
 
     let hamburgerIcon = document.getElementById("hamburgerIcon");
     hamburgerIcon.style.display = "block";

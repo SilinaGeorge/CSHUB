@@ -6,7 +6,7 @@ export interface Note{
     description: String,
     name: String,
     topic: String,
-    dateCreate: Date,
+    dateCreate: Date | string,
     dateModifiedString: String
 }
 
@@ -20,7 +20,7 @@ export interface UpdateNote{
     userId: String,
     description: String,
     name: String,
-    content: String
+    content?: String
 
 }
 
