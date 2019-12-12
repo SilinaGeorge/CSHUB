@@ -44,8 +44,7 @@ export class DocViewerComponent implements OnInit {
     }
 
   ngOnInit() {
-
-    
+    this.sideNavService.setSidenav(this.sidenav);
 
     this.actroute.queryParams.subscribe(params => {
       this.topic = params.topic;
@@ -56,68 +55,52 @@ export class DocViewerComponent implements OnInit {
       else this.getMetaDocs.topic = this.topic
   });
 
-  this.sideNavService.setSidenav(this.sidenav);
+    this.subscription = this.store.select(store => store.user).subscribe(state =>   {
+      if (state){
+         this.getMetaDocs.userId = state.user._id;       
+      }
+    }); 
+
+      this.loading$ = this.store.select(store => store.docsState.loading)
+    this.store.dispatch(new GetDocsAction(this.getMetaDocs));
+    this.error$ = this.store.select(store => store.docsState.getMetaDocsError)
+
+    this.store.select(store => store.docsState.returnedMetaDocs).subscribe(docs =>{
+      if (docs){
+        this.metaDocs = docs
+
+  
+        if (this.initialSelectedDocId && this.metaDocs){
+         
+         for(let i=0; i< this.metaDocs.docs.length; i++) {
+            if (this.metaDocs.docs[i]._id == this.initialSelectedDocId) {
+              this.selectedDoc = this.metaDocs.docs[i];
+              this.url = this.baseURL + this.metaDocs.docs[i]._id;
+              this.selectedIndex = i;
+              this.initialSelectedDocId = null;
+              break;
+            }
+
+          };
+          if (this.selectedDoc == null){
+           
+           this.initialSelectedDocId = null;
+           this.selectedIndex = -1;
+           this.openUploadDocModal()
+          }
+        } 
+         else {
+          this.selectedIndex = -1
+         this.selectedDoc = null
+         this.url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf'
+         this.openUploadDocModal()
+        } 
+      }
+    })
+
     let hamburgerIcon = document.getElementById("hamburgerIcon");
     hamburgerIcon.style.display = "block";
     
-    this.subscription = this.store.select(store => store).subscribe(state =>   {
-      if (state){
-         this.getMetaDocs.userId = state.user.user._id;
-         this.metaDocs = state.docsState.returnedMetaDocs
-
-  
-         if (this.initialSelectedDocId && this.metaDocs){
-          
-          
-          for(let i=0; i< this.metaDocs.docs.length; i++) {
-             if (this.metaDocs.docs[i]._id == this.initialSelectedDocId) {
-               this.selectedDoc = this.metaDocs.docs[i];
-               this.url = this.baseURL + this.metaDocs.docs[i]._id;
-               this.selectedIndex = i;
-               this.initialSelectedDocId = null;
-               break;
-             }
-
-           };
-           if (this.selectedDoc == null){
-            
-            this.initialSelectedDocId = null;
-            this.selectedIndex = -1;
-            this.openUploadDocModal()
-          
-
-           }
-         }
-          else if (this.selectedIndex != -1 && this.metaDocs){
-            
-
-          try{
-          this.selectedDoc = this.metaDocs.docs[this.selectedIndex]
-          console.log(this.selectedDoc)
-          this.url = this.baseURL + this.selectedDoc._id;
-          }catch(err){
-            console.log(err)
-             this.selectedIndex = -1
-            this.selectedDoc = null
-            this.url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf'
-            this.openUploadDocModal() 
-          }
-
-         }  
-          else {
-           this.selectedIndex = -1
-          this.selectedDoc = null
-          this.url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf'
-          this.openUploadDocModal()
-         } 
-         
-      }
-      }); 
-    
-    this.store.dispatch(new GetDocsAction(this.getMetaDocs));
-    //this.topicNotes$ = this.store.select(store => store.noteState.returnedTopicNotes)
-    this.error$ = this.store.select(store => store.docsState.getMetaDocsError)
-
 
     this.uploadDocFormGroup = this.fb.group({
       name: ['', [

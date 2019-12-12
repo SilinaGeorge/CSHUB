@@ -23,7 +23,10 @@ export class DocsService {
   };
 
   GetDocs(getDocsData: GetMetaDocs) {
+    if ('topic' in getDocsData)
     return this.http.get<ReturnedMetaDocs>(`${this.URL}/user/${getDocsData.userId}?topic=${getDocsData.topic}`);
+
+    return this.http.get<ReturnedMetaDocs>(`${this.URL}/user/${getDocsData.userId}`);
   };
 
   DeleteDoc(deleteDocData: DeleteDoc) {

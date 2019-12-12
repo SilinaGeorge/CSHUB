@@ -87,7 +87,9 @@ import { PythonInterComponent } from './python-inter/python-inter.component';
 import { ManageDocsNotesComponent } from './manage-docs-notes/manage-docs-notes.component';
 import { ManageNotesComponent } from './manage-notes/manage-notes.component';
 import { ManageDocsComponent } from './manage-docs/manage-docs.component';
-import { ManageNotesDialogBoxComponent } from './manage-notes-dialog-box/manage-notes-dialog-box.component';
+import { NotesDocsDialogBoxComponent } from './notes-docs-dialog-box/notes-docs-dialog-box.component';
+import { AuthGuard } from './auth.guard';
+
 
 
 @NgModule({
@@ -118,7 +120,7 @@ import { ManageNotesDialogBoxComponent } from './manage-notes-dialog-box/manage-
     ManageDocsNotesComponent,
     ManageNotesComponent,
     ManageDocsComponent,
-    ManageNotesDialogBoxComponent,
+    NotesDocsDialogBoxComponent
   ],
   imports: [
     NgxSummernoteModule,
@@ -162,9 +164,9 @@ import { ManageNotesDialogBoxComponent } from './manage-notes-dialog-box/manage-
     AppRoutingModule,   
    
   ],
-  providers: [
+  providers: [ AuthGuard
   ],
   bootstrap: [AppComponent],
-  entryComponents:[NotifDialogPopupComponent,ManageNotesDialogBoxComponent],
+  entryComponents:[NotifDialogPopupComponent,NotesDocsDialogBoxComponent],
 })
 export class AppModule { }

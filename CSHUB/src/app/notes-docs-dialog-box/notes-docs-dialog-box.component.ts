@@ -2,7 +2,6 @@ import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-
 export interface UsersData {
   name: string;
   id: number;
@@ -10,22 +9,22 @@ export interface UsersData {
 
 
 @Component({
-  selector: 'app-manage-notes-dialog-box',
-  templateUrl: './manage-notes-dialog-box.component.html',
-  styleUrls: ['./manage-notes-dialog-box.component.css']
+  selector: 'app-notes-docs-dialog-box',
+  templateUrl: './notes-docs-dialog-box.component.html',
+  styleUrls: ['./notes-docs-dialog-box.component.css']
 })
-export class ManageNotesDialogBoxComponent implements OnInit {
+export class NotesDocsDialogBoxComponent implements OnInit {
 
   saveNoteFormGroup: FormGroup;
   action:string;
   local_data:any;
- 
 
 
   constructor(
-    public dialogRef: MatDialogRef<ManageNotesDialogBoxComponent>,
+    public dialogRef: MatDialogRef<NotesDocsDialogBoxComponent>,
     //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData,
+    @Optional() @Inject(MAT_DIALOG_DATA)
+    public data: UsersData,
     private fb: FormBuilder, ) {
     
     this.local_data = {...data};
@@ -67,5 +66,6 @@ export class ManageNotesDialogBoxComponent implements OnInit {
   closeDialog(){
     this.dialogRef.close({event:'Cancel'});
   }
+
 
 }

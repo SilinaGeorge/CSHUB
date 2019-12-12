@@ -11,6 +11,7 @@ import { DocViewerComponent } from './doc-viewer/doc-viewer.component'
 import {BadRouteComponent} from './bad-route/bad-route.component'
 import {PythonInterComponent} from './python-inter/python-inter.component'
 import {ManageDocsNotesComponent} from './manage-docs-notes/manage-docs-notes.component'
+import { AuthGuard } from './auth.guard';
 
 
 
@@ -19,12 +20,12 @@ const routes: Routes = [
   { path:'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path:'about', component: AboutComponent},
-  { path:'login-home', component: LoginHomeComponent},
-  { path:'editor', component: EditorComponent},
+  { path:'login-home', component: LoginHomeComponent, canActivate:[AuthGuard]},
+  { path:'editor', component: EditorComponent, canActivate:[AuthGuard]},
   { path:'social-redirect/:id', component: SocialRedirectComponent},
-  { path:'doc-viewer', component: DocViewerComponent},
-  { path:'python-inter', component: PythonInterComponent},
-  { path:'manage-docs-notes', component: ManageDocsNotesComponent},
+  { path:'doc-viewer', component: DocViewerComponent, canActivate:[AuthGuard]},
+  { path:'python-inter', component: PythonInterComponent, canActivate:[AuthGuard]},
+  { path:'manage-docs-notes', component: ManageDocsNotesComponent, canActivate:[AuthGuard]},
   { path:'**', component: BadRouteComponent},
 ];
 

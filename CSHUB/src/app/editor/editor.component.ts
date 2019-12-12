@@ -87,16 +87,17 @@ export class EditorComponent implements OnInit {
      else this.getTopicNotes.topic = this.topic
  });
    
-   this.subscription = this.store.select(store => store).subscribe(state =>   {
+   this.subscription = this.store.select(store => store.user).subscribe(state =>   {
      if (state){
-       this.userID = state.user.user._id
+       this.userID = state.user._id
         this.getTopicNotes.userId = this.userID;
        
      }
      }); 
-     this.loading$ = this.store.select(store => store.noteState.loading)
+
+
+  this.loading$ = this.store.select(store => store.noteState.loading)
    this.store.dispatch(new GetNotesAction(this.getTopicNotes))
-   //this.topicNotes$ = this.store.select(store => store.noteState.returnedTopicNotes)
    this.error$ = this.store.select(store => store.noteState.getNotesError)
 
    this.store.select(store => store.noteState.returnedNotes).subscribe(notes =>{

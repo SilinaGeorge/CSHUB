@@ -13,18 +13,27 @@ export enum UserActionTypes{
     LOGIN_USER = '[USER] Login',
     LOGIN_USER_SUCCESS = '[USER] Login Success',
     LOGIN_USER_ERROR = '[USER] Login Error',
+
     SIGNUP_USER = '[USER] Signup',
     SIGNUP_USER_SUCCESS = '[USER] Signup Success',
     SIGNUP_USER_ERROR = '[USER] Signup Error',
+
+    LOGOUT_USER = '[USER] Logout',
+    LOGOUT_USER_SUCCESS = '[USER] Logout Success',
+    LOGOUT_USER_ERROR = '[USER] Logout Error',
+
     GET_SOCIAL_USER = '[USER] Get Social Media User Info',
     GET_SOCIAL_USER_SUCCESS = '[USER] Get Social Media User Info Success',
     GET_SOCIAL_USER_ERROR = '[USER] Get Social Media User Info Error',
+
     UPDATE_SPOTIFY = '[USER] Update Spotify',
     UPDATE_SPOTIFY_SUCCESS = '[USER] Update Spotify Success',
     UPDATE_SPOTIFY_ERROR = '[USER] Update Spotify Error',
+
     ADD_NOTIF = '[USER] Add Notification',
     ADD_NOTIF_SUCCESS = '[USER] Add Notification Success',
     ADD_NOTIF_ERROR = '[USER] Add Notification Error',
+
     DELETE_NOTIF = '[USER] Delete Notification',
     DELETE_NOTIF_SUCCESS = '[USER] Delete Notification Success',
     DELETE_NOTIF_ERROR = '[USER] Delete Notification Error',
@@ -111,6 +120,21 @@ export class DeleteNotifActionErrorAction implements Action{
     constructor(public payload: Error){};
 }
 
+export class LogoutUserAction implements Action{
+    readonly type = UserActionTypes.LOGOUT_USER;
+    constructor(){};
+}
+
+export class LogoutUserSuccessAction implements Action{
+    readonly type = UserActionTypes.LOGOUT_USER_SUCCESS;
+    constructor(){};
+}
+
+export class LogoutUserErrorAction implements Action{
+    readonly type = UserActionTypes.LOGOUT_USER_ERROR;
+    constructor(public payload: Error){};
+}
+
 export type UserAction = 
 LoginUserAction|
 LoginUserSuccessAction | 
@@ -129,5 +153,8 @@ AddNotifActionSuccessAction |
 AddNotifActionErrorAction |
 DeleteNotifAction |
 DeleteNotifActionSuccessAction |
-DeleteNotifActionErrorAction
+DeleteNotifActionErrorAction |
+LogoutUserAction |
+LogoutUserSuccessAction |
+LogoutUserErrorAction
 ;

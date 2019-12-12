@@ -85,6 +85,8 @@ router.post("/login", [
   const email = req.body.email;
   const password = req.body.password;
 
+
+
   Users.findOne({ "email": email, "local": true }).exec(function (err, user) {
     if (err) return res.status(500).json({ msgs: ["Server Error"] });
     if (!user) return res.status(404).json({ msgs: ["Email is not correct"] });
@@ -92,6 +94,7 @@ router.post("/login", [
       return res.status(401).json({ msgs: ["Password is not correct"] }); // invalid password
     // start a session
     req.session.userid = user._id;
+
     return res.status(200).json({
       msg: "Success",
       _id: user._id,
@@ -221,10 +224,19 @@ router.get('/social/:id', isAuthenticated ,isAuthorized, [
   });
 });
 
-router.get('/logout', (req, res) => {
-  req.logout();
-  req.session = null;
-  res.redirect('/');
+
+router.get('/logout', function (req, res, next) {
+  
+  if (req.session) {
+    req.session.destroy(function(err) {
+      res.clearCookie('connect.sid', { path: '/' });
+      if(err) {
+        return res.status(500).json([{ msgs: "logout failure" }])
+      } else {
+        return res.status(200).json({ msgs: "Success" })
+      }
+    });
+  }
 });
 
 

@@ -3,7 +3,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable, MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import {MatSort} from '@angular/material/sort';
-import { ManageNotesDialogBoxComponent } from '../manage-notes-dialog-box/manage-notes-dialog-box.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { Subscription, Observable } from 'rxjs';
@@ -13,6 +12,7 @@ import { Note } from '../store/models/note.model';
 import { Error } from '../store/models/error.model';
 
 import * as moment from 'moment';
+import { NotesDocsDialogBoxComponent } from '../notes-docs-dialog-box/notes-docs-dialog-box.component';
 
 @Component({
   selector: 'app-manage-notes',
@@ -49,11 +49,12 @@ export class ManageNotesComponent implements OnInit {
         if (this.notes){
           this.notes.notes.forEach(element => {
             element.dateCreate = moment(element.dateCreate).format(("D/M/YYYY h:mm:ss a"))
-
-            this.dataSource = new MatTableDataSource(this.notes.notes);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
           });
+
+          
+          this.dataSource = new MatTableDataSource(this.notes.notes);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
          
         }
          
@@ -74,7 +75,7 @@ export class ManageNotesComponent implements OnInit {
 
   openDialog(action,obj) {
     obj.action = action;
-    const dialogRef = this.dialog.open(ManageNotesDialogBoxComponent, {
+    const dialogRef = this.dialog.open(NotesDocsDialogBoxComponent, {
       width: '40%',
       data:obj
     });

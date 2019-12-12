@@ -2,6 +2,7 @@ import { AddDoc, Doc, ReturnedMetaDocs, GetMetaDocs, DeleteDoc, UpdateDoc } from
 import { Error } from "../models/error.model";
 import { DocsActionTypes, DocsAction, GetDocsErrorAction } from "../actions/docs.actions";
 import { ACTIONS_SUBJECT_PROVIDERS } from "@ngrx/store/src/actions_subject";
+import { NgbButtonLabel } from '@ng-bootstrap/ng-bootstrap';
 
 export interface DocsState {
   docToBeAdded: AddDoc,
@@ -56,15 +57,16 @@ export function DocsReducer(
 
     
       case DocsActionTypes.GET_DOCS:
-      return { ...state, getMetaDocs: action.payload, loading: true };
+      return { ...state, getMetaDocs: action.payload, loading: true, returnedMetaDocs:null, getMetaDocsError:null };
     case DocsActionTypes.GET_DOCS_SUCCESS:
       return {
         ...state,
         returnedMetaDocs: action.payload,
+        getMetaDocsError: null,
         loading: false
       };
     case DocsActionTypes.GET_DOCS_ERROR:
-      return { ...state, getMetaDocsError: action.payload, loading: false };  
+      return { ...state, getMetaDocsError: action.payload, loading: false, returnedMetaDocs:null };  
 
 
 

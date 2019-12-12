@@ -7,7 +7,7 @@ export interface Doc{
     description: string,
     name: string,
     topic: string,
-    dateCreate: Date,
+    dateCreate: Date | string,
     dateModifiedString: string
 }
 

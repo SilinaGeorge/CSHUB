@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction, AddNotifAction, AddNotifActionSuccessAction, AddNotifActionErrorAction, DeleteNotifActionSuccessAction, DeleteNotifActionErrorAction, DeleteNotifAction } from '../actions/user.actions';
+import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction, AddNotifAction, AddNotifActionSuccessAction, AddNotifActionErrorAction, DeleteNotifActionSuccessAction, DeleteNotifActionErrorAction, DeleteNotifAction, LogoutUserAction, LogoutUserSuccessAction, LogoutUserErrorAction } from '../actions/user.actions';
 import { AuthService } from '../../services/auth.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -18,6 +18,8 @@ export class UsersEffects {
                 data => this.authService.loginUser(data.payload)
                     .pipe(
                         map(data => {
+                            sessionStorage.setItem("user", JSON.stringify(data));
+                            
                             this.router.navigateByUrl('/login-home')
                             return new LoginUserSuccessAction(data)
                         }),
@@ -36,6 +38,7 @@ export class UsersEffects {
                 data => this.authService.getSocialMediaUserInfo(data.payload)
                     .pipe(
                         map(data => {
+                            sessionStorage.setItem("user", JSON.stringify(data));
                             this.router.navigateByUrl('/login-home')
                             return new GetSocialUserSuccessAction(data)
                         }),
@@ -55,6 +58,7 @@ export class UsersEffects {
                 data => this.authService.signupUser(data.payload)
                     .pipe(
                         map(data => {
+                            sessionStorage.setItem("user", JSON.stringify(data));
                             this.router.navigateByUrl('/login-home')
                             return new SignupUserSuccessAction(data)
                         }),
@@ -73,6 +77,11 @@ export class UsersEffects {
                 data => this.widgetService.PatchSpotify(data.payload)
                     .pipe(
                         map(data => {
+                            if (sessionStorage.getItem('user')){
+                                var newUserLocal = JSON.parse(sessionStorage.getItem('user'))
+                                newUserLocal.spotifyurl = data.spotifyurl
+                                sessionStorage.setItem("user", JSON.stringify(newUserLocal));
+                            }
                             return new UpdateSpotifySuccessAction(data)
                         }),
                         catchError((error) => {
@@ -90,6 +99,7 @@ export class UsersEffects {
                 data => this.widgetService.PutNotif(data.payload)
                     .pipe(
                         map(data => {
+                            
                             return new AddNotifActionSuccessAction(data)
                         }),
                         catchError((error) => {
@@ -111,6 +121,26 @@ export class UsersEffects {
                         }),
                         catchError((error) => {
                             return of(new DeleteNotifActionErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
+
+        @Effect() logout = this.actions$
+        .pipe(
+            ofType<LogoutUserAction>(UserActionTypes.LOGOUT_USER),
+            mergeMap(
+                data => this.authService.logoutUser()
+                    .pipe(
+                        map(data => {
+                           
+                            this.router.navigateByUrl('/')
+                            return new LogoutUserSuccessAction()
+                        }),
+                        catchError((error) => {
+                            this.router.navigateByUrl('/')
+                            return of(new LogoutUserErrorAction(error.error))
                         }
                         )
                     )
