@@ -5,8 +5,9 @@ import { User } from '../models/user.model';
 import { Error } from '../models/error.model';
 import { Auth, SocialMediaAuth } from '../models/auth.model';
 import { SignUpUser } from '../models/sign-up-user.model';
-import { Spotify } from '../models/spotify.model';
-import { Notification } from '../models/notification.model';
+import { Spotify, GetSpotify } from '../models/spotify.model';
+import { Notification,AllNotifications, GetNotifications } from '../models/notification.model';
+
 
 
 export enum UserActionTypes{
@@ -30,6 +31,10 @@ export enum UserActionTypes{
     UPDATE_SPOTIFY_SUCCESS = '[USER] Update Spotify Success',
     UPDATE_SPOTIFY_ERROR = '[USER] Update Spotify Error',
 
+    GET_SPOTIFY = '[USER] Get Spotify',
+    GET_SPOTIFY_SUCCESS = '[USER] Get Spotify Success',
+    GET_SPOTIFY_ERROR = '[USER] Get Spotify Error',
+
     ADD_NOTIF = '[USER] Add Notification',
     ADD_NOTIF_SUCCESS = '[USER] Add Notification Success',
     ADD_NOTIF_ERROR = '[USER] Add Notification Error',
@@ -37,6 +42,10 @@ export enum UserActionTypes{
     DELETE_NOTIF = '[USER] Delete Notification',
     DELETE_NOTIF_SUCCESS = '[USER] Delete Notification Success',
     DELETE_NOTIF_ERROR = '[USER] Delete Notification Error',
+
+    GET_NOTIFS = '[USER] Get Notification',
+    GET_NOTIFS_SUCCESS = '[USER] Get Notification Success',
+    GET_NOTIFS_ERROR = '[USER] Get Notification Error',
 }
 // LOGIN
 export class LoginUserAction implements Action{
@@ -83,6 +92,8 @@ export class GetSocialUserErrorAction implements Action{
     readonly type = UserActionTypes.GET_SOCIAL_USER_ERROR;
     constructor(public payload: Error){};
 }
+
+// SPOTIFY
 export class UpdateSpotifyAction implements Action{
     readonly type = UserActionTypes.UPDATE_SPOTIFY;
     constructor(public payload: Spotify){};
@@ -95,6 +106,21 @@ export class UpdateSpotifyErrorAction implements Action{
     readonly type = UserActionTypes.UPDATE_SPOTIFY_ERROR;
     constructor(public payload: Error){};
 }
+
+export class GetSpotifyAction implements Action{
+    readonly type = UserActionTypes.GET_SPOTIFY;
+    constructor(public payload: GetSpotify){};
+}
+export class GetSpotifySuccessAction implements Action{
+    readonly type = UserActionTypes.GET_SPOTIFY_SUCCESS;
+    constructor(public payload: Spotify){};
+}
+export class GetSpotifyErrorAction implements Action{
+    readonly type = UserActionTypes.GET_SPOTIFY_ERROR;
+    constructor(public payload: Error){};
+}
+
+//NOTIFICATIONS
 export class AddNotifAction implements Action{
     readonly type = UserActionTypes.ADD_NOTIF;
     constructor(public payload: Notification){};
@@ -120,6 +146,20 @@ export class DeleteNotifActionErrorAction implements Action{
     constructor(public payload: Error){};
 }
 
+export class GetNotifsAction implements Action{
+    readonly type = UserActionTypes.GET_NOTIFS;
+    constructor(public payload: GetNotifications){};
+}
+export class GetNotifsActionSuccessAction implements Action{
+    readonly type = UserActionTypes.GET_NOTIFS_SUCCESS;
+    constructor(public payload: AllNotifications){};
+}
+export class GetNotifsActionErrorAction implements Action{
+    readonly type = UserActionTypes.GET_NOTIFS_ERROR;
+    constructor(public payload: Error){};
+}
+
+//LOGOUT
 export class LogoutUserAction implements Action{
     readonly type = UserActionTypes.LOGOUT_USER;
     constructor(){};
@@ -156,5 +196,11 @@ DeleteNotifActionSuccessAction |
 DeleteNotifActionErrorAction |
 LogoutUserAction |
 LogoutUserSuccessAction |
-LogoutUserErrorAction
+LogoutUserErrorAction |
+GetNotifsAction |
+GetNotifsActionSuccessAction |
+GetNotifsActionErrorAction |
+GetSpotifyAction |
+GetSpotifySuccessAction |
+GetSpotifyErrorAction
 ;

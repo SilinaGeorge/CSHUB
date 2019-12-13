@@ -56,7 +56,7 @@ export class DocViewerComponent implements OnInit {
   });
 
     this.subscription = this.store.select(store => store.user).subscribe(state =>   {
-      if (state){
+      if (state && state.user){
          this.getMetaDocs.userId = state.user._id;       
       }
     }); 

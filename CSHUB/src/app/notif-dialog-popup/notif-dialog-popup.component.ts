@@ -7,8 +7,10 @@ import { Observable, Subscription } from 'rxjs';
 import { Notification } from '../store/models/notification.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
-import { AddNotifAction, DeleteNotifAction } from '../store/actions/user.actions';
+import { AddNotifAction, DeleteNotifAction, GetNotifsAction } from '../store/actions/user.actions';
 import { Error } from '../store/models/error.model';
+import { take } from 'rxjs/operators';
+import { GetNotesAction } from '../store/actions/notes.actions';
 
 @Component({
   selector: 'app-notif-dialog-popup',
@@ -33,6 +35,7 @@ export class NotifDialogPopupComponent implements OnInit {
   subscription: Subscription;
   success: boolean;
   success$: Observable<boolean>;
+  userId: string;
 
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
@@ -58,22 +61,34 @@ export class NotifDialogPopupComponent implements OnInit {
 
     this.success$ = this.store.select(store => store.user.notificationSuccess)
 
-    this.subscription = this.store.select(store => store.user).subscribe(state =>   {
+     this.store.select(store => store.user.user).pipe(take(1)).subscribe(state =>   {
       if (state){
-        this.user_notifs = state.user.notifications;
-        this.addDeleteNotif._id = state.user._id;
-        this.data = this.user_notifs;
-        let dataArray = Object.assign({}, this.user_notifs)
-        this.data = Object.keys(dataArray).map(key => (
-          {id: Number(key), 
-            displayDate: moment(new Date(dataArray[key])).format(("dddd, MMMM Do YYYY, h:mm a")) ,
-            datetime: dataArray[key]
-          }));
-        this.dataSource = new MatTableDataSource(this.data);
+        this.addDeleteNotif._id = state._id;
+        this.userId = state._id
       }
       }); 
+      this.loading$ = this.store.select(store => store.user.notifLoading)
+      this.store.dispatch(new GetNotifsAction({_id:this.userId}));
+      
+
+      this.subscription = this.store.select(store => store.user.returnedNotifs).subscribe(state =>   {
+        if (state){
+          this.user_notifs = state.notifications;
+          this.data = this.user_notifs;
+          let dataArray = Object.assign({}, this.user_notifs)
+          this.data = Object.keys(dataArray).map(key => (
+            {id: Number(key), 
+              displayDate: moment(new Date(dataArray[key])).format(("dddd, MMMM Do YYYY, h:mm a")) ,
+              datetime: dataArray[key]
+            }));
+          this.dataSource = new MatTableDataSource(this.data);
+        }
+        }); 
 
   }
+
+
+
 
   get minute() {
     return this.notifFormGroup.get('minute').value;
@@ -116,7 +131,6 @@ export class NotifDialogPopupComponent implements OnInit {
       else{
     
         this.addDeleteNotif.datetime = this.dateTime.toString()
-        this.loading$ = this.store.select(store => store.user.loading)
         this.store.dispatch(new AddNotifAction(this.addDeleteNotif));
         this.error$ = this.store.select(store => store.user.notificationError)
       }
@@ -152,7 +166,6 @@ export class NotifDialogPopupComponent implements OnInit {
       let deleteItem = this.data.splice(index, 1);
 
       this.addDeleteNotif.datetime = deleteItem[0].datetime;
-      this.loading$ = this.store.select(store => store.user.loading)
       this.store.dispatch(new DeleteNotifAction(this.addDeleteNotif));
       this.deleteError$ = this.store.select(store => store.user.deleteNotificationError)
 

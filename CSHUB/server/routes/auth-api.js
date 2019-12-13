@@ -100,9 +100,7 @@ router.post("/login", [
       _id: user._id,
       email: user.email,
       firstname: user.firstname,
-      lastname: user.lastname,
-      spotifyurl: user.spotifyurl,
-      notifications: user.notifications
+      lastname: user.lastname
     });
   });
 });
@@ -217,9 +215,7 @@ router.get('/social/:id', isAuthenticated ,isAuthorized, [
       _id: user._id,
       email: user.email,
       firstname: user.firstname,
-      lastname: user.lastname,
-      spotifyurl: user.spotifyurl,
-      notifications: user.notifications
+      lastname: user.lastname
     });
   });
 });

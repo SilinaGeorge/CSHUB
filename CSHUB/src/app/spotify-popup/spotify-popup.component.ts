@@ -6,7 +6,8 @@ import { AppState } from '../store/models/app-state.model';
 import { Observable, Subscription } from 'rxjs';
 import { Spotify } from '../store/models/spotify.model';
 import { Error } from '../store/models/error.model';
-import { UpdateSpotifyAction } from '../store/actions/user.actions';
+import { UpdateSpotifyAction, GetSpotifyAction } from '../store/actions/user.actions';
+import { take } from 'rxjs/operators';
 
 
 @Component({
@@ -30,32 +31,42 @@ export class SpotifyPopupComponent implements OnInit {
   userID: string;
 
  
-  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private store: Store<AppState>) {}
+  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private store: Store<AppState>) {
+    let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, "https://open.spotify.com/embed/playlist/37i9dQZF1DX9sIqqvKsjG8");
+    this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
+    
+  }
 
   ngOnInit() {
     this.spotifyFormGroup = this.fb.group({
       spotifyurl: ['', [
         Validators.required,
-        Validators.pattern("https://open.spotify.com/(album|playlist|station)/[a-zA-Z0-9/=?]*")
+        Validators.pattern("https://open.spotify.com/(album|playlist|station)/[a-zA-Z0-9/=?_\-]*")
       ]],
 
     });
     
-    this.subscription = this.store.select(store => store.user.user).subscribe(state =>   {
+    this.subscription = this.store.select(store => store.user.user).pipe(take(1)).subscribe(state =>   {
       if (state){
-        this.url = state.spotifyurl;
         this.userID = state._id;
       }
-      if (this.url){
+    });
+    this.store.dispatch(new GetSpotifyAction({_id:this.userID}));
+   
+    this.subscription = this.store.select(store => store.user.returnedSpotify).subscribe(state =>   {
+      if (state && state.spotifyurl){
+        this.url = state.spotifyurl;
+        if (this.url){
 
-        let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, this.url);
-        this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
-      }
-      else{
-  
-        let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, "https://open.spotify.com/embed/playlist/37i9dQZF1DX9sIqqvKsjG8");
-        this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
-  
+          let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, this.url);
+          this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
+        }
+        else{
+    
+          let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, "https://open.spotify.com/embed/playlist/37i9dQZF1DX9sIqqvKsjG8");
+          this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
+    
+        }
       }
       }); 
 
@@ -87,7 +98,7 @@ export class SpotifyPopupComponent implements OnInit {
       this.spotify.spotifyurl = embedURL;
       this.spotify._id = this.userID;
   
-      this.loading$ = this.store.select(store => store.user.loading)
+      this.loading$ = this.store.select(store => store.user.spotifyLoading)
       this.store.dispatch(new UpdateSpotifyAction(this.spotify));
       this.error$ = this.store.select(store => store.user.spotifyError)
   

@@ -28,7 +28,7 @@ module.exports = function (router, passport) {
     },
         function (accessToken, refreshToken, profile, done) {
             process.nextTick(function () {
-                Users.findOne({ 'facebook_id': profile.id, 'facebook': true }, function (err, user) {
+                Users.findOne({ 'social_id': profile.id, 'facebook': true }, function (err, user) {
                     if (err) { return done(err); }
                     if (user) {
                         done(null, user);
@@ -69,7 +69,7 @@ module.exports = function (router, passport) {
       },
       function(accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
-            Users.findOne({ 'google_id': profile.id, 'google': true }, function (err, user) {
+            Users.findOne({ 'social_id': profile.id, 'google': true }, function (err, user) {
                 if (err) { return done(err); }
                 if (user) {
                     done(null, user);

@@ -43,11 +43,36 @@ const transporter = nodemailer.createTransport({
 var date = new Date(2019, 7, 15, 23, 40, 0);
  
 
+// get spotify url
+router.get("/spotify/:id", isAuthorized, [
+  param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
+], (req, res, next) => { 
+
+    // returns validation errors if there are any 
+    const result = validationResult(req).formatWith(errorFormatter);
+    if (!result.isEmpty()) {
+      return res.status(400).json({ msgs: result.array() });
+    }
+  
+    const id = req.params.id;
+
+    Users.findById(id,{spotifyurl: 1}).exec(function (err, result) {
+      if (err) return res.status(500).json({ msgs: ["Server Error"] });
+      if (!result) return res.status(404).json({ msgs: ["User can't be found"] });
+  
+      return res.status(200).json({
+        msg: "Success",
+        _id: result._id,
+        spotifyurl: result.spotifyurl
+      });
+    });
+});
+
 
 
 // spotify url change
 router.patch("/spotify/:id",isAuthenticated,isAuthorized, [
-  check('spotifyurl', 'invalid spotify playlist/album url').matches('https://open.spotify.com/album|playlist|station/[a-zA-Z0-9/=?]*'),
+  check('spotifyurl', 'invalid spotify playlist/album url').matches('https://open.spotify.com/album|playlist|station/[a-zA-Z0-9/=?-_]*'),
   param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
 ], (req, res, next) => {
 
@@ -72,6 +97,31 @@ router.patch("/spotify/:id",isAuthenticated,isAuthorized, [
   });
 });
 
+// get notifications
+
+router.get('/notifs/:id',isAuthorized,[
+  param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
+], (req,res)=>{
+    // returns validation errors if there are any 
+    const result = validationResult(req).formatWith(errorFormatter);
+    if (!result.isEmpty()) {
+      return res.status(400).json({ msgs: result.array() });
+    }
+
+    const id = req.params.id;
+
+    Users.findById(id,{notifications: 1}).exec(function (err, result) {
+    
+        if (err) return res.status(500).json({ msgs: [err] });
+        if (!result) return res.status(404).json({ msgs: ["You have a maximum of 3 notifications already or you have a notification with the same date already"] });
+    
+        return res.status(200).json({
+          msg: "Success",
+          _id: result._id,
+          notifications: result.notifications
+        });
+      });
+});
 
 // add a new notification
 router.put("/notif/:id",isAuthenticated, isAuthorized, [

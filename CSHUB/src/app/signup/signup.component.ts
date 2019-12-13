@@ -91,27 +91,6 @@ export class SignupComponent implements OnInit {
     this.store.dispatch(new SignupUserAction(this.signupUser));
     this.error$ = this.store.select(store => store.user.signupError)
 
-    /* this._userService.signupUser({
-      firstname: this.firstname,
-      lastname: this.lastname,
-      email: this.email,
-      password: this.password
-    })
-      .subscribe(
-        response => this.router.navigateByUrl('/'),
-        error => {
-          this.errorHTML = ''
-          if ('msg' in error.error) {
-            if (Array.isArray(error.error.msg)) {
-
-              error.error.msg.forEach(element => {
-                this.errorHTML += `<li>${element}</li>`
-
-              });
-            }
-            else this.errorHTML = `<li>${error.error.msg}</li>`
-          }
-        }); */
   }
 
 

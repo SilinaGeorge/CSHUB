@@ -3,3 +3,7 @@ export interface Spotify{
     spotifyurl: string,
     msg?: string
 }
+
+export interface GetSpotify{
+    _id: string,
+}
