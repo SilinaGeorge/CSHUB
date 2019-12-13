@@ -239,5 +239,11 @@ router.get('/logout', function (req, res, next) {
   }
 });
 
+router.get('/checkloggedin', (req,res)=>{
+  if (!req.session.userid) return res.status(200).json({ isloggedin: false });
+  return res.status(200).json({ isloggedin: true });
+
+})
+
 
 module.exports = router

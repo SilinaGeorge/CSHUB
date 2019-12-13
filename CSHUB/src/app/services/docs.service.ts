@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AddDoc, Doc, GetMetaDocs, ReturnedMetaDocs, DeleteDoc, UpdateDoc } from '../store/models/docs.model';
 import { HttpClient } from '@angular/common/http'
-import { delay } from 'rxjs/operators';
 
 
 @Injectable({

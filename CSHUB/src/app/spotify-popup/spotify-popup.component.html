@@ -21,7 +21,7 @@
 
                 <form [formGroup]="spotifyFormGroup" (ngSubmit)="onUpload()">
                     <mat-form-field>
-                        <input matInput type="url" placeholder="playlist/album link" minlength="6"
+                        <input matInput type="url" placeholder="playlist/album link" minlength="6" maxlength="150"
                             formControlName="spotifyurl">
                         <mat-error>Please enter a valid spotify public album/playlist link
                         </mat-error>
