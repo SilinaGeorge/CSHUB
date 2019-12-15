@@ -124,7 +124,7 @@ export class NotifDialogPopupComponent implements OnInit {
       }
 
       if (this.user_notifs.length == 3)
-        this.errorHTML = `A maximum of 2 notifications are allowed at once`;
+        this.errorHTML = `A maximum of 3 notifications are allowed at once`;
 
       else if (this.user_notifs.includes(this.dateTime.toString()))
         this.errorHTML = `You already have a notification for this date`;
@@ -166,13 +166,11 @@ export class NotifDialogPopupComponent implements OnInit {
       let deleteItem = this.data.splice(index, 1);
 
       this.addDeleteNotif.datetime = deleteItem[0].datetime;
-      this.store.dispatch(new DeleteNotifAction(this.addDeleteNotif));
+      this.store.dispatch(new DeleteNotifAction(this.addDeleteNotif))
       this.deleteError$ = this.store.select(store => store.user.deleteNotificationError)
 
-
-
-      this.dataSource = new MatTableDataSource(dataCopy);
     });
+    this.dataSource = new MatTableDataSource(dataCopy);
     this.selection = new SelectionModel(true, []);
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */

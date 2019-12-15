@@ -13,3 +13,9 @@ export interface AllNotifications{
 export interface GetNotifications{
     _id: string,
 }
+
+export interface ReturnedDeletedNotif{
+    msg: string,
+    _id: string,
+    datetime: string
+}

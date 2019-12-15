@@ -193,7 +193,7 @@ export class EditorComponent implements OnInit {
       placeholder: '',
       tabsize: 2,
       uploadImagePath: '',
-      maximumImageFileSize: 200*1024, // 200 KB 
+      maximumImageFileSize: 5000000, // 5mb
       callbacks:{ onImageUploadError: function(msg){ console.log(msg); } },
       toolbar: [
           // [groupName, [list of button]]

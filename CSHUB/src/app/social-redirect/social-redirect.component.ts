@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { ActivatedRoute  } from '@angular/router';
-import { User } from '../store/models/user.model';
 import { Error } from '../store/models/error.model';
 import { GetSocialUserAction } from '../store/actions/user.actions';
-import { Router } from '@angular/router'
 import { Observable } from 'rxjs';
 import { SocialMediaAuth } from '../store/models/auth.model';
 import { take } from 'rxjs/operators';
@@ -21,7 +19,7 @@ export class SocialRedirectComponent implements OnInit {
   user: SocialMediaAuth = {_id: null};
   error$: Observable<Error>;
 
-  constructor(private store: Store<AppState>, private activatedroute: ActivatedRoute, private router: Router) {
+  constructor(private store: Store<AppState>, private activatedroute: ActivatedRoute) {
 
 
     

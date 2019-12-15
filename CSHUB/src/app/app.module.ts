@@ -22,8 +22,6 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LoginComponent } from './login/login.component';
-import { AboutComponent } from './about/about.component';
-
 
 
 import { 
@@ -77,12 +75,12 @@ import { GoogleSearchComponent } from './google-search/google-search.component';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { TitleComponent } from './title/title.component';
 import { BadRouteComponent } from './bad-route/bad-route.component';
-import { PythonInterComponent } from './python-inter/python-inter.component';
 import { ManageDocsNotesComponent } from './manage-docs-notes/manage-docs-notes.component';
 import { ManageNotesComponent } from './manage-notes/manage-notes.component';
 import { ManageDocsComponent } from './manage-docs/manage-docs.component';
 import { NotesDocsDialogBoxComponent } from './notes-docs-dialog-box/notes-docs-dialog-box.component';
 import { AuthGuard } from './auth.guard';
+import { InterpreterComponent } from './interpreter/interpreter.component';
 
 
 
@@ -94,7 +92,6 @@ import { AuthGuard } from './auth.guard';
     SignupComponent,
     NavMenuComponent,
     LoginComponent,
-    AboutComponent,
     NotificationComponent,
     NotifDialogPopupComponent,
     TimerComponent,
@@ -110,11 +107,11 @@ import { AuthGuard } from './auth.guard';
     DigitOnlyDirective,
     TitleComponent,
     BadRouteComponent,
-    PythonInterComponent,
     ManageDocsNotesComponent,
     ManageNotesComponent,
     ManageDocsComponent,
-    NotesDocsDialogBoxComponent
+    NotesDocsDialogBoxComponent,
+    InterpreterComponent
   ],
   imports: [
     NgxSummernoteModule,

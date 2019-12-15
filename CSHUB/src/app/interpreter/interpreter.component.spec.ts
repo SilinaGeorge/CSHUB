@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PythonInterComponent } from './python-inter.component';
+import { InterpreterComponent } from './interpreter.component';
 
-describe('PythonInterComponent', () => {
-  let component: PythonInterComponent;
-  let fixture: ComponentFixture<PythonInterComponent>;
+describe('InterpreterComponent', () => {
+  let component: InterpreterComponent;
+  let fixture: ComponentFixture<InterpreterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PythonInterComponent ]
+      declarations: [ InterpreterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PythonInterComponent);
+    fixture = TestBed.createComponent(InterpreterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

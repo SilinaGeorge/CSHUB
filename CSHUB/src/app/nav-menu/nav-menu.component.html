@@ -12,6 +12,7 @@
       </a>
       <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
         <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Python'}">Python</a> 
+        <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Java'}">Java</a> 
         <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Other'}">Other</a>
       </div>
     </li>
@@ -21,21 +22,19 @@
           Documents
         </a>
         <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Python'}">Python</a> 
+          <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Python'}">Python</a>
+          <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Java'}">Java</a> 
           <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Other'}">Other</a>
         </div>
       </li>
 
       <a class="nav-link" routerLink="/manage-docs-notes">Manage Documents & Notes</a>
 
-    <app-notification></app-notification>
-
-    <app-spotify></app-spotify>
-    <app-timer-icon></app-timer-icon>
-    <app-google-search></app-google-search>
-
-
-    <a class="nav-link" (click)='logout()'>Log out</a>
+      <li><app-notification></app-notification></li>
+      <li><app-spotify></app-spotify></li>
+      <li><app-timer-icon></app-timer-icon></li>
+      <li><app-google-search></app-google-search></li>
+      <li class="text-right"><a class="nav-link" (click)='logout()'>Log out</a></li>
 
   </ul>
 </div>
@@ -44,7 +43,6 @@
 <ng-template #notLoggedIn>
     <ul class="navbar-nav ml-auto">
       <a class="nav-link" routerLink="/login">Login</a>
-      <a class="nav-link" routerLink="/signup">Signup</a>
-      <a class="nav-link" routerLink="/about">About</a>
+      <a class="nav-link" routerLink="/signup">Sign up</a>
     </ul>
 </ng-template>

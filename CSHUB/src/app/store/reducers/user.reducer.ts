@@ -3,7 +3,7 @@ import { Error } from "../models/error.model";
 import { Spotify, GetSpotify } from "../models/spotify.model";
 import { Auth, SocialMediaAuth } from "../models/auth.model";
 import { SignUpUser } from "../models/sign-up-user.model";
-import { Notification, GetNotifications, AllNotifications } from "../models/notification.model";
+import { Notification, GetNotifications, AllNotifications, ReturnedDeletedNotif } from "../models/notification.model";
 import { UserActionTypes, UserAction } from '../actions/user.actions';
 import { findStaticQueryIds } from '@angular/compiler';
 
@@ -22,6 +22,7 @@ export interface UserState {
     notificationError: Error,
     deleteNotification: Notification,
     deleteNotificationError: Error,
+    deletedNofication: ReturnedDeletedNotif,
     getNotifs: GetNotifications,
     returnedNotifs: AllNotifications,
     getNotifsError: Error,
@@ -58,6 +59,7 @@ const intialState: UserState = {
     notificationSuccess: false,
     deleteNotification: null,
     deleteNotificationError: null,
+    deletedNofication: null,
     getNotifs: null,
     returnedNotifs: null,
     getNotifsError: null,
@@ -116,14 +118,14 @@ export function UserReducer(state: UserState = intialState, action: UserAction) 
             return { ...state, notificationError: action.payload,notificationSuccess: false, loading: false };
         
         case UserActionTypes.DELETE_NOTIF:
-                return { ...state, deleteNotification: action.payload, loading: true };
+                return { ...state, deleteNotification: action.payload, loading: true, deletedNofication: null, deleteNotificationError: null };
         case UserActionTypes.DELETE_NOTIF_SUCCESS:
             let prevReturnedNotifsDel = {...state.returnedNotifs};
             var index = prevReturnedNotifsDel.notifications.indexOf(action.payload.datetime);
             prevReturnedNotifsDel.notifications.splice(index, 1);
-            return { ...state, returnedNotifs: prevReturnedNotifsDel, deleteNotificationError:null, loading: false };
+            return { ...state, returnedNotifs: prevReturnedNotifsDel, deletedNofication:action.payload,deleteNotificationError:null, loading: false };
         case UserActionTypes.DELETE_NOTIF_ERROR:
-            return { ...state, deleteNotificationError: action.payload, loading: false };
+            return { ...state, deleteNotificationError: action.payload,deletedNofication:null, loading: false };
         
         case UserActionTypes.LOGOUT_USER_SUCCESS:
             sessionStorage.clear()
