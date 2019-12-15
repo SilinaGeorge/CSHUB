@@ -21,9 +21,9 @@
                 </mat-form-field>
 
                 <div mat-dialog-actions>
-                    <button type='submit' mat-button  [disabled]="saveNoteFormGroup.invalid">{{action}}</button>
+                    <button type='submit' class="btn btn-primary shadow-sm mr-auto" [disabled]="saveNoteFormGroup.invalid">{{action}}</button>
                     
-                    <button type='button' mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+                    <button type='button' mat-button (click)="closeDialog()" class="btn btn-secondary shadow-sm">Cancel</button>
                   </div>
 
             </div>
@@ -36,8 +36,8 @@
     Are you sure you want to delete <b>{{local_data.name}}</b>?
 
     <div mat-dialog-actions>
-        <button mat-button (click)="DeleteClick()">{{action}}</button>
-        <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+        <button  (click)="DeleteClick()" class="btn btn-primary shadow-sm mr-auto">{{action}}</button>
+        <button (click)="closeDialog()" class="btn btn-secondary shadow-sm">Cancel</button>
       </div>
 
   </ng-template>

@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                     <iframe [src]="srcUrl" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                     <iframe [src]="srcUrl" width="100%" height="400px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
              </div>
             <div class="modal-footer">
                 <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
@@ -21,17 +21,21 @@
             <div id="errors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"> </div>
 
                 <form [formGroup]="spotifyFormGroup" (ngSubmit)="onUpload()">
-                    <mat-form-field>
+
+                    <mat-form-field >
                         <input matInput type="url" placeholder="playlist/album link" minlength="6" maxlength="150"
                             formControlName="spotifyurl">
+
+ 
                         <mat-error>Please enter a valid spotify public album/playlist link
                         </mat-error>
                     </mat-form-field>
-                    <button type="submit" [disabled]="spotifyFormGroup.invalid" class="btn btn-primary">Upload
+                    <button type="submit" [disabled]="spotifyFormGroup.invalid" class="btn btn-primary ml-auto">Upload
                         <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
                     </button>
+       
                 </form>
-                <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+                <button type="button" class="btn btn-secondary ml-auto" (click)="close()">Close</button>
             </div>
         </div>
     </div>
