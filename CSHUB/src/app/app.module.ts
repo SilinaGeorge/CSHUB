@@ -6,14 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
 import { CountdownModule } from 'ngx-countdown';
 import { MccSpeedDialModule} from 'material-community-components'
 import { NgxSummernoteModule} from 'ngx-summernote'
 import { DragDropModule} from '@angular/cdk/drag-drop'
 import { NgxDocViewerModule } from 'ngx-doc-viewer'
-import { HTMLEscapeUnescapeModule } from 'html-escape-unescape' //remove
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -58,7 +57,6 @@ import { SpotifyPopupComponent } from './spotify-popup/spotify-popup.component';
 import { LoginHomeComponent } from './login-home/login-home.component';
 
 import { TimerIconComponent } from './timer-icon/timer-icon.component';
-import { CountdownConfig } from 'ngx-countdown/src/countdown.config';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 import { StoreModule } from '@ngrx/store';
@@ -143,7 +141,6 @@ import { AuthGuard } from './auth.guard';
     MatDialogModule,
     HeadroomModule,
     MatSidenavModule,
-    ParallaxScrollModule,
     HttpClientModule,
     MatButtonModule,
     MatSelectModule,
@@ -158,7 +155,6 @@ import { AuthGuard } from './auth.guard';
     NgbModule,
     BrowserModule,
     AppRoutingModule,   
-    HTMLEscapeUnescapeModule,
    
   ],
   providers: [ AuthGuard

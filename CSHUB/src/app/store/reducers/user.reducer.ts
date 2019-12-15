@@ -107,7 +107,7 @@ export function UserReducer(state: UserState = intialState, action: UserAction) 
             return { ...state, spotifyError: action.payload, loading: false };
 
         case UserActionTypes.ADD_NOTIF:
-                return { ...state, notification: action.payload, loading: true };
+                return { ...state, notification: action.payload, loading: true, notificationError:null, notificationSuccess: null };
         case UserActionTypes.ADD_NOTIF_SUCCESS:
             let prevReturnedNotifs = {...state.returnedNotifs};
             prevReturnedNotifs.notifications.push(action.payload.datetime);

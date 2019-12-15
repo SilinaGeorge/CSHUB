@@ -231,6 +231,9 @@ ngOnDestroy(){
   hamburgerIcon.style.display = "none";
 
   this.returnedMetaDocsSub.unsubscribe();
+  this.deletedDocSub.unsubscribe();
+  this.addedDocSub.unsubscribe();
+  this.updatedDocSub.unsubscribe();
 }
 
 onDocClick(doc, i){
