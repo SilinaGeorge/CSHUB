@@ -125,7 +125,7 @@ router.get('/notifs/:id',isAuthorized,[
 
 // add a new notification
 router.put("/notif/:id",isAuthenticated, isAuthorized, [
-  check('datetime', 'invalid datetime'),//.matches('/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/'),
+  check('datetime', 'invalid datetime').trim().not().isEmpty(),//.matches('/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/'),
   param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
 ], (req, res, next) => {
 
@@ -136,6 +136,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
   }
   const datetime = req.body.datetime;
 
+  if (new Date(datetime) == 'Invalid Date') return res.status(404).json({ msgs: ["invalid date format"] });
   if (new Date(datetime) < new Date()) 
     return res.status(404).json({ msgs: ["Date has already passed"] });
 
@@ -186,7 +187,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
 
 // delete a notification
 router.patch("/notif/delete/:id",isAuthenticated,isAuthorized, [
-  check('datetime', 'invalid datetime'),//.matches('/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/'),
+  check('datetime', 'invalid datetime').trim().not().isEmpty(),//.matches('/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/'),
   param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
 ], (req, res, next) => {
 
@@ -198,6 +199,8 @@ router.patch("/notif/delete/:id",isAuthenticated,isAuthorized, [
 
   const id = req.params.id;
   const datetime = req.body.datetime;
+
+  if (new Date(datetime) == 'Invalid Date') return res.status(404).json({ msgs: ["invalid date format"] });
   
   Users.findOneAndUpdate({_id:id, notifications:{$in : [datetime]}}, {$pull: {notifications: datetime}}, {new: true}).exec(function (err, user) {
     if (err) return res.status(500).json({ msgs: ["Server Error"] });

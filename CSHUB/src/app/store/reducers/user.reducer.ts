@@ -1,4 +1,4 @@
-import { User } from "../models/user.model";
+import { User, GetSpaceLeft, SpaceLeft } from "../models/user.model";
 import { Error } from "../models/error.model";
 import { Spotify, GetSpotify } from "../models/spotify.model";
 import { Auth, SocialMediaAuth } from "../models/auth.model";
@@ -28,6 +28,9 @@ export interface UserState {
     getSpotify: GetSpotify,
     returnedSpotify: Spotify,
     getSpotifyError: Error,
+    getSpaceLeft: GetSpaceLeft,
+    returnedSpaceLeft: SpaceLeft,
+    getSpaceLeftError: Error,
     loading: boolean,
     notifLoading:boolean,
     spotifyLoading:boolean,
@@ -61,6 +64,9 @@ const intialState: UserState = {
     getSpotify: null,
     returnedSpotify: null,
     getSpotifyError: null,
+    getSpaceLeft: null,
+    returnedSpaceLeft: null,
+    getSpaceLeftError: null,
     loading: false,
     notifLoading:false,
     spotifyLoading:false,
@@ -137,6 +143,14 @@ export function UserReducer(state: UserState = intialState, action: UserAction) 
             return { ...state, returnedSpotify: action.payload, spotifyLoading: false, getSpotifyError:null };
         case UserActionTypes.GET_SPOTIFY_ERROR:
             return { ...state, getSpotifyError: action.payload, spotifyLoading: false, returnedSpotify: null };
+       
+        case UserActionTypes.GET_SPACE_LEFT:
+            return { ...state, loading: true,  getSpaceLeft: action.payload, getSpaceLeftError: null };
+        case UserActionTypes.GET_SPACE_LEFT_SUCCESS:
+            return { ...state, returnedSpaceLeft: action.payload, loading: false, getSpaceLeftError:null };
+        case UserActionTypes.GET_SPACE_LEFT_ERROR:
+            return { ...state, getSpaceLeftError: action.payload, loading: false, returnedSpaceLeft: null };
+          
         default:
             return state;
     }

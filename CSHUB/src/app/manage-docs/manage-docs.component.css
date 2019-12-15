@@ -1,0 +1,16 @@
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  th{
+      color:darkviolet
+  }
+
+  a{
+      color:blue
+  }
+
+  a:hover{
+      color:purple
+  }

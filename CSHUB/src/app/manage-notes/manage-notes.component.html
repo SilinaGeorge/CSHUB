@@ -47,6 +47,13 @@
             <td mat-cell *matCellDef="let element"> {{element.topic}} </td>
           </ng-container>
 
+                 <!-- size Column -->
+        <ng-container matColumnDef="size">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Size </th>
+          <td mat-cell *matCellDef="let element"> {{element.size*0.000001}} MB </td>
+      </ng-container>
+
+
                                     <!-- Date Created Column -->
         <ng-container matColumnDef="dateCreated">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Created </th>

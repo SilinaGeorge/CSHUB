@@ -8,6 +8,7 @@ import { GetSocialUserAction } from '../store/actions/user.actions';
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs';
 import { SocialMediaAuth } from '../store/models/auth.model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-social-redirect',
@@ -28,7 +29,7 @@ export class SocialRedirectComponent implements OnInit {
 
   ngOnInit() {
 
-    this.activatedroute.paramMap.subscribe(params => {
+    this.activatedroute.paramMap.pipe(take(1)).subscribe(params => {
       this.id = params.get("id")
     })
 

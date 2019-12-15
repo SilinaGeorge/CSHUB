@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,SecurityContext } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 
 import { SideNavToggleService } from '../services/side-nav-toggle.service';
@@ -14,6 +14,8 @@ import {Topics} from '../topics'
 import { SelectedNote, UpdateNote, Note, DeleteNote } from '../store/models/note.model';
 import { MatDrawer } from '@angular/material';
 import { AddNote } from '../store/models/add-note.model';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { take } from 'rxjs/operators';
 
 
 
@@ -23,12 +25,15 @@ import { AddNote } from '../store/models/add-note.model';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-  userID: String
+  userID: string
   topic:string;
-  public content: String
+  public content: string
   public editorConfig
   saveNoteFormGroup: FormGroup;
-  subscription: Subscription;
+  addedNoteSub: Subscription;
+  deletedNoteSub: Subscription;
+  updatedNoteSub: Subscription;
+  returnedNotesSub: Subscription;
   loading$: Observable<Boolean>;
   error$: Observable<Error>;
   selectedNote: Note;
@@ -48,12 +53,10 @@ export class EditorComponent implements OnInit {
     private sideNavService: SideNavToggleService, 
     private store: Store<AppState>, 
     private actroute: ActivatedRoute,
-    private router: Router) { 
+    private router: Router,
+    private sanitizer:DomSanitizer) { 
 
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-
-          
-    
 
     }
 
@@ -61,19 +64,20 @@ export class EditorComponent implements OnInit {
 
     let hamburgerIcon = document.getElementById("hamburgerIcon");
     hamburgerIcon.style.display = "none";
-  //  this.sidenav.close();
+  
+    this.addedNoteSub.unsubscribe()
+    this.deletedNoteSub.unsubscribe()
+    this.updatedNoteSub.unsubscribe()
+    this.returnedNotesSub.unsubscribe()
+
 
   }
-  ngAfterViewInit(){
-   // this.sidenav.open();
 
-
-  }
   ngOnInit() {
 
     this.sideNavService.setSidenav(this.sidenav);
 
-    this.actroute.queryParams.subscribe(params => {
+    this.actroute.queryParams.pipe(take(1)).subscribe(params => {
      this.topic = params.topic;
     
      if (params.noteId) {
@@ -87,7 +91,7 @@ export class EditorComponent implements OnInit {
      else this.getTopicNotes.topic = this.topic
  });
    
-   this.subscription = this.store.select(store => store.user).subscribe(state =>   {
+   this.store.select(store => store.user).pipe(take(1)).subscribe(state =>   {
      if (state && state.user){
        this.userID = state.user._id
         this.getTopicNotes.userId = this.userID;
@@ -100,7 +104,44 @@ export class EditorComponent implements OnInit {
    this.store.dispatch(new GetNotesAction(this.getTopicNotes))
    this.error$ = this.store.select(store => store.noteState.getNotesError)
 
-   this.store.select(store => store.noteState.returnedNotes).subscribe(notes =>{
+   
+
+   this.deletedNoteSub = this.store.select(store => store.noteState.deletedNote).subscribe(result =>
+    {
+      if (result){
+        this.selectedIndex = this.selectedIndex - 1;
+        if (this.selectedIndex != -1){
+          this.selectedNote = this.topicNotes.notes[this.selectedIndex];
+          this.content = this.selectedNote.content
+
+        }
+        else{
+          this.selectedNote =null;
+          this.content =""
+
+        }
+      }
+      
+    })
+
+
+   this.addedNoteSub = this.store.select(store => store.noteState.addedNote).subscribe(result =>
+    {
+      if (result){
+        this.selectedNote = result;
+        this.selectedIndex =0;
+      }
+      
+    })
+
+    this.updatedNoteSub = this.store.select(store => store.noteState.updatedNote).subscribe(result =>
+      {
+        if (result){
+          this.selectedNote = result;
+        }
+      })
+
+   this.returnedNotesSub = this.store.select(store => store.noteState.returnedNotes).subscribe(notes =>{
      if (notes){
 
       this.topicNotes = notes
@@ -110,7 +151,7 @@ export class EditorComponent implements OnInit {
        for(let i=0; i< this.topicNotes.notes.length; i++) {
           if (this.topicNotes.notes[i]._id == this.initialSelectedNoteId) {
             this.selectedNote = this.topicNotes.notes[i];
-            this.content = this.topicNotes.notes[i].content;
+            this.content = this.selectedNote.content//this.decodeHtml(this.topicNotes.notes[i].content);
             this.selectedIndex = i;
             this.initialSelectedNoteId = null;
             break;
@@ -156,7 +197,7 @@ export class EditorComponent implements OnInit {
       callbacks:{ onImageUploadError: function(msg){ console.log(msg); } },
       toolbar: [
           // [groupName, [list of button]]
-          ['misc', [, 'undo', 'redo', 'codeBlock', 'help']],
+          ['misc', ['undo', 'redo', 'help']],
           ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
           ['fontsize', ['fontname', 'fontsize', 'color']],
           ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
@@ -185,6 +226,13 @@ export class EditorComponent implements OnInit {
    
  }
 
+ decodeHtml(str) {
+  var txt = document.createElement("div");
+  txt.innerHTML = str;
+  let decoded = txt.innerText
+  txt.remove()
+  return decoded;
+}
 
  get name() {
   return this.saveNoteFormGroup.get('name');
@@ -209,7 +257,7 @@ setData(){
 
 onNoteClick(note, i){
    this.selectedNote = note;
-  this.content = note.content;
+  this.content = note.content//this.decodeHtml(note.content)
   //this.selectedNoteId = note._id
   //this.initialSelectedNoteId = null; 
   this.selectedIndex = i;
@@ -232,7 +280,7 @@ onModalSave(){
       userId: this.userID,
       description: this.description.value,
       name: this.name.value,
-      content: this.content
+      content: this.content// this.sanitizer.sanitize(SecurityContext.HTML ,this.content)
     }
     this.store.dispatch(new updateNoteAction(updateNote));
     this.error$ = this.store.select(store => store.noteState.updateNoteError)
@@ -241,17 +289,18 @@ onModalSave(){
   }
   else{
 
+    
     this.addNewNote ={
       userId: this.userID,
       description: this.description.value,
       name: this.name.value,
-      content: this.content,
+      content: this.content,//this.sanitizer.sanitize(SecurityContext.HTML ,this.content),
       topic: this.topic
     }
 
       this.store.dispatch(new AddNoteAction(this.addNewNote));
       this.error$ = this.store.select(store => store.noteState.addNoteError)
-      this.selectedIndex = 0
+      //this.selectedIndex = 0
   }
   this.close()
     
@@ -264,7 +313,7 @@ onModalSave(){
     this.store.dispatch(new DeleteNoteAction(this.deleteNote));
     this.error$ = this.store.select(store => store.noteState.deleteNoteError)
  
-      this.selectedIndex = this.selectedIndex - 1
+      
 
     
     }

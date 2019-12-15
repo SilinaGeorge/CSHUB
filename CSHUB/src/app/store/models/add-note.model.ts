@@ -1,8 +1,8 @@
 export interface AddNote{
-    userId: String,
-    content: String,
-    description: String,
-    name: String,
-    topic:String
+    userId: string,
+    content: string,
+    description: string,
+    name: string,
+    topic:string
 }
     

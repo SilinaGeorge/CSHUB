@@ -10,14 +10,10 @@ import { ParallaxScrollModule } from 'ng2-parallaxscroll';
 import { HeadroomModule } from '@ctrl/ngx-headroom';
 import { CountdownModule } from 'ngx-countdown';
 import { MccSpeedDialModule} from 'material-community-components'
-
 import { NgxSummernoteModule} from 'ngx-summernote'
-
 import { DragDropModule} from '@angular/cdk/drag-drop'
-
-
-
 import { NgxDocViewerModule } from 'ngx-doc-viewer'
+import { HTMLEscapeUnescapeModule } from 'html-escape-unescape' //remove
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -162,6 +158,7 @@ import { AuthGuard } from './auth.guard';
     NgbModule,
     BrowserModule,
     AppRoutingModule,   
+    HTMLEscapeUnescapeModule,
    
   ],
   providers: [ AuthGuard

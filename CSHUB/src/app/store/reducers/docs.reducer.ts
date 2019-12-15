@@ -48,7 +48,7 @@ export function DocsReducer(
         prevDocs.docs.unshift(action.payload);
       return {
         ...state,
-        addedNote: action.payload,
+        addedDoc: action.payload,
         returnedMetaDocs: prevDocs,
         loading: false
       };
@@ -80,7 +80,7 @@ export function DocsReducer(
         prevDocDelete.docs.splice(index, 1);
         return {
           ...state,
-          deletedNote: action.payload,
+          deletedDoc: action.payload,
           returnedMetaDocs: prevDocDelete,
           loading: false
         };

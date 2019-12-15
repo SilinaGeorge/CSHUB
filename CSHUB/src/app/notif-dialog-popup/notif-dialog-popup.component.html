@@ -13,11 +13,12 @@
                     <div style="color: green; margin-bottom: 1em">you will be notified on {{displayDateTime()}} </div>
                 </div>
                 
-                <div *ngIf="error$ | async as error">
-                    <ul *ngIf="error$ | async as error">
-                        <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
-                    </ul>
-                </div>
+                <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
+                  <ul >
+                      <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li> 
+              
+                  </ul>
+              </div>
 
                 <div id="errors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"> </div>
 
@@ -155,12 +156,12 @@
     <!--tab 2: manage notifications-->
     <mat-tab label="Manage Notifications" >
 
-        <div *ngIf="deleteError$ | async as error">
-            <ul *ngIf="deleteError$ | async as error">
-                <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
-            </ul>
-          </div>
-
+      <div class="alert alert-dismissible alert-danger" *ngIf="deleteError$ | async as error">
+        <ul >
+            <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li> 
+    
+        </ul>
+    </div>
 
         <div class="example-container mat-elevation-z8">
 

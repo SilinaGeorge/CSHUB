@@ -2,12 +2,13 @@ export interface Note{
     msg?: String,
     _id: String,
     userId: String,
-    content: String,
+    content: string,
     description: String,
     name: String,
     topic: String,
     dateCreate: Date | string,
-    dateModifiedString: String
+    dateModifiedString: String,
+    size: string
 }
 
 export interface SelectedNote{
@@ -20,7 +21,7 @@ export interface UpdateNote{
     userId: String,
     description: String,
     name: String,
-    content?: String
+    content?: string
 
 }
 

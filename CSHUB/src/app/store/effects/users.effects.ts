@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction, AddNotifAction, AddNotifActionSuccessAction, AddNotifActionErrorAction, DeleteNotifActionSuccessAction, DeleteNotifActionErrorAction, DeleteNotifAction, LogoutUserAction, LogoutUserSuccessAction, LogoutUserErrorAction, GetSpotifyAction, GetSpotifySuccessAction, GetSpotifyErrorAction, GetNotifsAction, GetNotifsActionSuccessAction, GetNotifsActionErrorAction } from '../actions/user.actions';
+import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction, AddNotifAction, AddNotifActionSuccessAction, AddNotifActionErrorAction, DeleteNotifActionSuccessAction, DeleteNotifActionErrorAction, DeleteNotifAction, LogoutUserAction, LogoutUserSuccessAction, LogoutUserErrorAction, GetSpotifyAction, GetSpotifySuccessAction, GetSpotifyErrorAction, GetNotifsAction, GetNotifsActionSuccessAction, GetNotifsActionErrorAction, GetSpaceLeftAction, GetSpaceLeftActionSuccessAction, GetSpaceLeftActionErrorAction } from '../actions/user.actions';
 import { AuthService } from '../../services/auth.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { WidgetService } from '../../services/widget.service';
 import { GetNotesSuccessAction } from '../actions/notes.actions';
+import { GetSpaceLeft } from '../models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Injectable()
 export class UsersEffects {
@@ -177,6 +179,24 @@ export class UsersEffects {
             )
         )
 
-    constructor(private actions$: Actions, private authService: AuthService, private widgetService: WidgetService, private router: Router) { }
+
+        @Effect() GetSpaceLeft = this.actions$
+        .pipe(
+            ofType<GetSpaceLeftAction>(UserActionTypes.GET_SPACE_LEFT),
+            mergeMap(
+                data => this.userService.GetSpaceLeft(data.payload)
+                    .pipe(
+                        map(data => {
+                            return new GetSpaceLeftActionSuccessAction(data)
+                        }),
+                        catchError((error) => {
+                            return of(new GetSpaceLeftActionErrorAction(error.error))
+                        }
+                        )
+                    )
+            )
+        )
+
+    constructor(private actions$: Actions, private authService: AuthService, private widgetService: WidgetService, private userService: UserService, private router: Router) { }
 
 }

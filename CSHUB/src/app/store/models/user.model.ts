@@ -5,3 +5,12 @@ export interface User{
     lastname: string,
     msg?: string
 }
+
+export interface GetSpaceLeft{
+    id: string
+}
+
+export interface SpaceLeft {
+    msg?: string,
+    spaceleft: Number
+}

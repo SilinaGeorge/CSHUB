@@ -1,7 +1,7 @@
 //update state of action/ communicate with our store: dispatches action
 
 import { Action } from '@ngrx/store';
-import { User } from '../models/user.model';
+import { User, GetSpaceLeft, SpaceLeft } from '../models/user.model';
 import { Error } from '../models/error.model';
 import { Auth, SocialMediaAuth } from '../models/auth.model';
 import { SignUpUser } from '../models/sign-up-user.model';
@@ -46,6 +46,10 @@ export enum UserActionTypes{
     GET_NOTIFS = '[USER] Get Notification',
     GET_NOTIFS_SUCCESS = '[USER] Get Notification Success',
     GET_NOTIFS_ERROR = '[USER] Get Notification Error',
+
+    GET_SPACE_LEFT = '[USER] Get Space Left',
+    GET_SPACE_LEFT_SUCCESS = '[USER] Get Space Left Success',
+    GET_SPACE_LEFT_ERROR = '[USER] Get Space Left Error',
 }
 // LOGIN
 export class LoginUserAction implements Action{
@@ -175,6 +179,22 @@ export class LogoutUserErrorAction implements Action{
     constructor(public payload: Error){};
 }
 
+//GET SPACE LEFT
+export class GetSpaceLeftAction implements Action{
+    readonly type = UserActionTypes.GET_SPACE_LEFT;
+    constructor(public payload: GetSpaceLeft){};
+}
+export class GetSpaceLeftActionSuccessAction implements Action{
+    readonly type = UserActionTypes.GET_SPACE_LEFT_SUCCESS;
+    constructor(public payload: SpaceLeft){};
+}
+export class GetSpaceLeftActionErrorAction implements Action{
+    readonly type = UserActionTypes.GET_SPACE_LEFT_ERROR;
+    constructor(public payload: Error){};
+}
+
+
+
 export type UserAction = 
 LoginUserAction|
 LoginUserSuccessAction | 
@@ -202,5 +222,8 @@ GetNotifsActionSuccessAction |
 GetNotifsActionErrorAction |
 GetSpotifyAction |
 GetSpotifySuccessAction |
-GetSpotifyErrorAction
+GetSpotifyErrorAction |
+GetSpaceLeftAction |
+GetSpaceLeftActionSuccessAction |
+GetSpaceLeftActionErrorAction
 ;

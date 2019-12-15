@@ -5,11 +5,11 @@
         Sign up to CS HUB</div>
     <div class="card-body">
 
-        <div *ngIf="error$ | async as error">
-            <ul *ngIf="error$ | async as error">
-                <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
+        <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
+            <ul >
+                <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li> 
+        
             </ul>
-
         </div>
 
         <form [formGroup]="signupFormGroup" (ngSubmit)="onSubmit()">

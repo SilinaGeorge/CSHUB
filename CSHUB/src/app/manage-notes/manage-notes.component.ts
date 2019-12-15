@@ -13,6 +13,8 @@ import { Error } from '../store/models/error.model';
 
 import * as moment from 'moment';
 import { NotesDocsDialogBoxComponent } from '../notes-docs-dialog-box/notes-docs-dialog-box.component';
+import { take } from 'rxjs/operators';
+import { GetSpaceLeftAction } from '../store/actions/user.actions';
 
 @Component({
   selector: 'app-manage-notes',
@@ -20,7 +22,7 @@ import { NotesDocsDialogBoxComponent } from '../notes-docs-dialog-box/notes-docs
   styleUrls: ['./manage-notes.component.css']
 })
 export class ManageNotesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'description', 'topic', 'dateCreated', 'dateModified' ,'action'];
+  displayedColumns: string[] = ['name', 'description', 'topic', 'size' ,'dateCreated', 'dateModified' ,'action'];
   dataSource = new MatTableDataSource<Note>();
  
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
@@ -28,6 +30,7 @@ export class ManageNotesComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   subscription: Subscription;
+  subscription2: Subscription;
   userId : string;
   notes: ReturnedNotes
   error$: Observable<Error>;
@@ -39,17 +42,30 @@ export class ManageNotesComponent implements OnInit {
 
   ngOnInit() {
 
+    this.store.select(store => store.user).pipe(take(1)).subscribe(state =>   {
+      if (state && state.user){
+        this.userId = state.user._id
+      }
+    }); 
 
+     this.subscription2 = this.store.select(store => store.noteState.deletedNote).subscribe(state =>{
+      if (state){
+        this.store.dispatch(new GetSpaceLeftAction({id:this.userId}));
+      }
+    }) 
 
-    this.subscription = this.store.select(store => store).subscribe(state =>   {
+    this.store.dispatch(new GetNotesAction({userId: this.userId}));
+      this.error$ = this.store.select(store => store.noteState.getNotesError)
+
+    this.subscription = this.store.select(store => store.noteState).subscribe(state =>   {
       if (state){
 
-        this.userId = state.user.user._id;
-        this.notes = state.noteState.returnedNotes;
+        this.notes = state.returnedNotes;
         if (this.notes){
-          this.notes.notes.forEach(element => {
-            element.dateCreate = moment(element.dateCreate).format(("D/M/YYYY h:mm:ss a"))
-          });
+           this.notes.notes.forEach(element => {
+             if (moment(new Date(element.dateCreate)).format(("D/M/YYYY h:mm:ss a")) != 'Invalid date')
+            element.dateCreate = moment(new Date(element.dateCreate)).format(("D/M/YYYY h:mm:ss a"))
+          }); 
 
           
           this.dataSource = new MatTableDataSource(this.notes.notes);
@@ -62,8 +78,7 @@ export class ManageNotesComponent implements OnInit {
       }
       });
   
-      this.store.dispatch(new GetNotesAction({userId: this.userId}));
-      this.error$ = this.store.select(store => store.noteState.getNotesError)
+      
 
      
   }
@@ -71,6 +86,7 @@ export class ManageNotesComponent implements OnInit {
   
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subscription2.unsubscribe();
   }
 
   openDialog(action,obj) {
@@ -80,12 +96,13 @@ export class ManageNotesComponent implements OnInit {
       data:obj
     });
  
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
        if(result.event == 'Update'){
         this.updateRowData(result.data);
       }else if(result.event == 'Delete'){
         this.deleteRowData(result.data);
       }
+      
     });
   }
  
@@ -94,6 +111,7 @@ export class ManageNotesComponent implements OnInit {
     let update = {userId: this.userId, _id: row_obj._id, name: row_obj.name, description:row_obj.description}
     this.store.dispatch(new updateNoteAction(update));
     this.error$ = this.store.select(store => store.noteState.updateNoteError)
+
     
   }
   deleteRowData(row_obj){

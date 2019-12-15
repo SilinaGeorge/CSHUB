@@ -8,6 +8,8 @@ import { Error } from '../store/models/error.model';
 import { UpdateDocAction, DeleteDocAction, GetDocsAction } from '../store/actions/docs.actions';
 import { ReturnedMetaDocs, Doc } from '../store/models/docs.model';
 import { NotesDocsDialogBoxComponent } from '../notes-docs-dialog-box/notes-docs-dialog-box.component';
+import { take } from 'rxjs/operators';
+import { GetSpaceLeftAction } from '../store/actions/user.actions';
 
 @Component({
   selector: 'app-manage-docs',
@@ -24,6 +26,7 @@ export class ManageDocsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   subscription: Subscription;
+  subscription2: Subscription;
   userId : string;
   docs: ReturnedMetaDocs
   error$: Observable<Error>;
@@ -33,33 +36,44 @@ export class ManageDocsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.subscription = this.store.select(store => store).subscribe(state =>   {
+    this.store.select(store => store.user).pipe(take(1)).subscribe(state =>   {
+      if (state && state.user){
+        this.userId = state.user._id
+      }
+    }); 
+
+    this.subscription2 = this.store.select(store => store.docsState.deletedDoc).subscribe(state =>{
+      if (state)
+      this.store.dispatch(new GetSpaceLeftAction({id:this.userId})); 
+  })
+
+    this.store.dispatch(new GetDocsAction({userId: this.userId}));
+    this.error$ = this.store.select(store => store.docsState.getMetaDocsError)
+
+    this.subscription = this.store.select(store => store.docsState).subscribe(state =>   {
       if (state){
 
-        this.userId = state.user.user._id;
-        this.docs = state.docsState.returnedMetaDocs;
-        console.log(this.docs)
-        if (this.docs){
-          this.docs.docs.forEach(element => {
-            element.dateCreate = moment(element.dateCreate).format(("D/M/YYYY h:mm:ss a"))
-          });
-
+        this.docs = state.returnedMetaDocs;
+         if (this.docs){
+           this.docs.docs.forEach(element => {
+            if (moment(new Date(element.dateCreate)).format(("D/M/YYYY h:mm:ss a")) != 'Invalid date')
+            element.dateCreate = moment(new Date(element.dateCreate)).format(("D/M/YYYY h:mm:ss a"))
+          });  
+          
           this.dataSource = new MatTableDataSource(this.docs.docs);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-         
         }
          
 
       }
       });
   
-      this.store.dispatch(new GetDocsAction({userId: this.userId}));
-      this.error$ = this.store.select(store => store.docsState.getMetaDocsError)
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subscription2.unsubscribe();
   }
 
   openDialog(action,obj) {
@@ -69,7 +83,7 @@ export class ManageDocsComponent implements OnInit {
       data:obj
     });
  
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
        if(result.event == 'Update'){
         this.updateRowData(result.data);
       }else if(result.event == 'Delete'){
@@ -86,10 +100,8 @@ export class ManageDocsComponent implements OnInit {
     
   }
   deleteRowData(row_obj){
-
     this.store.dispatch(new DeleteDocAction({userId: this.userId, _id: row_obj._id}));
     this.error$ = this.store.select(store => store.docsState.deleteDocError)
-
 
   }
 

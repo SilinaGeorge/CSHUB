@@ -82,14 +82,16 @@ app.use(
 
 
 // ------------------------------
-let userRoute = require('./routes/auth-api.js');
+let authRoute = require('./routes/auth-api.js');
 let widgetRoute = require('./routes/widgets-api.js');
 let notesRoute = require('./routes/notes-api.js');
 let docsRoute = require('./routes/docs-api.js');
-app.use('/auth', userRoute);
+let userRoute = require('./routes/user-api.js');
+app.use('/auth', authRoute);
 app.use('/widgets', widgetRoute);
 app.use('/notes', notesRoute);
 app.use('/docs', docsRoute);
+app.use('/user', userRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

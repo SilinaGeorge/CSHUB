@@ -7,6 +7,9 @@ var moment = require("moment");
 const Docu = require("../mongo-models/docs.js");
 const Users = require("../mongo-models/users.js");
 
+
+const validTopics = require("./topics");
+
 //var upload    = require('../upload-doc.js/index.js');
 
 // format validation error
@@ -89,7 +92,7 @@ router.post(
       .escape()
       .isLength({ max: 50 })
       .not()
-      .isEmpty(),
+      .isEmpty().isIn(validTopics),
     param("id", "Invalid ID")
       .isAlphanumeric()
       .trim()
@@ -222,6 +225,7 @@ router.get(
       .isAlphanumeric()
       .trim()
       .escape()
+      .isIn(validTopics)
   ],
   (req, res, next) => {
 
@@ -277,7 +281,7 @@ router.delete(
     if (!result.isEmpty()) {
       return res.status(400).json({ msgs: result.array() });
     }
-    //console.log(req.params)
+
     const docId = req.params.docId;
     const userId = req.params.id;
 
@@ -288,7 +292,7 @@ router.delete(
         return res
           .status(404)
           .json({ msgs: ["There is no document with that id for this user"] });
-
+ 
       Users.findByIdAndUpdate(userId, {
         $inc: { spaceleft: result.filesize }
       }).exec(function (err, user) {

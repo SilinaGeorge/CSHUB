@@ -10,6 +10,7 @@ import { SideNavToggleService } from '../services/side-nav-toggle.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Topics } from '../topics';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-doc-viewer',
@@ -21,7 +22,10 @@ export class DocViewerComponent implements OnInit {
   url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf'
   fileToUpload: File = null;
   userId =null
-  subscription: Subscription;
+  returnedMetaDocsSub: Subscription;
+  deletedDocSub: Subscription;
+  addedDocSub: Subscription;
+  updatedDocSub: Subscription;
   error$: Observable<Error>;
   loading$: Observable<Boolean>;
   getMetaDocs: GetMetaDocs = {userId: null, topic: null}
@@ -46,7 +50,7 @@ export class DocViewerComponent implements OnInit {
   ngOnInit() {
     this.sideNavService.setSidenav(this.sidenav);
 
-    this.actroute.queryParams.subscribe(params => {
+    this.actroute.queryParams.pipe(take(1)).subscribe(params => {
       this.topic = params.topic;
      
        if (params.docId) this.initialSelectedDocId = params.docId
@@ -55,7 +59,7 @@ export class DocViewerComponent implements OnInit {
       else this.getMetaDocs.topic = this.topic
   });
 
-    this.subscription = this.store.select(store => store.user).subscribe(state =>   {
+    this.store.select(store => store.user).pipe(take(1)).subscribe(state =>   {
       if (state && state.user){
          this.getMetaDocs.userId = state.user._id;       
       }
@@ -65,7 +69,46 @@ export class DocViewerComponent implements OnInit {
     this.store.dispatch(new GetDocsAction(this.getMetaDocs));
     this.error$ = this.store.select(store => store.docsState.getMetaDocsError)
 
-    this.store.select(store => store.docsState.returnedMetaDocs).subscribe(docs =>{
+
+    this.deletedDocSub = this.store.select(store => store.docsState.deletedDoc).subscribe(result =>
+      {
+        if (result){
+          this.selectedIndex = this.selectedIndex - 1;
+          if (this.selectedIndex != -1){
+            this.selectedDoc = this.metaDocs.docs[this.selectedIndex];
+            this.url = this.baseURL + this.selectedDoc._id
+          }
+          else{
+            
+            this.initialSelectedDocId = null;
+            this.selectedIndex = -1;
+            this.openUploadDocModal()
+
+          }
+
+        }
+        
+      })
+  
+  
+     this.addedDocSub = this.store.select(store => store.docsState.addedDoc).subscribe(result =>
+      {
+        if (result){
+          this.selectedDoc = result;
+          this.url = this.baseURL + this.selectedDoc._id
+          this.selectedIndex =0;
+        }
+        
+      })
+  
+      this.updatedDocSub = this.store.select(store => store.docsState.updatedDoc).subscribe(result =>
+        {
+          if (result){
+            this.selectedDoc = result;
+          }
+        })
+
+    this.returnedMetaDocsSub = this.store.select(store => store.docsState.returnedMetaDocs).subscribe(docs =>{
       if (docs){
         this.metaDocs = docs
 
@@ -172,7 +215,7 @@ get updatedescription() {
 
     this.store.dispatch(new AddDocAction(upload));
     this.error$ = this.store.select(store => store.docsState.addDocError)
-    this.selectedIndex = this.selectedIndex + 1;
+    //this.selectedIndex = this.selectedIndex + 1;
 
     this.name.setValue("");
     this.description.setValue("")
@@ -186,6 +229,8 @@ ngOnDestroy(){
 
   let hamburgerIcon = document.getElementById("hamburgerIcon");
   hamburgerIcon.style.display = "none";
+
+  this.returnedMetaDocsSub.unsubscribe();
 }
 
 onDocClick(doc, i){
@@ -240,7 +285,7 @@ onDeleteClick(){
     this.store.dispatch(new DeleteDocAction(deleteDoc));
     this.error$ = this.store.select(store => store.docsState.deleteDocError)
   
-    this.selectedIndex = this.selectedIndex - 1
+    //this.selectedIndex = this.selectedIndex - 1
     }
 }
 
@@ -263,7 +308,6 @@ onUpdateClick(){
     description: this.updatedescription.value,
     name: this.updatename.value
   }
-  console.log(updateDoc)
   this.store.dispatch(new UpdateDocAction(updateDoc));
   this.error$ = this.store.select(store => store.docsState.updateDocError)
   this.closeUpdateDocModal();
