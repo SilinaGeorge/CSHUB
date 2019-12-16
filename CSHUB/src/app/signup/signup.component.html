@@ -1,4 +1,4 @@
-<div class="card bg-light mb-3 shadow-sm" style="max-width: 40%; margin:auto;  margin-top: 2vh">
+<div class="card bg-light shadow-sm col-xs-5 col-sm-5 col-lg-6" style="margin:auto;  margin-top: 2vh">
 
     <div class="card-header">
             <span class="material-icons">person_add</span>
@@ -24,23 +24,26 @@
                 <mat-error>Please enter last name (alphabet only)</mat-error>
             </mat-form-field>
 
-            <div>
+            
                 <mat-form-field style="margin-right:25%">
                     <input matInput placeholder="Email" formControlName="email" maxlength="50">
                     <mat-error>Please enter a valid email</mat-error>
                 </mat-form-field>
+                
 
-
-                <mat-form-field>
+              
+                <mat-form-field >
                     <input matInput type='password' placeholder="Password" minlength="6" maxlength="18"
                         formControlName="password" (input)="onPasswordInput()">
                     <mat-error>Please enter a valid password</mat-error>
                     <mat-hint>6-18 characters</mat-hint>
                 </mat-form-field>
+                
 
 
-                <mat-form-field>
-                    <input matInput type='password' placeholder="Verify password" minlength="6" maxlength="18"
+
+                <mat-form-field style="margin-right:25%">
+                    <input matInput type='password'  placeholder="Verify password" minlength="6" maxlength="18"
                         formControlName="verifypassword" (input)="onPasswordInput()">
                     <mat-error
                         *ngIf="verifypassword?.invalid && verifypassword?.touched && verifypassword?.hasError('required')">
@@ -51,7 +54,7 @@
                 </mat-form-field>
 
 
-            </div>
+            
 
             <div style="text-align: center; margin-top:3em">
                 <button type="submit" [disabled]="signupFormGroup.invalid"

@@ -1,7 +1,7 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 
-<div class="card bg-light  mb-3 shadow-sm" style="width: 30vw; margin:auto; margin-top: 2vh">
+<div class="card bg-light col-xs-5 col-sm-5 col-lg-4 " style="margin:auto; margin-top: 2vh">
 
     <div class="card-header">
         <span class="material-icons">person</span>
@@ -18,7 +18,7 @@
 
         <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
             <div>
-                <mat-form-field style="margin-right:25%">
+                <mat-form-field style="margin-right:25%;">
                     <input matInput type='email' placeholder="Email" formControlName="email" maxlength="50">
                     <mat-error>Please enter a valid email</mat-error>
                 </mat-form-field>
@@ -47,12 +47,12 @@
         </form>
 
         <a class="nav-link" href="/auth/facebook">
-            <img src='../../assets/images/fb_login.png' style="width: 220px; height:68px" >
+            <img src='../../assets/images/fb_login.png' style="width: 220px;" >
         </a>
 
 
         <a class="nav-link" href="/auth/google">
-            <img src='../../assets/images/google_signin.png' style="width: 200px; height:40px; margin-left:8px" >
+            <img src='../../assets/images/google_signin.png' style="width: 200px; margin-left:8px" >
         </a>
 
 
