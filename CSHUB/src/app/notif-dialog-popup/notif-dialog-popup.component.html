@@ -142,7 +142,7 @@
             </mat-dialog-content>
             <div style="text-align: center;">
             <mat-dialog-actions style="text-align: center;">
-                    <button type='submit'  [disabled]="notifFormGroup.invalid"  class="btn btn-primary shadow-sm">
+                    <button type='submit'  [disabled]="notifFormGroup.invalid"  class="btn btn-primary shadow-sm mr-auto">
                         Create
                         <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
                     </button>
@@ -204,7 +204,7 @@
 
             </mat-table>
 
-            <button  class="btn btn-primary" (click)="removeSelectedRows()">
+            <button  class="btn btn-primary mr-auto" (click)="removeSelectedRows()">
                 Delete Selected Rows
                 <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
               </button>

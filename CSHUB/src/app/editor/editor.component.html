@@ -1,4 +1,4 @@
-<mat-drawer-container style="z-index:0!important;height:90vh">
+<mat-drawer-container style="z-index:0!important;height:85vh">
 
     <!-- side menu -->
 
@@ -33,7 +33,7 @@
                         </div>
 
                         <h5 class="mb-1">{{note.name}}</h5>
-    
+
 
                         <p class="mb-1">{{note.description}}</p>
 
@@ -63,9 +63,9 @@
         </ng-template>
 
 
-         <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
-            <ul >
-                <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li> 
+        <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
+            <ul>
+                <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li>
 
             </ul>
         </div>
@@ -73,12 +73,12 @@
         <textarea id="note" [ngxSummernote]='editorConfig' [(ngModel)]="content"></textarea>
 
         <div style="margin-left: 46%">
-            <button  (click)="openModal();setData()" class="btn btn-primary shadow-sm">Save
+            <button (click)="openModal();setData()" class="btn btn-primary shadow-sm">Save
             </button>
             &nbsp;&nbsp;&nbsp;
-                <button *ngIf='selectedNote'  (click)="onDeleteClick()" class="btn btn-danger shadow-sm">Delete
-                </button>
-          
+            <button *ngIf='selectedNote' (click)="onDeleteClick()" class="btn btn-danger shadow-sm">Delete
+            </button>
+
         </div>
 
         <!-- save note modal -->
@@ -93,44 +93,43 @@
                     </div>
                     <form [formGroup]="saveNoteFormGroup" (ngSubmit)="onModalSave()">
                         <div class="modal-body">
-        
-        
+
+
                             <mat-form-field style="width: 90%!important">
                                 <input matInput type="text" placeholder="Name" autocomplete="off" maxlength="50"
                                     formControlName="name">
                                 <mat-error>Please enter name</mat-error>
                             </mat-form-field>
-                            
+
                             <br>
-        
+
                             <mat-form-field style="width: 90%!important">
-        
+
                                 <textarea style='resize: none;' matInput type="text" placeholder="Description" rows='4'
                                     maxlength="210" formControlName="description"></textarea>
 
-        
+
                             </mat-form-field>
-        
-        
-        
-        
+
+
+
+
                         </div>
                         <div class="modal-footer text-center">
-        
-                            <button type="submit" [disabled]="saveNoteFormGroup.invalid" class="btn btn-primary mr-auto">Save
+
+                            <button type="submit" [disabled]="saveNoteFormGroup.invalid"
+                                class="btn btn-primary mr-auto">Save
                                 <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
                             </button>
                             <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
-        
-        
+
+
                         </div>
                     </form>
-        
+
                 </div>
             </div>
         </div>
 
-
     </mat-drawer-content>
 </mat-drawer-container>
-

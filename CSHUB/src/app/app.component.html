@@ -4,33 +4,9 @@
   <div >
             <!-- main menu hide when scroll down, show whe scroll up -->
             <ngx-headroom>
-    
-                <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
-    
-                    <div id='hamburgerIcon' style='display:none'>
-                    <button mat-icon-button (click)="clickSideBar()">
-                        <mat-icon style='color: black'>menu</mat-icon>
-                    </button>
-                </div>
-                    
-                    <app-title></app-title>
-    
-                    <button class="navbar-toggler" type="button" aria-controls="navbarContent"
-                        [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-    
-                    <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
-                        <!--main menu content-->
-                        <app-nav-menu></app-nav-menu>
-    
-                    </div>
-    
-    
-                </nav>
-    
-                <app-timer></app-timer>
-            
+                 <!--main menu content-->
+                 <app-nav-menu></app-nav-menu>
+                <app-timer></app-timer>       
             </ngx-headroom>
     
 
@@ -38,9 +14,11 @@
     
         </div>       
     
-            <div>
-                <router-outlet></router-outlet>
-            </div>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+    
+  
 
       
 

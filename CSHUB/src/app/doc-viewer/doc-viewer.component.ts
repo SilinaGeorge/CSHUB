@@ -55,7 +55,7 @@ export class DocViewerComponent implements OnInit {
      
        if (params.docId) this.initialSelectedDocId = params.docId
 
-      if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/login-home'])
+      if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/'])
       else this.getMetaDocs.topic = this.topic
   });
 

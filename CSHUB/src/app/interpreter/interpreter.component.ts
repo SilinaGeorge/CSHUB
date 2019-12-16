@@ -20,7 +20,7 @@ export class InterpreterComponent implements OnInit {
     this.activatedroute.paramMap.pipe(take(1)).subscribe(params => {
       this.topic = params.get("topic")
 
-      if (this.topic == undefined || !Topics.includes(this.topic) || this.topic =='Other') this.router.navigate(['/login-home'])
+      if (this.topic == undefined || !Topics.includes(this.topic) || this.topic =='Other') this.router.navigate(['/'])
     })
   }
 

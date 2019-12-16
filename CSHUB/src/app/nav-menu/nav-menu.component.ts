@@ -4,6 +4,7 @@ import { AppState } from '../store/models/app-state.model';
 import { Observable } from 'rxjs';
 import { User } from '../store/models/user.model';
 import { LogoutUserAction } from '../store/actions/user.actions';
+import { SideNavToggleService } from '../services/side-nav-toggle.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -14,7 +15,7 @@ export class NavMenuComponent implements OnInit {
   
   user$: Observable<User>;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private sideNavService: SideNavToggleService) { }
 
   ngOnInit() {
     this.user$ = this.store.select(store => store.user.user)
@@ -23,5 +24,9 @@ export class NavMenuComponent implements OnInit {
   logout(){
     this.store.dispatch(new LogoutUserAction());
 
+  }
+
+  clickSideBar() { 
+    this.sideNavService.toggle();
   }
 }

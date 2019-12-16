@@ -1,48 +1,111 @@
-<div *ngIf="user$ | async as user; else notLoggedIn" >
+ 
 
-<!--user entered wrong credentials 
-<div *ngIf="!user._id; then notLoggedIn"></div>-->
+ 
+ <!--user is logged in-->
+<div *ngIf="user$ | async as user; else notLoggedIn">
+  <div *ngIf="user._id;" >
+  <nav class="navbar navbar-collapse navbar-expand-lg navbar-dark bg-primary">
 
-<!--user successfully logged in-->
-  <ul id='navMenu' class="navbar-nav ml-auto" *ngIf="user._id;">
+    <!--mobile menu button-->
+    <button class="navbar-toggler" type="button" aria-controls="navbarContent navbarContent2 navbarContent3"
+    [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+    <span class="navbar-toggler-icon"></span>
+</button>
 
-    <li class="nav-item" ngbDropdown>
-      <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
-        Notes
-      </a>
-      <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-        <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Python'}">Python</a> 
-        <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Java'}">Java</a> 
-        <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Other'}">Other</a>
-      </div>
-    </li>
-
-    <li class="nav-item" ngbDropdown>
-        <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
-          Documents
-        </a>
-        <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Python'}">Python</a>
-          <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Java'}">Java</a> 
-          <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Other'}">Other</a>
-        </div>
-      </li>
-
-      <a class="nav-link" routerLink="/manage-docs-notes">Manage Documents & Notes</a>
-
-      <li><app-notification></app-notification></li>
-      <li><app-spotify></app-spotify></li>
-      <li><app-timer-icon></app-timer-icon></li>
-      <li><app-google-search></app-google-search></li>
-      <li class="text-right"><a class="nav-link" (click)='logout()'>Log out</a></li>
-
-  </ul>
+<div id='hamburgerIcon' style='display:none'>
+  <button mat-icon-button (click)="clickSideBar()">
+    <mat-icon style='color: black'>menu</mat-icon>
+  </button>
 </div>
 
- <!--initial load -->
-<ng-template #notLoggedIn>
-    <ul class="navbar-nav ml-auto">
-      <a class="nav-link" routerLink="/login">Login</a>
-      <a class="nav-link" routerLink="/signup">Sign up</a>
-    </ul>
-</ng-template>
+
+<app-title></app-title>
+
+    <div class="navbar-collapse collapse w-30 order-1 order-md-0 dual-collapse2" [class.collapse]="collapsed" id="navbarContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item" ngbDropdown>
+          <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
+            Notes
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Python'}">Python</a>
+            <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Java'}">Java</a>
+            <a class="dropdown-item" [routerLink]="['/editor']" [queryParams]="{topic:'Other'}">Other</a>
+          </div>
+        </li>
+
+        <li class="nav-item" ngbDropdown>
+          <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button">
+            Documents
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Python'}">Python</a>
+            <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Java'}">Java</a>
+            <a class="dropdown-item" [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Other'}">Other</a>
+          </div>
+        </li>
+
+        <li class="nav-item ">
+          <a class="nav-link" routerLink="/manage-docs-notes">Manage Documents & Notes</a>
+        </li>
+
+
+
+      </ul>
+    </div>
+    <div class="navbar-collapse collapse w-35 order-2 order-md-0 dual-collapse2" [class.collapse]="collapsed" id="navbarContent2">
+      <ul class="navbar-nav mr-auto">
+    <li class="h-50 d-inline-block ">
+      <app-google-search></app-google-search>
+    </li>
+      </ul>
+    </div>
+
+
+    <div class="navbar-collapse collapse w-25 order-3 dual-collapse2" [class.collapse]="collapsed" id="navbarContent3">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <app-spotify></app-spotify>
+        </li>
+        <li class="nav-item">
+          <app-timer-icon></app-timer-icon>
+        </li>
+        <li class="nav-item">
+          <app-notification></app-notification>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" (click)='logout()'>Log out</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</div>
+</div>
+
+
+   <!--initial load user not logged in-->
+  <ng-template #notLoggedIn>
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+
+          <!--mobile menu button-->
+    <button class="navbar-toggler" type="button" aria-controls="navbarContent4"
+    [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+   
+      <app-title></app-title> 
+   
+        
+    
+    <div class="navbar-collapse collapse w-50 order-3 order-md-0 dual-collapse2" [class.collapse]="collapsed" id="navbarContent4">
+      <ul class="navbar-nav ml-auto">
+        <a class="nav-link" routerLink="/login">Login</a>
+        <a class="nav-link" routerLink="/signup">Sign up</a>
+      </ul>
+    </div>
+  </nav>
+  </ng-template> 
