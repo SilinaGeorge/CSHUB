@@ -1,45 +1,48 @@
-<div id="spotify" class="modal" style="display:none;overflow: visible;z-index:1000!important;" tabindex="-1" role="dialog">
+<div id="spotify" class="modal" style="display:none;overflow: visible;z-index:1000!important;" tabindex="-1"
+    role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+            <!--header-->
             <div class="modal-header">
                 <h5 class="modal-title">Play Spotify Public Album/Playlist</h5>
                 <button type="button" class="close" (click)="close()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
+            <!--body/ iframe-->
             <div class="modal-body">
-                     <iframe [src]="srcUrl" width="100%" height="300px" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-             </div>
+                <iframe [src]="srcUrl" width="100%" height="300px" frameborder="0" allowtransparency="true"
+                    allow="encrypted-media"></iframe>
+            </div>
+
+            <!--footer/ upload playlist/albumn-->
             <div class="modal-footer">
                 <div class="alert alert-dismissible alert-danger" *ngIf="error$ | async as error">
-                    <ul >
-                        <li style="color:red" *ngFor="let msg of error.msgs">{{msg}}</li> 
-                
+                    <ul>
+                        <li style="color:red" *ngFor="let msg of error.msgs">{{ msg }}</li>
                     </ul>
                 </div>
-              
-            <div id="errors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"> </div>
+
+                <div id="errors" style="color:red; margin-bottom: 1em" [innerHTML]="errorHTML"></div>
 
                 <form [formGroup]="spotifyFormGroup" (ngSubmit)="onUpload()">
-
-                    <mat-form-field >
+                    <mat-form-field>
                         <input matInput type="url" placeholder="playlist/album link" minlength="6" maxlength="150"
-                            formControlName="spotifyurl">
+                            formControlName="spotifyurl" />
 
- 
                         <mat-error>Please enter a valid spotify public album/playlist link
                         </mat-error>
                     </mat-form-field>
-                    <button type="submit" [disabled]="spotifyFormGroup.invalid" class="btn btn-primary ml-auto">Upload
-                        <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
+                    <button type="submit" [disabled]="spotifyFormGroup.invalid" class="btn btn-primary ml-auto">
+                        Upload
+                        <app-loading-spinner *ngIf="loading$ | async"></app-loading-spinner>
                     </button>
-       
                 </form>
-                <button type="button" class="btn btn-secondary ml-auto" (click)="close()">Close</button>
+                <button type="button" class="btn btn-secondary ml-auto" (click)="close()">
+                    Close
+                </button>
             </div>
         </div>
     </div>
 </div>
-
-
-

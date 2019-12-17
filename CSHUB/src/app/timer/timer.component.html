@@ -1,17 +1,28 @@
 <div id="timer" class="bg-light" style="display: none">
-
-    <countdown #c class="text-lg"  (finished)="timerFinished()"  [config]="config"> $!h!:$!m!:$!s!</countdown>
-    <button (click)="c.pause()" class="btn btn-link btn-sm">pause</button>
-    <button (click)="c.resume()" class="btn btn-link btn-sm">resume</button>
-
-
-
-    <input appDigitOnly placeholder="hh"  maxlength="2" style="border-color:transparent !important" [(ngModel)]="hours" value="0" style="width:3em; height:2em"> hh:
-    <input appDigitOnly placeholder="mm"  maxlength="2"  style="border-color:transparent !important" [(ngModel)]="minutes" value="0" style="width:3em; height:2em">
-    mm
-    <button (click)="change()" class="btn btn-link btn-sm">start</button>
-
-
-
-
+  <countdown #c class="text-lg" (finished)="timerFinished()" [config]="config">
+    $!h!:$!m!:$!s!</countdown>
+    
+  <button (click)="c.pause()" class="btn btn-link btn-sm">pause</button>
+  <button (click)="c.resume()" class="btn btn-link btn-sm">resume</button>
+  <input
+    appDigitOnly
+    placeholder="hh"
+    maxlength="2"
+    style="border-color:transparent !important"
+    [(ngModel)]="hours"
+    value="0"
+    style="width:3em; height:2em"
+  />
+  hh:
+  <input
+    appDigitOnly
+    placeholder="mm"
+    maxlength="2"
+    style="border-color:transparent !important"
+    [(ngModel)]="minutes"
+    value="0"
+    style="width:3em; height:2em"
+  />
+  mm
+  <button (click)="change()" class="btn btn-link btn-sm">start</button>
 </div>

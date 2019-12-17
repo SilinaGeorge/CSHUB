@@ -11,8 +11,9 @@ export class TimerIconComponent implements OnInit {
 
   ngOnInit() {}
 
+  //toggle timer show and not show
   openTimer(){
-    //toggle timer show and not show
+    // element timer is in timer component
     var timerdiv = document.getElementById("timer");
     if (timerdiv.style.display === "none") {
       timerdiv.style.display = "block";

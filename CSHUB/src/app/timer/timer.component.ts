@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material';
-import { Config } from 'ngx-countdown';
-
 
 @Component({
   selector: 'app-timer',
@@ -10,10 +8,10 @@ import { Config } from 'ngx-countdown';
   styleUrls: ['./timer.component.css']
 })
 export class TimerComponent implements OnInit {
-  date = moment(new Date()).add(1, 'minute').unix();
+
   hours: string = '1';
   minutes: string = '0';
-  timeleft = 30;
+  timeleft = 0;
 
   config = {
     leftTime: 3600, // intial timer is set to an hour
@@ -22,9 +20,7 @@ export class TimerComponent implements OnInit {
 
   constructor(private _snackbar: MatSnackBar) { }
 
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   timerFinished() {
     this._snackbar.open("Time to take a break!", 'Close');
@@ -40,12 +36,10 @@ export class TimerComponent implements OnInit {
     if (!isNaN(parseInt(this.minutes)) && !isNaN(parseInt(this.hours))) {
       this.timeleft = parseInt(this.minutes) * 60 + parseInt(this.hours) * 3600
       if (this.timeleft != 0) {
-
         this.config = {
           leftTime: this.timeleft,
           demand: false,
         }
-
       }
     }
 

@@ -19,7 +19,6 @@ export class SpotifyPopupComponent implements OnInit {
 
   spotifyFormGroup: FormGroup;
   subscription: Subscription;
-
   srcUrl: SafeResourceUrl;
   errorHTML: string;
   closeResult: string;
@@ -27,11 +26,10 @@ export class SpotifyPopupComponent implements OnInit {
   spotify$: Observable<Spotify>;
   loading$: Observable<Boolean>;
   error$: Observable<Error>;
-  spotify: Spotify= {_id: null, spotifyurl: null};;
   userID: string;
 
- 
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private store: Store<AppState>) {
+    // default playlist
     let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, "https://open.spotify.com/embed/playlist/37i9dQZF1DX9sIqqvKsjG8");
     this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
     
@@ -51,6 +49,8 @@ export class SpotifyPopupComponent implements OnInit {
         this.userID = state._id;
       }
     });
+
+    // get the user's saved playlist 
     this.store.dispatch(new GetSpotifyAction({_id:this.userID}));
    
     this.subscription = this.store.select(store => store.user.returnedSpotify).subscribe(state =>   {
@@ -61,6 +61,7 @@ export class SpotifyPopupComponent implements OnInit {
           let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, this.url);
           this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
         }
+        // set default playlist
         else{
     
           let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, "https://open.spotify.com/embed/playlist/37i9dQZF1DX9sIqqvKsjG8");
@@ -78,28 +79,21 @@ export class SpotifyPopupComponent implements OnInit {
     return String (this.spotifyFormGroup.get('spotifyurl').value);
   }
 
+  // close spotify modal 
   close(){
-     var spotifypopup = document.getElementById("spotify");
+    var spotifypopup = document.getElementById("spotify");
     spotifypopup.style.display = "none"; 
-    
-    
   }
 
+  // upload spotify playlist
   onUpload(){
     try{
-/*       let index = this.spotifyurl.indexOf("https:\/\/open.spotify.com\/")
-      console.log(index); */
       let embedURL = this.spotifyurl.substr(0, 25) + "embed\/" + this.spotifyurl.substr(25);
-     // console.log(embedURL);
-      let sanatizedUrl= this.sanitizer.sanitize(SecurityContext.URL, embedURL);
-      //this.srcUrl = this.sanitizer.bypassSecurityTrustResourceUrl(sanatizedUrl);
-
-
-      this.spotify.spotifyurl = embedURL;
-      this.spotify._id = this.userID;
-  
+      let uploadSpotify: Spotify= {_id: this.userID, spotifyurl: embedURL};
+      
+      // save user's upload 
       this.loading$ = this.store.select(store => store.user.spotifyLoading)
-      this.store.dispatch(new UpdateSpotifyAction(this.spotify));
+      this.store.dispatch(new UpdateSpotifyAction(uploadSpotify));
       this.error$ = this.store.select(store => store.user.spotifyError)
   
     }
