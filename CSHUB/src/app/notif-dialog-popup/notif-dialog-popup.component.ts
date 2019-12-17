@@ -4,10 +4,10 @@ import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
-import { Notification } from '../store/models/notification.model';
+import { Notification, DeleteNotifs } from '../store/models/notification.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
-import { AddNotifAction, DeleteNotifAction, GetNotifsAction } from '../store/actions/user.actions';
+import { AddNotifAction, DeleteNotifsAction, GetNotifsAction } from '../store/actions/user.actions';
 import { Error } from '../store/models/error.model';
 import { take } from 'rxjs/operators';
 import { GetNotesAction } from '../store/actions/notes.actions';
@@ -31,7 +31,8 @@ export class NotifDialogPopupComponent implements OnInit {
   loading$: Observable<Boolean>;
   error$: Observable<Error>;
   deleteError$: Observable<Error>;
-  addDeleteNotif: Notification = {_id: null, datetime: null};
+  addNotif: Notification = {_id: null, datetime: null};
+  deleteNotifs: DeleteNotifs = {_id: null, datetimes: []};
   subscription: Subscription;
   success: boolean;
   success$: Observable<boolean>;
@@ -63,7 +64,6 @@ export class NotifDialogPopupComponent implements OnInit {
 
      this.store.select(store => store.user.user).pipe(take(1)).subscribe(state =>   {
       if (state){
-        this.addDeleteNotif._id = state._id;
         this.userId = state._id
       }
       }); 
@@ -130,8 +130,9 @@ export class NotifDialogPopupComponent implements OnInit {
         this.errorHTML = `You already have a notification for this date`;
       else{
     
-        this.addDeleteNotif.datetime = this.dateTime.toString()
-        this.store.dispatch(new AddNotifAction(this.addDeleteNotif));
+        this.addNotif.datetime = this.dateTime.toString()
+        this.addNotif._id = this.userId
+        this.store.dispatch(new AddNotifAction(this.addNotif));
         this.error$ = this.store.select(store => store.user.notificationError)
       }
       
@@ -158,20 +159,24 @@ export class NotifDialogPopupComponent implements OnInit {
   removeSelectedRows() {
 
     let dataCopy = this.data.slice();
+    this.deleteNotifs.datetimes =[];
+    this.dataSource = new MatTableDataSource(dataCopy);
 
     this.selection.selected.forEach(item => {
       let index: number = dataCopy.findIndex(d => d === item);
       
       //this.data.splice(index, 1)
-      let deleteItem = this.data.splice(index, 1);
+      let deleteItem = dataCopy.splice(index, 1);
 
-      this.addDeleteNotif.datetime = deleteItem[0].datetime;
-      this.store.dispatch(new DeleteNotifAction(this.addDeleteNotif))
-      this.deleteError$ = this.store.select(store => store.user.deleteNotificationError)
-
+      this.deleteNotifs.datetimes.push(deleteItem[0].datetime);
     });
-    this.dataSource = new MatTableDataSource(dataCopy);
+    if (this.deleteNotifs.datetimes){
+      this.deleteNotifs._id = this.userId
+      this.store.dispatch(new DeleteNotifsAction(this.deleteNotifs))
+      this.deleteError$ = this.store.select(store => store.user.deleteNotificationsError)
+    }
     this.selection = new SelectionModel(true, []);
+
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {

@@ -22,7 +22,9 @@ export class NavMenuComponent implements OnInit {
   }
 
   logout(){
+    if(confirm("Are you sure you want to log out?")) {
     this.store.dispatch(new LogoutUserAction());
+    }
 
   }
 

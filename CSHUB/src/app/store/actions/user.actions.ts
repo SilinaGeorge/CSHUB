@@ -6,7 +6,7 @@ import { Error } from '../models/error.model';
 import { Auth, SocialMediaAuth } from '../models/auth.model';
 import { SignUpUser } from '../models/sign-up-user.model';
 import { Spotify, GetSpotify } from '../models/spotify.model';
-import { Notification,AllNotifications, GetNotifications } from '../models/notification.model';
+import { Notification,AllNotifications, GetNotifications, DeleteNotifs } from '../models/notification.model';
 
 
 
@@ -39,9 +39,9 @@ export enum UserActionTypes{
     ADD_NOTIF_SUCCESS = '[USER] Add Notification Success',
     ADD_NOTIF_ERROR = '[USER] Add Notification Error',
 
-    DELETE_NOTIF = '[USER] Delete Notification',
-    DELETE_NOTIF_SUCCESS = '[USER] Delete Notification Success',
-    DELETE_NOTIF_ERROR = '[USER] Delete Notification Error',
+    DELETE_NOTIFS = '[USER] Delete Notification',
+    DELETE_NOTIFS_SUCCESS = '[USER] Delete Notification Success',
+    DELETE_NOTIFS_ERROR = '[USER] Delete Notification Error',
 
     GET_NOTIFS = '[USER] Get Notification',
     GET_NOTIFS_SUCCESS = '[USER] Get Notification Success',
@@ -137,16 +137,16 @@ export class AddNotifActionErrorAction implements Action{
     readonly type = UserActionTypes.ADD_NOTIF_ERROR;
     constructor(public payload: Error){};
 }
-export class DeleteNotifAction implements Action{
-    readonly type = UserActionTypes.DELETE_NOTIF;
-    constructor(public payload: Notification){};
+export class DeleteNotifsAction implements Action{
+    readonly type = UserActionTypes.DELETE_NOTIFS;
+    constructor(public payload: DeleteNotifs){};
 }
-export class DeleteNotifActionSuccessAction implements Action{
-    readonly type = UserActionTypes.DELETE_NOTIF_SUCCESS;
-    constructor(public payload: Notification){};
+export class DeleteNotifsActionSuccessAction implements Action{
+    readonly type = UserActionTypes.DELETE_NOTIFS_SUCCESS;
+    constructor(public payload: DeleteNotifs){};
 }
-export class DeleteNotifActionErrorAction implements Action{
-    readonly type = UserActionTypes.DELETE_NOTIF_ERROR;
+export class DeleteNotifsActionErrorAction implements Action{
+    readonly type = UserActionTypes.DELETE_NOTIFS_ERROR;
     constructor(public payload: Error){};
 }
 
@@ -211,9 +211,9 @@ UpdateSpotifyErrorAction |
 AddNotifAction |
 AddNotifActionSuccessAction |
 AddNotifActionErrorAction |
-DeleteNotifAction |
-DeleteNotifActionSuccessAction |
-DeleteNotifActionErrorAction |
+DeleteNotifsAction |
+DeleteNotifsActionSuccessAction |
+DeleteNotifsActionErrorAction |
 LogoutUserAction |
 LogoutUserSuccessAction |
 LogoutUserErrorAction |

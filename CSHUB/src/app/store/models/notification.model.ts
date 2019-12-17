@@ -14,8 +14,8 @@ export interface GetNotifications{
     _id: string,
 }
 
-export interface ReturnedDeletedNotif{
-    msg: string,
+export interface DeleteNotifs{
+    msg?: string,
     _id: string,
-    datetime: string
+    datetimes: Array<string>
 }

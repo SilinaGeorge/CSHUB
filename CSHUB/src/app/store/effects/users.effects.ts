@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Effect, Actions, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction ,LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction, AddNotifAction, AddNotifActionSuccessAction, AddNotifActionErrorAction, DeleteNotifActionSuccessAction, DeleteNotifActionErrorAction, DeleteNotifAction, LogoutUserAction, LogoutUserSuccessAction, LogoutUserErrorAction, GetSpotifyAction, GetSpotifySuccessAction, GetSpotifyErrorAction, GetNotifsAction, GetNotifsActionSuccessAction, GetNotifsActionErrorAction, GetSpaceLeftAction, GetSpaceLeftActionSuccessAction, GetSpaceLeftActionErrorAction } from '../actions/user.actions';
+import { UpdateSpotifyAction, UpdateSpotifyErrorAction, UpdateSpotifySuccessAction, LoginUserSuccessAction, UserActionTypes, LoginUserAction, LoginUserErrorAction, SignupUserAction, SignupUserSuccessAction, SignupUserErrorAction, GetSocialUserAction, GetSocialUserSuccessAction, GetSocialUserErrorAction, AddNotifAction, AddNotifActionSuccessAction, AddNotifActionErrorAction, LogoutUserAction, LogoutUserSuccessAction, LogoutUserErrorAction, GetSpotifyAction, GetSpotifySuccessAction, GetSpotifyErrorAction, GetNotifsAction, GetNotifsActionSuccessAction, GetNotifsActionErrorAction, GetSpaceLeftAction, GetSpaceLeftActionSuccessAction, GetSpaceLeftActionErrorAction, DeleteNotifsActionSuccessAction, DeleteNotifsActionErrorAction, DeleteNotifsAction } from '../actions/user.actions';
 import { AuthService } from '../../services/auth.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ export class UsersEffects {
                     .pipe(
                         map(data => {
                             sessionStorage.setItem("user", JSON.stringify(data));
-                            
+
                             this.router.navigateByUrl('/login-home')
                             return new LoginUserSuccessAction(data)
                         }),
@@ -34,7 +34,7 @@ export class UsersEffects {
             )
         )
 
-        @Effect() getSocialUser = this.actions$
+    @Effect() getSocialUser = this.actions$
         .pipe(
             ofType<GetSocialUserAction>(UserActionTypes.GET_SOCIAL_USER),
             mergeMap(
@@ -73,7 +73,7 @@ export class UsersEffects {
             )
         )
 
-        @Effect() UpdateSpotify = this.actions$
+    @Effect() UpdateSpotify = this.actions$
         .pipe(
             ofType<UpdateSpotifyAction>(UserActionTypes.UPDATE_SPOTIFY),
             mergeMap(
@@ -90,7 +90,7 @@ export class UsersEffects {
             )
         )
 
-        @Effect() GetSpotify = this.actions$
+    @Effect() GetSpotify = this.actions$
         .pipe(
             ofType<GetSpotifyAction>(UserActionTypes.GET_SPOTIFY),
             mergeMap(
@@ -107,14 +107,14 @@ export class UsersEffects {
             )
         )
 
-        @Effect() AddNotif = this.actions$
+    @Effect() AddNotif = this.actions$
         .pipe(
             ofType<AddNotifAction>(UserActionTypes.ADD_NOTIF),
             mergeMap(
                 data => this.widgetService.PutNotif(data.payload)
                     .pipe(
                         map(data => {
-                            
+
                             return new AddNotifActionSuccessAction(data)
                         }),
                         catchError((error) => {
@@ -125,24 +125,24 @@ export class UsersEffects {
             )
         )
 
-        @Effect() DeleteNotif = this.actions$
+    @Effect() DeleteNotif = this.actions$
         .pipe(
-            ofType<DeleteNotifAction>(UserActionTypes.DELETE_NOTIF),
+            ofType<DeleteNotifsAction>(UserActionTypes.DELETE_NOTIFS),
             mergeMap(
-                data => this.widgetService.DeleteNotif(data.payload)
+                data => this.widgetService.DeleteNotifs(data.payload)
                     .pipe(
                         map(data => {
-                            return new DeleteNotifActionSuccessAction(data)
+                            return new DeleteNotifsActionSuccessAction(data)
                         }),
                         catchError((error) => {
-                            return of(new DeleteNotifActionErrorAction(error.error))
+                            return of(new DeleteNotifsActionErrorAction(error.error))
                         }
                         )
                     )
             )
         )
 
-        @Effect() GetNotif = this.actions$
+    @Effect() GetNotif = this.actions$
         .pipe(
             ofType<GetNotifsAction>(UserActionTypes.GET_NOTIFS),
             mergeMap(
@@ -159,14 +159,14 @@ export class UsersEffects {
             )
         )
 
-        @Effect() logout = this.actions$
+    @Effect() logout = this.actions$
         .pipe(
             ofType<LogoutUserAction>(UserActionTypes.LOGOUT_USER),
             mergeMap(
                 data => this.authService.logoutUser()
                     .pipe(
                         map(data => {
-                           
+
                             this.router.navigateByUrl('/')
                             return new LogoutUserSuccessAction()
                         }),
@@ -180,7 +180,7 @@ export class UsersEffects {
         )
 
 
-        @Effect() GetSpaceLeft = this.actions$
+    @Effect() GetSpaceLeft = this.actions$
         .pipe(
             ofType<GetSpaceLeftAction>(UserActionTypes.GET_SPACE_LEFT),
             mergeMap(

@@ -1,7 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ParallaxScrollModule} from 'ng2-parallaxscroll';
-import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { take } from 'rxjs/operators';
@@ -17,7 +14,7 @@ import { Subscription } from 'rxjs';
    '../../assets/landingpage/sass/noscript.scss',
    '../../assets/landingpage/sass/main.scss'
   ],
-  providers: [NgbCarouselConfig],
+  providers: [],
 
 })
 

@@ -28,7 +28,7 @@ app.use(cors(corsOptions));
 const mongoDB = process.env.MONGODBCONNECTION;
 
 // connect to our database
-mongoose.connect(mongoDB, { useNewUrlParser: true });
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, });
 
 let defaultconnection = mongoose.connection;
 
