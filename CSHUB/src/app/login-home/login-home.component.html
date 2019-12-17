@@ -1,54 +1,48 @@
-
-      <mat-grid-list cols="3" rowHeight="1:1"  >
-            <mat-grid-tile>
-                    <div class="card border-dark text-white bg-secondary mb-3 shadow-lg rounded" style="width: 80%;height:90%  ">
-                            <div class="card-header">Learn Python 
-                                    <img src='../../assets/images/python-logo.png' style="width: 20px" >
-                            </div>
-                            <div class="card-body text-center">
-                                    <img src='../../assets/images/python-logo-name.png' style="max-width: 80%; margin-top:7vh;margin-bottom:7vh" >
-
-                            </div>
-                            <a href="#" style="width:100%" class="btn btn-primary border-dark">Cliff Notes (coming soon)</a>
-                            <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Python'}">Your Python Notes</a>
-                            <a [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Python'}" style="width:100%" class="btn btn-primary border-dark">Your Python Documents</a>
-                            <a routerLink="/interpreter/Python" style="width:100%" class="btn btn-primary border-dark">Interpreter</a>
-                          </div>
-            </mat-grid-tile>
-
-            <mat-grid-tile>
-                <div class="card border-dark text-white bg-secondary mb-3 shadow-lg rounded" style="width: 80%;height:90%  ">
-                        <div class="card-header">Learn Java 
-                                <img src='../../assets/images/java-logo.png' style="width: 25px" >
-                        </div>
-                        <div class="card-body text-center">
-                                <img src='../../assets/images/java-logo-name.png' style="max-width: 60%;" >
-
-                        </div>
-                        <a href="#" style="width:100%" class="btn btn-primary border-dark">Cliff Notes (coming soon)</a>
-                        <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Java'}">Your Java Notes</a>
-                        <a [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Java'}" style="width:100%" class="btn btn-primary border-dark">Your Java Documents</a>
-                        <a routerLink="/interpreter/Java" style="width:100%" class="btn btn-primary border-dark">Interpreter</a>
-                      </div>
-        </mat-grid-tile>
-
-            <mat-grid-tile>
-
-                    <div class="card border-dark text-white bg-secondary mb-3 shadow-lg rounded" style="width: 80%; height:90% ">
-                            <div class="card-header">Learn Other 
-                                    <img src='../../assets/images/other-icon.png' style="width: 30px" >
-                            </div>
-                            <div class="card-body text-center">
-                                    <img src='../../assets/images/other.png' style="max-width: 69%; margin-top:6vh;margin-bottom:6vh" >
+                  <div class="container" style='margin-top:2%'>
+                <div class="row">
+                  <div class="col-md">
+                        <div class="card border-dark text-white bg-secondary mb-3 shadow-lg rounded" style="width: 80%;height:90%  ">
+                                <div class="card-header">Learn Python 
+                                        <img src='../../assets/images/python-logo.png' style="width: 20px" >
+                                </div>
+                                <div class="card-body text-center">
+                                        <img src='../../assets/images/python-logo-name.png' style="max-width: 80%; margin-top:7vh;margin-bottom:7vh" >
+    
+                                </div>
+                                <a href="#" style="width:100%" class="btn btn-primary border-dark">Cliff Notes (coming soon)</a>
+                                <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Python'}">Your Python Notes</a>
+                                <a [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Python'}" style="width:100%" class="btn btn-primary border-dark">Your Python Documents</a>
+                                <a routerLink="/interpreter/Python" style="width:100%" class="btn btn-primary border-dark">Interpreter</a>
+                              </div>
+                  </div>
+                  <div class="col-md">
+                        <div class="card border-dark text-white bg-secondary mb-3 shadow-lg rounded" style="width: 80%;height:90%  ">
+                                <div class="card-header">Learn Java 
+                                        <img src='../../assets/images/java-logo.png' style="width: 25px;" >
+                                </div>
+                                <div class="card-body text-center">
+                                        <img src='../../assets/images/java-logo-name.png' style="max-width: 60%;margin-bottom: 3vh;" >
         
-                            </div>
-                            <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Other'}">Your Other Notes</a>
-                            <a [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Other'}" style="width:100%" class="btn btn-primary border-dark">Your Other Documents</a>
-                  
-                        </div>
-
-            </mat-grid-tile>
-
- 
-        
+                                </div>
+                                <a href="#" style="width:100%" class="btn btn-primary border-dark">Cliff Notes (coming soon)</a>
+                                <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Java'}">Your Java Notes</a>
+                                <a [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Java'}" style="width:100%" class="btn btn-primary border-dark">Your Java Documents</a>
+                                <a routerLink="/interpreter/Java" style="width:100%" class="btn btn-primary border-dark">Interpreter</a>
+                              </div>
+                  </div>
+                  <div class="col-md">
+                        <div class="card border-dark text-white bg-secondary mb-3 shadow-lg rounded" style="width: 80%; height:90% ">
+                                <div class="card-header">Learn Other 
+                                        <img src='../../assets/images/other-icon.png' style="width: 30px" >
+                                </div>
+                                <div class="card-body text-center">
+                                        <img src='../../assets/images/other.png' style="max-width: 69%; margin-top:6vh;margin-bottom:6vh" >
             
+                                </div>
+                                <a style="width:100%" class="btn btn-primary border-dark" [routerLink]="['/editor']" [queryParams]="{topic:'Other'}">Your Other Notes</a>
+                                <a [routerLink]="['/doc-viewer']" [queryParams]="{topic:'Other'}" style="width:100%" class="btn btn-primary border-dark">Your Other Documents</a>
+                      
+                            </div>
+                  </div>
+                </div>
+              </div>
