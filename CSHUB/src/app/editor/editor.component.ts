@@ -58,6 +58,20 @@ export class EditorComponent implements OnInit {
 
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
+      this.actroute.queryParams.pipe(take(1)).subscribe(params => {
+        this.topic = params.topic;
+       
+        if (params.noteId) {
+   
+          this.initialSelectedNoteId = params.noteId
+          //this.selectedNoteId = this.initialSelectedNoteId
+   
+        }
+        
+        if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/'])
+        else this.getTopicNotes.topic = this.topic
+    });
+
     }
 
   ngOnDestroy(){
@@ -77,19 +91,7 @@ export class EditorComponent implements OnInit {
 
     this.sideNavService.setSidenav(this.sidenav);
 
-    this.actroute.queryParams.pipe(take(1)).subscribe(params => {
-     this.topic = params.topic;
-    
-     if (params.noteId) {
 
-       this.initialSelectedNoteId = params.noteId
-       //this.selectedNoteId = this.initialSelectedNoteId
-
-     }
-     
-     if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/'])
-     else this.getTopicNotes.topic = this.topic
- });
    
    this.store.select(store => store.user).pipe(take(1)).subscribe(state =>   {
      if (state && state.user){

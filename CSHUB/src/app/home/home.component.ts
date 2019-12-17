@@ -25,17 +25,16 @@ export class HomeComponent implements OnInit {
   subscription: Subscription;
 
   constructor(private store: Store<AppState>, private router: Router) {
-  }
 
-  ngOnInit() {
-
-  this.subscription = this.store.select(store => store.user).subscribe(state =>   {
+    this.subscription = this.store.select(store => store.user).subscribe(state =>   {
       if (state.user && state.user._id){
         this.router.navigateByUrl('/login-home')
         
       }
       }); 
   }
+
+  ngOnInit() {  }
 
   ngOnDestroy(){
     this.subscription.unsubscribe()

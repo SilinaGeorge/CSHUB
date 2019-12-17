@@ -46,25 +46,27 @@ export class DocViewerComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder ) { 
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
+      this.actroute.queryParams.pipe(take(1)).subscribe(params => {
+        this.topic = params.topic;
+       
+         if (params.docId) this.initialSelectedDocId = params.docId
+  
+        if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/'])
+        else this.getMetaDocs.topic = this.topic
+    });
+  
+      this.store.select(store => store.user).pipe(take(1)).subscribe(state =>   {
+        if (state && state.user){
+           this.getMetaDocs.userId = state.user._id;       
+        }
+      }); 
+  
     }
 
   ngOnInit() {
     this.sideNavService.setSidenav(this.sidenav);
 
-    this.actroute.queryParams.pipe(take(1)).subscribe(params => {
-      this.topic = params.topic;
-     
-       if (params.docId) this.initialSelectedDocId = params.docId
-
-      if (this.topic == undefined || !Topics.includes(this.topic)) this.router.navigate(['/'])
-      else this.getMetaDocs.topic = this.topic
-  });
-
-    this.store.select(store => store.user).pipe(take(1)).subscribe(state =>   {
-      if (state && state.user){
-         this.getMetaDocs.userId = state.user._id;       
-      }
-    }); 
 
       this.loading$ = this.store.select(store => store.docsState.loading)
     this.store.dispatch(new GetDocsAction(this.getMetaDocs));
