@@ -17,7 +17,6 @@ export class LoginHomeComponent implements OnInit {
 
   ngOnInit() {
     this.user$ = this.store.select(store => store.user.user)
-    
   }
 
 }
