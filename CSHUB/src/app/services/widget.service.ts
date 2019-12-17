@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Spotify, GetSpotify } from '../store/models/spotify.model';
 import { Notification, GetNotifications, AllNotifications } from '../store/models/notification.model';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WidgetService {
 
-  private URL = "https://localhost:4200/widgets";
+  private URL = environment.url + "/widgets";
 
   constructor(private http: HttpClient) { }
 

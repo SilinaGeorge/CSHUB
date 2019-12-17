@@ -3,12 +3,14 @@ import { AddNote } from '../store/models/add-note.model';
 import { ReturnedNotes, GetNotes } from '../store/models/get-notes.model';
 import { Note, DeleteNote, UpdateNote } from '../store/models/note.model';
 import { HttpClient } from '@angular/common/http'
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotesService {
-  private URL = "https://localhost:4200/notes";
+
+  private URL = environment.url + "/notes";
 
   constructor(private http: HttpClient) { }
 

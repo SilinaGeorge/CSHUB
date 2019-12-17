@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AddDoc, Doc, GetMetaDocs, ReturnedMetaDocs, DeleteDoc, UpdateDoc } from '../store/models/docs.model';
 import { HttpClient } from '@angular/common/http'
-
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocsService {
-  private URL = "https://localhost:4200/docs";
+
+  private URL = environment.url + "/docs";
 
   constructor(private http: HttpClient) { }
 

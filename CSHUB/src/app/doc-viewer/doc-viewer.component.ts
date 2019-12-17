@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Topics } from '../topics';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { take } from 'rxjs/operators';
+import { environment } from './../../environments/environment';
 
 @Component({
   selector: 'app-doc-viewer',
@@ -18,7 +19,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./doc-viewer.component.css']
 })
 export class DocViewerComponent implements OnInit {
-  baseURL= 'https://localhost:4200/docs/'
+  baseURL= environment.url + '/'
   url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf'
   fileToUpload: File = null;
   userId =null

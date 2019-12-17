@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GetSpaceLeft, SpaceLeft } from '../store/models/user.model';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private URL = "https://localhost:4200/user";
+  private URL = environment.url + "/user";
+  
 
   constructor(private http: HttpClient) { }
 
