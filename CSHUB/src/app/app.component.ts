@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SideNavToggleService } from './services/side-nav-toggle.service';
-
 
 @Component({
   selector: 'app-root',
@@ -9,27 +7,7 @@ import { SideNavToggleService } from './services/side-nav-toggle.service';
 })
 export class AppComponent implements OnInit  {
 
-  closeResult: string;
-  collapsed = true;
-  Title: string = "CS HUB";
+  constructor() { }
 
- 
-
-  constructor(private sideNavService: SideNavToggleService) { 
-  }
-
-  ngOnInit() { 
-
-    
-
-  } 
-
-  clickSideBar() { 
-    this.sideNavService.toggle();
-  }
-
- 
-
-
-
+  ngOnInit() { } 
 }

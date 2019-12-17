@@ -1,30 +1,16 @@
-
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <div >
-            <!-- main menu hide when scroll down, show whe scroll up -->
-            <ngx-headroom>
-                 <!--main menu content-->
-                 <app-nav-menu></app-nav-menu>
-                <app-timer></app-timer>       
-            </ngx-headroom>
-    
+<div>
+    <!-- nav menu hide when scroll down, show whe scroll up -->
+    <ngx-headroom>
+        <!--nav menu content-->
+        <app-nav-menu></app-nav-menu>
 
-    
-    
-        </div>       
-    
-    <div>
-        <router-outlet></router-outlet>
-    </div>
-    
-  
+        <!--count down timer-->
+        <app-timer></app-timer>
+    </ngx-headroom>
+</div>
 
-      
-
-
-
-
-<!-- <div id="fb-root"></div>
-<script async defer crossorigin="anonymous"
-    src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0&appId=2426554690949520&autoLogAppEvents=1"></script> -->
+<div>
+    <router-outlet></router-outlet>
+</div>

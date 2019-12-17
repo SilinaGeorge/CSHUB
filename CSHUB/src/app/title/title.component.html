@@ -1,11 +1,7 @@
 <div *ngIf="user$ | async as user; else notLoggedInTitle">
-        <!--user entered wrong credentials 
-        <div *ngIf="!user._id; then notLoggedInTitle"></div>-->
-
-        <!--user successfully logged in-->
-        <a *ngIf="user._id" class="navbar-brand" routerLink="/login-home">{{Title}}</a>
+  <a *ngIf="user._id" class="navbar-brand" routerLink="/login-home">{{title}}</a>
 </div>
 
 <ng-template #notLoggedInTitle>
-        <a class="navbar-brand" routerLink="/">{{Title}}</a>
+  <a class="navbar-brand" routerLink="/">{{ title }}</a>
 </ng-template>

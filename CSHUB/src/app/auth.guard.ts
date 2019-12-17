@@ -15,6 +15,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
      
+      // check backend to see if user is logged in
      return this.auth.checkLoggedin().toPromise()
       .then(response => {
         if (!response.isloggedin){

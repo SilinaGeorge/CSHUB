@@ -12,8 +12,6 @@ import {ManageDocsNotesComponent} from './manage-docs-notes/manage-docs-notes.co
 import {InterpreterComponent} from './interpreter/interpreter.component'
 import { AuthGuard } from './auth.guard';
 
-
-
 const routes: Routes = [
   { path:'', component: HomeComponent },
   { path:'signup', component: SignupComponent },

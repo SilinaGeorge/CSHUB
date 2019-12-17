@@ -10,7 +10,7 @@ import { User } from '../store/models/user.model';
   styleUrls: ['./title.component.css']
 })
 export class TitleComponent implements OnInit {
-  Title = 'CS HUB'
+  title = 'CS HUB'
   user$: Observable<User>;
 
   constructor(private store: Store<AppState>) { }
