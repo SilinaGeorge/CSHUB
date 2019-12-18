@@ -1,8 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { SpotifyPopupComponent } from '../spotify-popup/spotify-popup.component';
-
-
 
 @Component({
   selector: 'app-spotify',
@@ -11,11 +7,9 @@ import { SpotifyPopupComponent } from '../spotify-popup/spotify-popup.component'
 })
 export class SpotifyComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor() { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   openModal(){
      var spotifypopup = document.getElementById("spotify");
@@ -24,8 +18,6 @@ export class SpotifyComponent implements OnInit {
     } else {
       spotifypopup.style.display = "none";
     } 
-
-    //this.dialog.open(SpotifyPopupComponent,);
   }
 
 }

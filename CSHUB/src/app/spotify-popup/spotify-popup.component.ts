@@ -74,7 +74,7 @@ export class SpotifyPopupComponent implements OnInit {
 
   }
 
-
+  //forum value
   get spotifyurl() {
     return String (this.spotifyFormGroup.get('spotifyurl').value);
   }
