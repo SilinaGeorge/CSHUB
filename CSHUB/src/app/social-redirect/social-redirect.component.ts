@@ -8,6 +8,10 @@ import { Observable } from 'rxjs';
 import { SocialMediaAuth } from '../store/models/auth.model';
 import { take } from 'rxjs/operators';
 
+/* this page is used as a callback to social media login (facebook,google)
+   param is the id of the social media user that is trying to login, this will then send back
+   the user id to the backend which will get the user details and send it back and store it in ngrx
+*/
 @Component({
   selector: 'app-social-redirect',
   templateUrl: './social-redirect.component.html',
@@ -19,11 +23,7 @@ export class SocialRedirectComponent implements OnInit {
   user: SocialMediaAuth = {_id: null};
   error$: Observable<Error>;
 
-  constructor(private store: Store<AppState>, private activatedroute: ActivatedRoute) {
-
-
-    
-   }
+  constructor(private store: Store<AppState>, private activatedroute: ActivatedRoute) { }
 
   ngOnInit() {
 
