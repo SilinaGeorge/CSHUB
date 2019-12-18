@@ -79,10 +79,10 @@ export class EditorComponent implements OnInit {
     let hamburgerIcon = document.getElementById("hamburgerIcon");
     hamburgerIcon.style.display = "none";
   
-    this.addedNoteSub.unsubscribe()
-    this.deletedNoteSub.unsubscribe()
-    this.updatedNoteSub.unsubscribe()
-    this.returnedNotesSub.unsubscribe()
+    if (this.addedNoteSub) this.addedNoteSub.unsubscribe()
+    if (this.deletedNoteSub) this.deletedNoteSub.unsubscribe()
+    if (this.updatedNoteSub) this.updatedNoteSub.unsubscribe()
+    if (this.returnedNotesSub) this.returnedNotesSub.unsubscribe()
 
 
   }

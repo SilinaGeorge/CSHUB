@@ -233,10 +233,10 @@ ngOnDestroy(){
   let hamburgerIcon = document.getElementById("hamburgerIcon");
   hamburgerIcon.style.display = "none";
 
-  this.returnedMetaDocsSub.unsubscribe();
-  this.deletedDocSub.unsubscribe();
-  this.addedDocSub.unsubscribe();
-  this.updatedDocSub.unsubscribe();
+  if (this.returnedMetaDocsSub) this.returnedMetaDocsSub.unsubscribe();
+  if (this.deletedDocSub) this.deletedDocSub.unsubscribe();
+  if (this.addedDocSub) this.addedDocSub.unsubscribe();
+  if (this.updatedDocSub) this.updatedDocSub.unsubscribe();
 }
 
 onDocClick(doc, i){
