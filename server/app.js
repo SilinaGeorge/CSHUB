@@ -50,7 +50,7 @@ app.use(express.static(dist));
 
 // Create server to listen for connections
 //const server = http.createServer(app);
-http.createServer({}, app).listen(process.env.PORT || port, () => {
+http.createServer(app).listen(process.env.PORT || 4200, () => {
   console.log('Listening...')
 })
 //server.listen(port, () => console.log("listening on port " + port));
@@ -59,10 +59,6 @@ http.createServer({}, app).listen(process.env.PORT || port, () => {
 // ----------------- security
 // create session
 const session = require("express-session");
-
-app.get('/', function(req, res){
-  res.redirect('/');
-});
 
 const MongoStore = require("connect-mongo")(session);
 app.use(cookieParser())
