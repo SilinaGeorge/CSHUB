@@ -49,13 +49,17 @@ app.use(express.static(dist));
 const port = process.env.PORT || 4200;
 const server = http.createServer(app);
 
-server.listen(port);
+server.listen(port, ()=>{
+  console.log('Listeing...')
+});
 
 // ----------------- security
 // create session
 const session = require("express-session");
 
-
+app.get('/', function(req, res){
+  res.sendFile('../dist/CSHubProject/index.html')
+});
 
 const MongoStore = require("connect-mongo")(session);
 app.use(cookieParser())
