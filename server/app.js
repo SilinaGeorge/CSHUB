@@ -37,9 +37,6 @@ let defaultconnection = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 defaultconnection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// Set port
-const port = 4200;
-
 app.use(bodyParser.json()); // support json encoded bodies
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,16 +46,18 @@ const dist = '../dist/CSHubProject';
 app.use(express.static(dist));
 
 // Create server to listen for connections
-//const server = http.createServer(app);
-http.createServer(app).listen(process.env.PORT || 4200, () => {
-  console.log('Listening...')
-})
-//server.listen(port, () => console.log("listening on port " + port));
+const port = process.env.PORT || 4200;
+const server = http.createServer(app);
 
+server.listen(port);
 
 // ----------------- security
 // create session
 const session = require("express-session");
+
+app.get('/', function(req, res){
+  res.redirect('/');
+});
 
 const MongoStore = require("connect-mongo")(session);
 app.use(cookieParser())
