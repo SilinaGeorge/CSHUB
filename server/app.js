@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 mongoose.set('useFindAndModify', false);
 const { check, validationResult } = require('express-validator');
 const cookieParser = require("cookie-parser");
-const https = require('https');
+//const https = require('https');
 const fs = require('fs');
 const passport = require('passport');
 const path = require('path');
@@ -50,10 +50,7 @@ app.use(express.static(dist));
 
 // Create server to listen for connections
 //const server = http.createServer(app);
-https.createServer({
-  key: fs.readFileSync('localhost.key'),
-  cert: fs.readFileSync('localhost.crt')
-}, app).listen(port, () => {
+http.createServer({}, app).listen(port, () => {
   console.log('Listening...')
 })
 //server.listen(port, () => console.log("listening on port " + port));
