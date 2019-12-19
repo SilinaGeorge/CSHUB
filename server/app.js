@@ -58,7 +58,7 @@ server.listen(port, ()=>{
 const session = require("express-session");
 
 app.get('/', function(req, res){
-  res.sendFile("index.html", {root: '/dist/CSHubProject'});
+  res.sendFile("index.html", {root: '../dist/CSHubProject'});
 });
 
 const MongoStore = require("connect-mongo")(session);
