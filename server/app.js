@@ -1,3 +1,5 @@
+
+require('dotenv').config()
 const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
@@ -10,7 +12,7 @@ const fs = require('fs');
 const passport = require('passport');
 const path = require('path');
 
-require('dotenv').config()
+
 
 const app = express();
 
