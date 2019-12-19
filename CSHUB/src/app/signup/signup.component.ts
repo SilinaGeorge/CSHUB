@@ -22,8 +22,27 @@ export class SignupComponent implements OnInit {
 
   constructor(private store: Store<AppState>, private fb: FormBuilder) { }
 
+  // get forum values
+  get firstname() {
+    return this.signupFormGroup.get('firstname').value;
+  }
+  get lastname() {
+    return this.signupFormGroup.get('lastname').value;
+  }
+
+  get email() {
+    return this.signupFormGroup.get('email').value;
+  }
+
+  get password() {
+    return this.signupFormGroup.get('password').value;
+  }
+
+  get verifypassword() {
+    return this.signupFormGroup.get('verifypassword');
+  }
+
   ngOnInit() {
-    //this.error$ = null;
 
     this.signupFormGroup = this.fb.group({
 
@@ -53,25 +72,6 @@ export class SignupComponent implements OnInit {
     }, { validator: passwordMatchValidator });
   }
 
-  get firstname() {
-    return this.signupFormGroup.get('firstname').value;
-  }
-  get lastname() {
-    return this.signupFormGroup.get('lastname').value;
-  }
-
-  get email() {
-    return this.signupFormGroup.get('email').value;
-  }
-
-  get password() {
-    return this.signupFormGroup.get('password').value;
-  }
-
-  get verifypassword() {
-    return this.signupFormGroup.get('verifypassword');
-  }
-
   // check to see if passwords match on every input
   onPasswordInput() {
     if (this.signupFormGroup.hasError('passwordMismatch'))
@@ -96,7 +96,7 @@ export class SignupComponent implements OnInit {
 
 }
 
-// check password and verify password are the same
+// check to see if password and verify password are the same
 export const passwordMatchValidator: ValidatorFn = (passFormGroup: FormGroup): ValidationErrors | null => {
   if (passFormGroup.get('password').value === passFormGroup.get('verifypassword').value)
     return null;
