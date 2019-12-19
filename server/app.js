@@ -60,7 +60,7 @@ const session = require("express-session");
 
 app.get('/', function(req, res){
   
-  res.sendFile('../dist/CSHubProject/index.html', {root: __dirname})
+  res.sendFile(path.resolve(__dirname+'../dist/CSHubProject/index.html'))
 });
 
 const MongoStore = require("connect-mongo")(session);
