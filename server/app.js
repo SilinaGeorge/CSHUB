@@ -55,9 +55,7 @@ server.listen(port);
 // create session
 const session = require("express-session");
 
-app.get('/', function(req, res){
-  res.redirect('/');
-});
+
 
 const MongoStore = require("connect-mongo")(session);
 app.use(cookieParser())
