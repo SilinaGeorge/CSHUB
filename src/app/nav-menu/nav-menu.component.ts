@@ -14,6 +14,7 @@ import { SideNavToggleService } from '../services/side-nav-toggle.service';
 export class NavMenuComponent implements OnInit {
   
   user$: Observable<User>;
+  collapsed:any;
 
   constructor(private store: Store<AppState>, private sideNavService: SideNavToggleService) { }
 
