@@ -43,7 +43,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Set name of directory where angular distribution files are stored
 const dist = '../dist/CSHubProject';
-app.use(express.static(dist));
+app.use(express.static(path.join(__dirname, '../dist/CSHubProject')));
 
 // Create server to listen for connections
 const port = process.env.PORT || 4200;
