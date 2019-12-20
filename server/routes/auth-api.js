@@ -189,7 +189,7 @@ router.get('/google/callback',
   function (req, res) {
     req.session.userid = req._id
     //res.redirect("/#/social-redirect/" + req.user._id);
-    res.redirect("https://localhost:4200/");
+    res.redirect("/");
   });
 
 
