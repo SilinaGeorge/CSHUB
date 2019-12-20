@@ -23,17 +23,16 @@ export class SocialRedirectComponent implements OnInit {
   user: SocialMediaAuth = {_id: null};
   error$: Observable<Error>;
 
-  constructor(private store: Store<AppState>, private activatedroute: ActivatedRoute) { }
-
-  ngOnInit() {
-
+  constructor(private store: Store<AppState>, private activatedroute: ActivatedRoute) {
     this.activatedroute.paramMap.pipe(take(1)).subscribe(params => {
       this.id = params.get("id")
     })
 
     this.user._id = this.id;
 
-    this.store.dispatch(new GetSocialUserAction(this.user));    
-  }
+    this.store.dispatch(new GetSocialUserAction(this.user));  
+   }
+
+  ngOnInit() {}
 
 }
