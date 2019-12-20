@@ -202,9 +202,9 @@ router.get("/:docId", (req, res, next) => {
         .json({ msgs: ["There is no document with that id "] });
     let filename = result._id + "_" + result.filename;
 
-    if (!fs.existsSync(path.join(process.cwd(), 'temp/'))) {
+    if (!fs.existsSync(path.join(process.cwd(), 'tmp/'))) {
       
-      fs.writeFileSync(path.join(process.cwd(), 'temp/'+ filename));
+      fs.writeFileSync(path.join(process.cwd(), 'tmp/'+ filename));
     }
     return res.sendFile("/tmp'" + filename, { root: __dirname });
   });
