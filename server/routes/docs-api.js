@@ -206,7 +206,7 @@ router.get("/:docId", (req, res, next) => {
       
       fs.writeFileSync(path.join(process.cwd(), 'tmp/'+ filename), result.file);
     }
-    return res.sendFile("/tmp'" + filename, { root: process.cwd() });
+    return res.sendFile("tmp/" + filename, { root: process.cwd() });
   });
 });
 
