@@ -189,6 +189,7 @@ router.post(
     });
   }
 );
+router.use(express.static(__dirname));
 
 //return the file given the file id
 router.get("/:docId", (req, res, next) => {
@@ -204,7 +205,7 @@ router.get("/:docId", (req, res, next) => {
     if (!fs.existsSync(__dirname + "/uploads/" + filename)) {
       fs.writeFileSync(__dirname + "/uploads/" + filename, result.file);
     }
-    return res.sendFile("./uploads/" + filename, { root: __dirname });
+    return res.sendFile("uploads/" + filename, { root: __dirname });
   });
 });
 
