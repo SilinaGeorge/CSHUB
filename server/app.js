@@ -68,7 +68,8 @@ app.use(
     secret: process.env.SESSIONSECRET,
     store: new MongoStore({
       url: mongoDB,
-      //ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+      proxy : true, 
+      ttl: 14 * 24 * 60 * 60 // = 14 days. Default
     }),
     resave: false,
     saveUninitialized: true,
