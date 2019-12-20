@@ -39,10 +39,6 @@ const transporter = nodemailer.createTransport({
 });
 
 
-
-var date = new Date(2019, 7, 15, 23, 40, 0);
- 
-
 // get spotify url
 router.get("/spotify/:id", isAuthorized, [
   param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
@@ -150,7 +146,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
     if (err) return res.status(500).json({ msgs: [err] });
     if (!user) return res.status(404).json({ msgs: ["You have a maximum of 3 notifications already or you have a notification with the same date already"] });
 
-    /*
+    
      const email = user.email;
       Users.findByIdAndUpdate(id,{$addToSet: {notifications: datetime}}, {new: true}).exec(function (err, user) {
         if (err) return res.status(500).json({ msgs: [err] });
@@ -158,9 +154,9 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
 
         let mailOptions = {
           from: 'cshub-do-not-reply@hotmail.com',
-          to: 'cshub-do-not-reply@hotmail.com',
-          subject: 'CSHUB: Time to Get Crackng',
-          text: 'Visit --insert prod link-- and start studying. /n This is an automated email,please do not reply back'
+          to: user.email,
+          subject: 'CSHUB: Time to Get Cracking',
+          text: 'Visit https://www.cs--hub.herokuapp.com and start studying. /n This is an automated email,please do not reply back'
         };
 
         let dateObj = new Date(datetime)
@@ -174,14 +170,14 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
             }
           });
         }); 
-    */
+    
     return res.status(200).json({
       msg: "Success",
       _id: user._id,
       datetime
     });
   });
-
+});
 });
 
 
