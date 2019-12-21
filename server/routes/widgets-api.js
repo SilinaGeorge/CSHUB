@@ -27,16 +27,6 @@ const isAuthorized = function(req, res, next) {
 const schedule = require('node-schedule');
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-  service: 'hotmail.com',
-  auth: {
-    user: 'cshub-do-not-reply@hotmail.com',
-    pass: 'CSHUBisthebest'
-  },
-  tls: {
-    rejectUnauthorized: false
-}
-});
 
 
 
@@ -123,6 +113,20 @@ router.get('/notifs/:id',isAuthorized,[
       });
 });
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail.com',
+  secure:true,
+  auth: {
+    user: 'cshub.do.not.reply@gmail.com',
+    pass: 'CSHUBisthebest'
+  },
+  tls: {
+    rejectUnauthorized: false
+}
+});
+
+
+var scheduleJobs = {}
 // add a new notification
 router.put("/notif/:id",isAuthenticated, isAuthorized, [
   check('datetime', 'invalid datetime').trim().not().isEmpty(),//.matches('/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/'),
@@ -150,37 +154,62 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
     if (err) return res.status(500).json({ msgs: [err] });
     if (!user) return res.status(404).json({ msgs: ["You have a maximum of 3 notifications already or you have a notification with the same date already"] });
 
-    /*
+    
      const email = user.email;
       Users.findByIdAndUpdate(id,{$addToSet: {notifications: datetime}}, {new: true}).exec(function (err, user) {
         if (err) return res.status(500).json({ msgs: [err] });
         if (!user) return res.status(404).json({ msgs: ["User can't be found"] });
 
+        let htmlContent = `
+                <h1><strong>Study Time</strong></h1>
+                <p>Hi ${user.firstname},</p>
+                <br/>
+                <a href='https://cs--hub.herokuapp.com/'>Time to study</a>
+                `
+
         let mailOptions = {
-          from: 'cshub-do-not-reply@hotmail.com',
-          to: 'cshub-do-not-reply@hotmail.com',
+          from: 'cshub.do.not.reply@gmail.com',
+          to: "silina_george@hotmail.com",
           subject: 'CSHUB: Time to Get Crackng',
-          text: 'Visit --insert prod link-- and start studying. /n This is an automated email,please do not reply back'
+          //text: 'Visit --insert prod link-- and start studying. /n This is an automated email,please do not reply back'
+          html: htmlContent
         };
 
         let dateObj = new Date(datetime)
 
         let j = schedule.scheduleJob(dateObj, function(){
+
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
             } else {
               console.log('Email sent: ' + info.response);
+
+               //delete from db
+              Users.findOneAndUpdate({_id:id, notifications:{$in : datetime}}, {$pull: {notifications: {$in:datetime}}}, {new: true}).exec(function (err, user2) {
+                if (err) console.log('Server error trying to delete email from db')
+                if (!user) console.log("User can't be found or date does not exist in notifications");
+              
+                console.log(`Sent and Deleted ${datetime} for ${user2._id}`)
+                delete scheduleJobs[`${user2._id}_${datetime}`]
+
+              
+              }); 
+
+
             }
           });
         }); 
-    */
+
+        scheduleJobs[`${user._id}_${datetime}`] = j
+    
     return res.status(200).json({
       msg: "Success",
       _id: user._id,
       datetime
     });
   });
+});
 
 });
 
@@ -208,7 +237,17 @@ router.patch("/notifs/delete/:id",isAuthenticated,isAuthorized, [
   Users.findOneAndUpdate({_id:id, notifications:{$all : datetimes}}, {$pull: {notifications: {$in:datetimes}}}, {new: true}).exec(function (err, user) {
     if (err) return res.status(500).json({ msgs: ["Server Error"] });
     if (!user) return res.status(404).json({ msgs: ["User can't be found or date does not exist in notifications"] });
-  
+    
+    datetimes.forEach(dt => {
+      if (scheduleJobs[`${user._id}_${dt}`]){
+        scheduleJobs[`${user._id}_${dt}`].cancel()
+        delete scheduleJobs[`${user._id}_${dt}`]
+      }
+
+        
+      
+    });
+
     return res.status(200).json({
       msg: "Success",
       _id: user._id,
