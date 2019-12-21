@@ -39,7 +39,7 @@ const nodemailer = require('nodemailer');
 });
  */
 var transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: 'gmail.com',
   port: 465,
   secure: true,
   auth: {
@@ -167,7 +167,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
         if (!user) return res.status(404).json({ msgs: ["User can't be found"] });
 
         let mailOptions = {
-          from: 'cshub-do-not-reply@hotmail.com',
+          from: 'cshub.do.not.reply@gmail.com',
           to: user.email,
           subject: 'CSHUB: Time to Get Cracking',
           text: 'Visit https://www.cs--hub.herokuapp.com and start studying. /n This is an automated email,please do not reply back'
