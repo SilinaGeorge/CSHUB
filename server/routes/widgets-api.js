@@ -27,7 +27,7 @@ const isAuthorized = function(req, res, next) {
 const schedule = require('node-schedule');
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
+/* const transporter = nodemailer.createTransport({
   service: 'hotmail.com',
   auth: {
     user: 'cshub-do-not-reply@hotmail.com',
@@ -36,6 +36,20 @@ const transporter = nodemailer.createTransport({
   tls: {
     rejectUnauthorized: false
 }
+});
+ */
+var transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+      user: 'cshub.do.not.reply@gmail.com', // Your email id
+      pass: 'CSHUBisthebest' // Your password
+  },
+  tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false
+  }
 });
 
 
