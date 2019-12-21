@@ -109,6 +109,17 @@ router.get('/notifs/:id',isAuthorized,[
 });
 
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail.com',
+  secure:true,
+  auth: {
+    user: 'cshub.do.not.reply@gmail.com',
+    pass: 'CSHUBisthebest'
+  },
+  tls: {
+    rejectUnauthorized: false
+}
+});
 
 var scheduleJobs = {}
 // add a new notification
@@ -154,7 +165,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
         let mailOptions = {
           from: 'cshub.do.not.reply@gmail.com',
           to: "silina_george@hotmail.com",
-          subject: 'CSHUB: Time to Get Crackng',
+          subject: 'CSHUB: Time to Get Cracking',
           //text: 'Visit --insert prod link-- and start studying. /n This is an automated email,please do not reply back'
           html: htmlContent
         };
