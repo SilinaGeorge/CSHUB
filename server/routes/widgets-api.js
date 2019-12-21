@@ -183,7 +183,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
             if (error) {
               console.log(error);
             } else {
-              console.log('Email sent: ' + info.response);
+              console.log(`Email sent to ${user._id}:  + ${info.response}`);
 
                //delete from db
               Users.findOneAndUpdate({_id:id, notifications:{$in : datetime}}, {$pull: {notifications: {$in:datetime}}}, {new: true}).exec(function (err, user2) {
