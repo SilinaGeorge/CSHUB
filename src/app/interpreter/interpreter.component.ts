@@ -12,7 +12,7 @@ import { Topics } from '../topics';
 })
 export class InterpreterComponent implements OnInit {
 
-  private topic = null
+  topic = null
 
   constructor(private store: Store<AppState>, private activatedroute: ActivatedRoute, private router: Router){}
 

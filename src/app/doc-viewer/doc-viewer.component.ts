@@ -19,8 +19,8 @@ import { environment } from './../../environments/environment';
   styleUrls: ['./doc-viewer.component.css']
 })
 export class DocViewerComponent implements OnInit {
-  baseURL= environment.url + '/'
-  url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf'
+  baseURL= environment.url + '/docs/'
+  url = ''
   fileToUpload: File = null;
   userId =null
   returnedMetaDocsSub: Subscription;
