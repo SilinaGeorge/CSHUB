@@ -1,6 +1,9 @@
 
 # CSHubProject
 
+## Link to Website
+https://cs--hub.herokuapp.com/
+
 ## About
 A hub for computer science related learning and job hunting. Features include (features are not finished yet):   
 - Notes on computer science concepts are there for you already, don't like them? created your own custom studying material:  
@@ -11,6 +14,7 @@ A hub for computer science related learning and job hunting. Features include (f
 - Count down timer: set a timer, when it is finished it'll let you know that it is time for a break  
 - Email notification reminder: set a date and time and an email will be sent reminding you it is time to study
 - Play your favorite spotify playlist while studying
+- login with facebook if you choose to do so
 - code right in the app using interpreters 
 --------------------------
 
