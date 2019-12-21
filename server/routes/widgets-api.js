@@ -41,7 +41,7 @@ const nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   host: 'gmail.com',
   port: 465,
-  secure: true,
+  secure: false,
   auth: {
       user: 'cshub.do.not.reply@gmail.com', // Your email id
       pass: 'CSHUBisthebest' // Your password
