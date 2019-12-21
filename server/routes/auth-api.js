@@ -188,7 +188,7 @@ router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/'}),
   function (req, res) {
     req.session.userid = req._id
-    res.redirect("/social-redirect/" + req.user._id);
+    res.redirect("/#/social-redirect/" + req.user._id);
     //res.redirect("/");
   });
 
