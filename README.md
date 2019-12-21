@@ -15,4 +15,5 @@ A hub for computer science related learning. Features include:
 - Email notification reminder: set a date and time and an email will be sent reminding you it is time to study
 - Play your favorite spotify playlist while studying
 - login with facebook if you choose to do so
+- code right in the app using interpreters 
 --------------------------
