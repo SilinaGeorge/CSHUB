@@ -18,7 +18,8 @@ import { take } from 'rxjs/operators';
 export class SpotifyPopupComponent implements OnInit {
 
   spotifyFormGroup: FormGroup;
-  subscription: Subscription;
+  userSub: Subscription;
+  spotifySub: Subscription;
   srcUrl: SafeResourceUrl;
   errorHTML: string;
   closeResult: string;
@@ -44,7 +45,7 @@ export class SpotifyPopupComponent implements OnInit {
 
     });
     
-    this.subscription = this.store.select(store => store.user.user).pipe(take(1)).subscribe(state =>   {
+    this.userSub = this.store.select(store => store.user.user).subscribe(state =>   {
       if (state){
         this.userID = state._id;
       }
@@ -53,7 +54,7 @@ export class SpotifyPopupComponent implements OnInit {
     // get the user's saved playlist 
     this.store.dispatch(new GetSpotifyAction({_id:this.userID}));
    
-    this.subscription = this.store.select(store => store.user.returnedSpotify).subscribe(state =>   {
+    this.spotifySub = this.store.select(store => store.user.returnedSpotify).subscribe(state =>   {
       if (state && state.spotifyurl){
         this.url = state.spotifyurl;
         if (this.url){
@@ -83,6 +84,7 @@ export class SpotifyPopupComponent implements OnInit {
   close(){
     var spotifypopup = document.getElementById("spotify");
     spotifypopup.style.display = "none"; 
+    this.spotifyFormGroup.get('spotifyurl').setValue('');
   }
 
   // upload spotify playlist
@@ -103,7 +105,8 @@ export class SpotifyPopupComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
+    this.spotifySub.unsubscribe();
+    this.userSub.unsubscribe();
 
   }
 }
