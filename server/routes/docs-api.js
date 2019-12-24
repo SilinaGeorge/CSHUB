@@ -9,6 +9,7 @@ const Users = require("../mongo-models/users.js");
 
 
 const validTopics = require("./topics");
+const maxSize = 45000000 //max file size in bytes
 
 //var upload    = require('../upload-doc.js/index.js');
 
@@ -130,7 +131,7 @@ router.post(
       if (!extension || !mimeType)
         return res.status(400).json({ msgs: ["Invalid file type"] });
       // 5MB limit per file
-      if (req.files.doc.size > 5000000)
+      if (req.files.doc.size > maxSize)
         return res.status(400).json({ msgs: ["file must be less than 5MB"] });
     } else return res.status(400).json({ msgs: ["File is not present"] });
 
