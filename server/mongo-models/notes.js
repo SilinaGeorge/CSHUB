@@ -14,6 +14,9 @@ const NoteSchema = new Schema({
     size: {type:Number, required: true}
 });
 
+NoteSchema.index({dateCreate: -1})
 const Notes = mongoose.model("Notes", NoteSchema);
+
+Notes.createIndexes({dateCreate: -1})
 
 module.exports = Notes;
