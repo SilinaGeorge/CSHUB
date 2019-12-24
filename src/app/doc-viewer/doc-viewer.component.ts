@@ -138,7 +138,7 @@ export class DocViewerComponent implements OnInit {
          else {
           this.selectedIndex = -1
          this.selectedDoc = null
-         this.url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf'
+         this.url = ''
          this.openUploadDocModal()
         } 
       }
@@ -259,7 +259,7 @@ openUploadDocModal(){
 
   this.selectedDoc = null;
   this.selectedIndex = -1;
-  this.url = 'https://cdn.s3waas.gov.in/master/uploads/2016/09/document_1481208108.pdf';
+  this.url = '';
 
 
 
