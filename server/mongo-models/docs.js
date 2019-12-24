@@ -16,6 +16,9 @@ const DocSchema = new Schema({
     dateModifiedString: {type: String, required: true}
 });
 
+DocSchema.index({dateCreate: -1})
 const Docs = mongoose.model("Docs", DocSchema);
+
+Docs.createIndexes({dateCreate: -1})
 
 module.exports = Docs;
