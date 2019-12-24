@@ -18,7 +18,6 @@ import { take } from 'rxjs/operators';
 export class SpotifyPopupComponent implements OnInit {
 
   spotifyFormGroup: FormGroup;
-  userSub: Subscription;
   spotifySub: Subscription;
   srcUrl: SafeResourceUrl;
   errorHTML: string;
@@ -45,7 +44,7 @@ export class SpotifyPopupComponent implements OnInit {
 
     });
     
-    this.userSub = this.store.select(store => store.user.user).subscribe(state =>   {
+    this.store.select(store => store.user.user).pipe(take(1)).subscribe(state =>   {
       if (state){
         this.userID = state._id;
       }
@@ -106,7 +105,6 @@ export class SpotifyPopupComponent implements OnInit {
 
   ngOnDestroy(){
     this.spotifySub.unsubscribe();
-    this.userSub.unsubscribe();
 
   }
 }
