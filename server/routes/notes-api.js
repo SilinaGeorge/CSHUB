@@ -86,7 +86,9 @@ router.post("/:id", isAuthenticated, isAuthorized, [
     })
 
     newNote.save(function (err, result) {
-      if (err) return res.status(500).json({ msgs: [err] })
+      if (err) {
+        console.log(err)
+        return res.status(500).json({ msgs: [err] })}
       if (result) {
         return res.status(200).json({
           msg: "Success",
