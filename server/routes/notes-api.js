@@ -41,7 +41,7 @@ const isAuthorizedBody = function (req, res, next) {
 router.post("/:id", isAuthenticated, isAuthorized, [
   check('name', 'name is invalid').trim().escape().isLength({ max: 50 }).not().isEmpty(),
   check('description', 'description is invalid').trim().escape().isLength({ max: 210 }),
-  check('content', 'invalid content').isLength({ max: 5000000 }),//.trim().escape(),
+  check('content', 'invalid content').isLength({ max: 5000000 }).optional(),//.trim().escape(),
   check('topic', 'invalid topic').trim().escape().isLength({ max: 50 }).not().isEmpty().isIn(validTopics),
   param('id', 'Invalid ID').isAlphanumeric().trim().escape().not().isEmpty()
 ], (req, res, next) => {
