@@ -5,13 +5,13 @@ import { AddDocAction, GetDocsAction, DeleteDocAction, UpdateDocAction } from '.
 import { Subscription, Observable } from 'rxjs';
 import { AddDoc, GetMetaDocs, ReturnedMetaDocs, Doc, DeleteDoc, UpdateDoc } from '../store/models/docs.model';
 import { Error } from '../store/models/error.model';
-import { MatDrawer } from '@angular/material';
 import { SideNavToggleService } from '../services/side-nav-toggle.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Topics } from '../topics';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-doc-viewer',

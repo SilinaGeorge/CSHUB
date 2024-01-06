@@ -7,12 +7,15 @@ import { Auth } from '../store/models/auth.model';
 import { Error } from '../store/models/error.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
  
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 

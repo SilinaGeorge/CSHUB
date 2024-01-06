@@ -1,8 +1,6 @@
 import { AddDoc, Doc, ReturnedMetaDocs, GetMetaDocs, DeleteDoc, UpdateDoc } from "../models/docs.model";
 import { Error } from "../models/error.model";
-import { DocsActionTypes, DocsAction, GetDocsErrorAction } from "../actions/docs.actions";
-import { ACTIONS_SUBJECT_PROVIDERS } from "@ngrx/store/src/actions_subject";
-import { NgbButtonLabel } from '@ng-bootstrap/ng-bootstrap';
+import { DocsActionTypes, DocsAction } from "../actions/docs.actions";
 
 export interface DocsState {
   docToBeAdded: AddDoc,

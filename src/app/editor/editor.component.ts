@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild,SecurityContext } from '@angular/core';
-import { MatSidenav } from '@angular/material';
-
 import { SideNavToggleService } from '../services/side-nav-toggle.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
@@ -12,10 +10,10 @@ import { Error } from '../store/models/error.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Topics} from '../topics'
 import { SelectedNote, UpdateNote, Note, DeleteNote } from '../store/models/note.model';
-import { MatDrawer } from '@angular/material';
 import { AddNote } from '../store/models/add-note.model';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
+import { MatDrawer } from '@angular/material/sidenav';
 
 
 

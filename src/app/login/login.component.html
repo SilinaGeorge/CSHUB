@@ -1,7 +1,7 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 
-<div class="card bg-light col-xs-5 col-sm-5 col-lg-4 " style="margin:auto; margin-top: 2vh">
+<div class="card bg-light col-xs-5 col-sm-5 col-lg-4 " style="margin:auto; margin-top: 2vh;">
 
     <div class="card-header">
         <span class="material-icons">person</span>
@@ -16,18 +16,22 @@
             </ul>
           </div>
 
-        <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
+        <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()" style=" min-width: 150px;
+        max-width: 500px;
+        width: 100%;">
             <div>
                 <mat-form-field style="margin-right:25%;">
                     <input matInput type='email' placeholder="Email" formControlName="email" maxlength="50">
                     <mat-error>Please enter a valid email</mat-error>
                 </mat-form-field>
 
-                <mat-form-field>
-                    <input matInput type='password' placeholder="Password" minlength="6" formControlName="password">
+                <mat-form-field style="height: 100%;">
+                    <mat-label>Password</mat-label>
+                    <input matInput type='password' minlength="6" formControlName="password">
                     <mat-error>Please enter a valid password
                     </mat-error>
                 </mat-form-field>
+
             </div>
             <div style="text-align: center;">
 
@@ -46,14 +50,14 @@
 
         </form>
 
-        <a class="nav-link" href="/auth/facebook">
+        <a class="nav-link" href="/auth/facebook" style="width: 220px;" >
             <img src='../../assets/images/fb_login.png' style="width: 220px;" >
         </a>
 
 
-        <a class="nav-link" href="/auth/google">
+        <a class="nav-link" href="/auth/google"  style="width: 200px;">
             <img src='../../assets/images/google_signin.png' style="width: 200px; margin-left:8px" >
         </a>
 
-
+       
 </div>

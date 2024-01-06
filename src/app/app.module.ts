@@ -9,7 +9,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HeadroomModule } from "@ctrl/ngx-headroom";
 import { CountdownModule } from "ngx-countdown";
-import { MccSpeedDialModule } from "material-community-components";
+import { MccSpeedDialModule} from 'material-community-components/speed-dial';
 import { NgxSummernoteModule } from "ngx-summernote";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { NgxDocViewerModule } from "ngx-doc-viewer";
@@ -39,34 +39,31 @@ import { BadRouteComponent } from "./bad-route/bad-route.component";
 import { ManageDocsNotesComponent } from "./manage-docs-notes/manage-docs-notes.component";
 import { ManageNotesComponent } from "./manage-notes/manage-notes.component";
 import { ManageDocsComponent } from "./manage-docs/manage-docs.component";
-import { NotesDocsDialogBoxComponent } from "./notes-docs-dialog-box/notes-docs-dialog-box.component";
+// import { NotesDocsDialogBoxComponent } from "./notes-docs-dialog-box/notes-docs-dialog-box.component";
 import { InterpreterComponent } from "./interpreter/interpreter.component";
-
+import { RouterModule } from '@angular/router';
 import { AuthGuard } from "./auth.guard";
 
 //directives
 import { DigitOnlyDirective } from "./directives/digit-only.directive";
 
-import {
-  MatProgressSpinnerModule,
-  MatTooltipModule,
-  MatSnackBarModule,
-  MatTabsModule,
-  MatNativeDateModule,
-  MatDatepickerModule,
-  MatCheckboxModule,
-  MatInputModule,
-  MatButtonModule,
-  MatSelectModule,
-  MatIconModule,
-  MatSidenavModule,
-  MatDialogModule,
-  MatTableModule,
-  MatGridListModule,
-  MatPaginatorModule,
-  MatSortModule
-} from "@angular/material";
-
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 //NGRX
 import { StoreModule } from "@ngrx/store";
@@ -89,8 +86,7 @@ import { DocsEffects } from "./store/effects/docs.effects";
     SignupComponent,
     NavMenuComponent,
     LoginComponent,
-    NotificationComponent,
-    NotifDialogPopupComponent,
+    // NotificationComponent,
     TimerComponent,
     SpotifyComponent,
     SpotifyPopupComponent,
@@ -107,10 +103,13 @@ import { DocsEffects } from "./store/effects/docs.effects";
     ManageDocsNotesComponent,
     ManageNotesComponent,
     ManageDocsComponent,
-    NotesDocsDialogBoxComponent,
-    InterpreterComponent
+    InterpreterComponent,
+    NotifDialogPopupComponent,
+    // NotesDocsDialogBoxComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
+    BrowserModule,
     NgxSummernoteModule,
     DragDropModule,
     MccSpeedDialModule,
@@ -142,15 +141,18 @@ import { DocsEffects } from "./store/effects/docs.effects";
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
-    BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-    BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule,
+
+  ],
+  exports:[
+    MatDialogModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
-  entryComponents: [NotifDialogPopupComponent, NotesDocsDialogBoxComponent]
+  // entryComponents: [NotifDialogPopupComponent, NotesDocsDialogBoxComponent]
 })
 export class AppModule { }
