@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const { check, validationResult, param, query } = require("express-validator");
 var moment = require("moment");
+var mongoose  = require( 'mongoose' ); 
 
 //mongodb model
 const Docu = require("../mongo-models/docs.js");
@@ -193,7 +194,7 @@ router.post(
 //return the file given the file id
 router.get("/:docId", (req, res, next) => {
   const docId = req.params.docId;
-  Docu.findById(docId).exec(function (err, result) {
+  Docu.findById(mongoose.Types.ObjectId(docId)).exec(function (err, result) {
     if (err) return res.status(500).json({ msgs: ["Server Error"] });
     if (!result)
       return res

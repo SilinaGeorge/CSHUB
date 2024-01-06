@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { NotesDocsDialogBoxComponent } from '../notes-docs-dialog-box/notes-docs-dialog-box.component';
 
 @Component({
   selector: 'app-manage-docs',
@@ -79,21 +80,21 @@ export class ManageDocsComponent implements OnInit {
     this.subscription2.unsubscribe();
   }
 
-  // openDialog(action,obj) {
-  //   obj.action = action;
-  //   const dialogRef = this.dialog.open(NotesDocsDialogBoxComponent, {
-  //     width: '40%',
-  //     data:obj
-  //   });
+  openDialog(action,obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open(NotesDocsDialogBoxComponent, {
+      width: '40%',
+      data:obj
+    });
  
-  //   dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-  //      if(result.event == 'Update'){
-  //       this.updateRowData(result.data);
-  //     }else if(result.event == 'Delete'){
-  //       this.deleteRowData(result.data);
-  //     }
-  //   });
-  // }
+    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
+       if(result.event == 'Update'){
+        this.updateRowData(result.data);
+      }else if(result.event == 'Delete'){
+        this.deleteRowData(result.data);
+      }
+    });
+  }
  
 
   updateRowData(row_obj){

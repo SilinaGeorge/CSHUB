@@ -23,11 +23,11 @@ export class AuthService {
 
 
   signupUser(signupData: SignUpUser) {
-    return this.http.post<User>(`${this.URL}/signup`, signupData);
+    return this.http.post<User>(`${this.URL}/signup`, signupData, { withCredentials: true });
   };
 
   loginUser(loginUserData: Auth) {
-    return this.http.post<User>(`${this.URL}/login`, loginUserData);
+    return this.http.post<User>(`${this.URL}/login`, loginUserData, { withCredentials: true } );
 
 
   };
@@ -39,12 +39,12 @@ export class AuthService {
   };
 
   getSocialMediaUserInfo(socialMediaUserId: SocialMediaAuth){
-    return this.http.get<User>(`${this.URL}/social/` + socialMediaUserId._id);
+    return this.http.get<User>(`${this.URL}/social/` + socialMediaUserId._id, { withCredentials: true });
   }
 
   
   checkLoggedin(){
-    return this.http.get<isloggedin>(`${this.URL}/checkloggedin`);
+    return this.http.get<isloggedin>(`${this.URL}/checkloggedin`, { withCredentials: true });
 
   }
 

@@ -10,7 +10,6 @@
 </div>
 <mat-form-field >
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    <mat-hint>search for content in your notes, name, description, topic, date created and date modified</mat-hint>
   </mat-form-field>
 
   <br>
@@ -74,13 +73,13 @@
 
  
     <!-- Action Column -->
-    <!-- <ng-container matColumnDef="action">
+    <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element"> 
         <a (click)="openDialog('Update',element)" class='link'>Edit</a> | 
         <a (click)="openDialog('Delete',element)" class='link'>Delete</a>  
       </td>
-    </ng-container> -->
+    </ng-container>
  
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

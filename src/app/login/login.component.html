@@ -1,9 +1,9 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 
-<div class="card bg-light col-xs-5 col-sm-5 col-lg-4 " style="margin:auto; margin-top: 2vh;">
+<div class="card bg-light col-xs-5 col-sm-5 col-lg-4 " style="margin:auto; margin-top: 2vh">
 
-    <div class="card-header">
+    <div class="card-header" style="width: 100%;">
         <span class="material-icons">person</span>
         Login into CS HUB
     </div>
@@ -16,22 +16,20 @@
             </ul>
           </div>
 
-        <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()" style=" min-width: 150px;
-        max-width: 500px;
-        width: 100%;">
+        <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
             <div>
                 <mat-form-field style="margin-right:25%;">
-                    <input matInput type='email' placeholder="Email" formControlName="email" maxlength="50">
+                    <input matInput type='email' formControlName="email" maxlength="50">
+                    <mat-label>Email</mat-label>
                     <mat-error>Please enter a valid email</mat-error>
                 </mat-form-field>
 
-                <mat-form-field style="height: 100%;">
+                <mat-form-field>
+                    <input matInput type='password'  minlength="6" formControlName="password">
                     <mat-label>Password</mat-label>
-                    <input matInput type='password' minlength="6" formControlName="password">
                     <mat-error>Please enter a valid password
                     </mat-error>
                 </mat-form-field>
-
             </div>
             <div style="text-align: center;">
 
@@ -39,15 +37,7 @@
                     class="btn btn-primary shadow-sm">Login
                     <app-loading-spinner *ngIf='loading$|async'></app-loading-spinner>
                 </button>
-
-
-
-
-
             </div>
-
-
-
         </form>
 
         <a class="nav-link" href="/auth/facebook" style="width: 220px;" >
@@ -55,9 +45,9 @@
         </a>
 
 
-        <a class="nav-link" href="/auth/google"  style="width: 200px;">
+        <a class="nav-link" href="/auth/google" style="width: 200px;">
             <img src='../../assets/images/google_signin.png' style="width: 200px; margin-left:8px" >
         </a>
 
-       
+
 </div>
