@@ -16,7 +16,7 @@ const app = express();
 
 var cors = require('cors');
 var corsOptions = {
-    origin: 'https://localhost:4200',
+    origin: ['http://localhost:4200'],
     credentials: true };
 
 app.use(cors(corsOptions));
@@ -36,7 +36,7 @@ let defaultconnection = mongoose.connection;
 defaultconnection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Set port
-const port = 4200;
+const port = 8000;
 
 app.use(bodyParser.json()); // support json encoded bodies
 //support parsing of application/x-www-form-urlencoded post data
@@ -48,10 +48,7 @@ app.use(express.static(dist));
 
 // Create server to listen for connections
 //const server = http.createServer(app);
-https.createServer({
-  key: fs.readFileSync('localhost.key'),
-  cert: fs.readFileSync('localhost.crt')
-}, app).listen(port, () => {
+http.createServer(app).listen(port, () => {
   console.log('Listening...')
 })
 //server.listen(port, () => console.log("listening on port " + port));
@@ -72,8 +69,8 @@ app.use(
       //ttl: 14 * 24 * 60 * 60 // = 14 days. Default
     }),
     resave: false,
-    saveUninitialized: true,
-    cookie: { httpOnly: true, sameSite: true, secure: true }
+    saveUninitialized: false,
+    cookie: { secure: false , maxAge:86400000}
   })
 );
 
