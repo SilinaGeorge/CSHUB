@@ -1,9 +1,14 @@
 import { Component, OnInit, Optional, Inject } from '@angular/core';
 import {
     MAT_DIALOG_DATA,
+    MatDialogModule,
     MatDialogRef,
   } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatCommonModule } from '@angular/material/core';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
 
 export interface UsersData {
   name: string;
@@ -14,7 +19,9 @@ export interface UsersData {
 @Component({
   selector: 'app-notes-docs-dialog-box',
   templateUrl: './notes-docs-dialog-box.component.html',
-  styleUrls: ['./notes-docs-dialog-box.component.css']
+  styleUrls: ['./notes-docs-dialog-box.component.scss'],
+  standalone:true,
+  imports:[ReactiveFormsModule, MatCommonModule, MatFormFieldModule, CommonModule, MatInputModule, MatDialogModule]
 })
 export class NotesDocsDialogBoxComponent implements OnInit {
 

@@ -149,7 +149,8 @@ import { DocsEffects } from "./store/effects/docs.effects";
 
   ],
   exports:[
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
