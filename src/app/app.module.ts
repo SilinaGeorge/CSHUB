@@ -86,7 +86,7 @@ import { DocsEffects } from "./store/effects/docs.effects";
     SignupComponent,
     NavMenuComponent,
     LoginComponent,
-    // NotificationComponent,
+    NotificationComponent,
     TimerComponent,
     SpotifyComponent,
     SpotifyPopupComponent,
