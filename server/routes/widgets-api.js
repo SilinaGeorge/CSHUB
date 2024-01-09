@@ -114,11 +114,11 @@ router.get('/notifs/:id',isAuthorized,[
 });
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail.com',
-  secure:true,
+  service: 'Outlook365',
+  secure:false,
   auth: {
-    user: 'cshub.do.not.reply@gmail.com',
-    pass: 'CSHUBisthebest'
+    user: process.env.CSHUB_EMAIL,
+    pass: process.env.CS_EMAIL_PASSWORD
   },
   tls: {
     rejectUnauthorized: false
@@ -164,11 +164,11 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
                 <h1><strong>Study Time</strong></h1>
                 <p>Hi ${user.firstname},</p>
                 <br/>
-                <a href='https://cs--hub.herokuapp.com/'>Time to study</a>
+                <a href='${process.env.CLIENT_URL}'>Time to study</a>
                 `
 
         let mailOptions = {
-          from: 'cshub.do.not.reply@gmail.com',
+          from: process.env.CLIENT_URL,
           to: user.email,
           subject: 'CSHUB: Time to Get Crackng',
           //text: 'Visit --insert prod link-- and start studying. /n This is an automated email,please do not reply back'
