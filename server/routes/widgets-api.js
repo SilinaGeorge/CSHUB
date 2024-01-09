@@ -169,7 +169,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
 
         let mailOptions = {
           from: 'cshub.do.not.reply@gmail.com',
-          to: "silina_george@hotmail.com",
+          to: user.email,
           subject: 'CSHUB: Time to Get Crackng',
           //text: 'Visit --insert prod link-- and start studying. /n This is an automated email,please do not reply back'
           html: htmlContent
@@ -187,7 +187,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
 
                //delete from db
               Users.findOneAndUpdate({_id:id, notifications:{$in : datetime}}, {$pull: {notifications: {$in:datetime}}}, {new: true}).exec(function (err, user2) {
-                if (err) console.log('Server error trying to delete email from db')
+                if (err) console.error('Server error trying to delete email from db')
                 if (!user) console.log("User can't be found or date does not exist in notifications");
               
                 console.log(`Sent and Deleted ${datetime} for ${user2._id}`)

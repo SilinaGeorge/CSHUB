@@ -33,7 +33,7 @@ export class AuthService {
   };
 
   logoutUser() {
-    return this.http.get<any>(`${this.URL}/logout`); 
+    return this.http.get<any>(`${this.URL}/logout`, { withCredentials: true }); 
 
 
   };

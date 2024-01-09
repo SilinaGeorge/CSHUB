@@ -57,7 +57,9 @@ var j = schedule.scheduleJob(date, function(){
   });
 }); */
 const isAuthenticated = function(req, res, next) {
-  if (!req.session.userid) return res.status(401).json({ msgs: ["You Are Not Logged In"] });
+  if (!req.session.userid){
+    return res.status(401).json({ msgs: ["You Are Not Logged In"] });
+  } 
   next();
 };
 
@@ -174,7 +176,7 @@ router.get('/facebook/callback',
 
     req.session.userid = req.user._id;
 
-    res.redirect("/#/social-redirect/" + req.user._id);
+    res.redirect("/#/social-redirect/?state=" + req.user._id);
 
   });
 
@@ -187,9 +189,10 @@ router.get('/google',
 router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/'}),
   function (req, res) {
-    req.session.userid = req._id
-    //res.redirect("/#/social-redirect/" + req.user._id);
-    res.redirect("https://localhost:4200/");
+    req.session.userid = req.user._id;
+    res.header()
+    req.stat
+    res.redirect("/#/social-redirect/?state=" + req.user._id);
   });
 
 
