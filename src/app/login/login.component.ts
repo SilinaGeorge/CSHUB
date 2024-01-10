@@ -7,10 +7,8 @@ import { Auth } from '../store/models/auth.model';
 import { Error } from '../store/models/error.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
- 
+import { environment } from './../../environments/environment';
+
 
 @Component({
   selector: 'app-login',
@@ -25,6 +23,9 @@ export class LoginComponent implements OnInit {
   loginUser: Auth = {email: null, password: null};
   error$: Observable<Error>;
   loading$: Observable<Boolean>;
+  facebookURL = environment.url + '/auth/facebook'
+  googleURL = environment.url + '/auth/google'
+
 
 
   constructor(private http: HttpClient, private store: Store<AppState>, private fb: FormBuilder) { }
