@@ -74,7 +74,7 @@ app.use(
     }),
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false , maxAge:86400000}
+    cookie: { secure: false , maxAge:86400000, httpOnly: false}
   })
 );
 
