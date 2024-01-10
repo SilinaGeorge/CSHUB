@@ -74,7 +74,9 @@ app.use(
     }),
     resave: false,
     saveUninitialized: false,
-    cookie: { httpOnly: true,  secure: true }
+    name: 'CSHUBCookie',
+    proxy: true,
+    cookie: { httpOnly: false,  secure: true, sameSite: 'none'}
   })
 );
 
