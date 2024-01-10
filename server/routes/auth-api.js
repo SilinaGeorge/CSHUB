@@ -96,6 +96,7 @@ router.post("/login", [
       return res.status(401).json({ msgs: ["Password is not correct"] }); // invalid password
     // start a session
     req.session.userid = user._id;
+    console.log("login:", req.session)
 
     return res.status(200).json({
       msg: "Success",
@@ -239,6 +240,7 @@ router.get('/logout', function (req, res, next) {
 });
 
 router.get('/checkloggedin', (req,res)=>{
+  console.log("login:", req.session)
   if (!req.session.userid) return res.status(200).json({ isloggedin: false });
   return res.status(200).json({ isloggedin: true });
 
