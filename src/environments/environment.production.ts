@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    url: 'https://cs-hub-backend.onrender.com'
+    url: 'https://cs-hub-api.onrender.com'
   };
