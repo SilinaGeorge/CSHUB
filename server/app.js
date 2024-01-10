@@ -45,7 +45,7 @@ app.use(express.static(dist));
 
 // Create server to listen for connections
 //const server = http.createServer(app);
-http.createServer(app).listen(port, () => {
+https.createServer(app).listen(port, () => {
   console.log('Listening...')
 })
 //server.listen(port, () => console.log("listening on port " + port));
