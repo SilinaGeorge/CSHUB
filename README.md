@@ -3,7 +3,7 @@
 
 ## Link to Website
 https://cs-hub.onrender.com/  
-Inital call to server may be long.
+Initial call to server may be long.
 
 ## About
 A hub for computer science related learning and job hunting. Features include (features are not finished yet):   
