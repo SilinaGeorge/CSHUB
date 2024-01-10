@@ -16,13 +16,10 @@ const app = express();
 
 var cors = require('cors');
 var corsOptions = {
-    origin: ['http://localhost:4200','https://localhost:4200'],
+    origin: [process.env.CLIENT_URL],
     credentials: true };
 
 app.use(cors(corsOptions));
-
-
-
 
 
 const mongoDB = process.env.MONGODBCONNECTION;
