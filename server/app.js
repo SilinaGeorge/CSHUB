@@ -33,7 +33,7 @@ let defaultconnection = mongoose.connection;
 defaultconnection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Set port
-const port = 8000;
+const port = process.env.PORT || 3001;
 
 app.use(bodyParser.json()); // support json encoded bodies
 //support parsing of application/x-www-form-urlencoded post data
@@ -51,8 +51,8 @@ app.use(express.static(dist));
 //   console.log('Listening...')
 // })
 
-https.createServer(app).listen(host='0.0.0.0',() => {
-  console.log('Listening...')
+https.createServer(app).listen(port,() => {
+  console.log(`Listening on port ${port}...`)
 })
 //server.listen(port, () => console.log("listening on port " + port));
 
