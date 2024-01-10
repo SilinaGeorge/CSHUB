@@ -51,7 +51,7 @@ app.use(express.static(dist));
 //   console.log('Listening...')
 // })
 
-http.createServer(app).listen(port, process.env.SERVER_URL, () => {
+http.createServer(app).listen(port, process.env.HOST, () => {
   console.log(`Listening on port ${port}...`)
 })
 
