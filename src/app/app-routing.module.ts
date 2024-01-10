@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path:'login-home', component: LoginHomeComponent, canActivate:[AuthGuard]},
   { path:'editor', component: EditorComponent, canActivate:[AuthGuard]},
-  { path:'social-redirect/:id', component: SocialRedirectComponent},
+  { path:'social-redirect', component: SocialRedirectComponent},
   { path:'doc-viewer', component: DocViewerComponent, canActivate:[AuthGuard]},
   { path:'manage-docs-notes', component: ManageDocsNotesComponent, canActivate:[AuthGuard]},
   { path:'interpreter/:topic', component: InterpreterComponent, canActivate:[AuthGuard]},

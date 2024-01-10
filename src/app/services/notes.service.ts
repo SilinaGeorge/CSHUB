@@ -16,24 +16,24 @@ export class NotesService {
 
   AddNote(addNoteData: AddNote) {
   
-    return this.http.post<Note>(`${this.URL}/${addNoteData.userId}`, addNoteData);
+    return this.http.post<Note>(`${this.URL}/${addNoteData.userId}`, addNoteData, { withCredentials: true });
   };
 
   DeleteNote(deleteNoteData: DeleteNote) {
 
-    return this.http.delete<Note>(`${this.URL}/${deleteNoteData._id}/${deleteNoteData.userId}`);
+    return this.http.delete<Note>(`${this.URL}/${deleteNoteData._id}/${deleteNoteData.userId}`, { withCredentials: true });
   };
 
   UpdateNote(updateNoteData: UpdateNote) {
 
-    return this.http.patch<Note>(`${this.URL}/${updateNoteData._id}`,updateNoteData);
+    return this.http.patch<Note>(`${this.URL}/${updateNoteData._id}`,updateNoteData, { withCredentials: true });
   };
 
   GetNotes(getTopicNotesData: GetNotes) {
     if ('topic' in getTopicNotesData)
-      return this.http.get<ReturnedNotes>(`${this.URL}/${getTopicNotesData.userId}?topic=${getTopicNotesData.topic}`);
+      return this.http.get<ReturnedNotes>(`${this.URL}/${getTopicNotesData.userId}?topic=${getTopicNotesData.topic}`, { withCredentials: true });
 
-      return this.http.get<ReturnedNotes>(`${this.URL}/${getTopicNotesData.userId}`);
+      return this.http.get<ReturnedNotes>(`${this.URL}/${getTopicNotesData.userId}`, { withCredentials: true });
     
   };
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material'
+import { MatDialog } from '@angular/material/dialog';
 import { NotifDialogPopupComponent } from '../notif-dialog-popup/notif-dialog-popup.component'
 
 @Component({

@@ -16,6 +16,6 @@ export class UserService {
   
   GetSpaceLeft(spaceLeftData: GetSpaceLeft) {
   
-    return this.http.get<SpaceLeft>(`${this.URL}/space/${spaceLeftData.id}`);
+    return this.http.get<SpaceLeft>(`${this.URL}/space/${spaceLeftData.id}`, { withCredentials: true });
   };
 }

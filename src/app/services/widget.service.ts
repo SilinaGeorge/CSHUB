@@ -15,30 +15,30 @@ export class WidgetService {
 
   PatchSpotify(spotifyData: Spotify) {
  
-    return this.http.patch<Spotify>(`${this.URL}/spotify/${spotifyData._id}`, spotifyData);
+    return this.http.patch<Spotify>(`${this.URL}/spotify/${spotifyData._id}`, spotifyData, { withCredentials: true });
   };
 
   GetSpotify(spotifyData: GetSpotify) {
  
-    return this.http.get<Spotify>(`${this.URL}/spotify/${spotifyData._id}`);
+    return this.http.get<Spotify>(`${this.URL}/spotify/${spotifyData._id}`, { withCredentials: true });
   };
 
  
   PutNotif(notifData: Notification)
   {
  
-    return this.http.put<Notification>(`${this.URL}/notif/${notifData._id}`, notifData);
+    return this.http.put<Notification>(`${this.URL}/notif/${notifData._id}`, notifData, { withCredentials: true });
   };
 
   DeleteNotifs(notifData: DeleteNotifs)
   {
  
-    return this.http.patch<DeleteNotifs>(`${this.URL}/notifs/delete/${notifData._id}`, notifData);
+    return this.http.patch<DeleteNotifs>(`${this.URL}/notifs/delete/${notifData._id}`, notifData, { withCredentials: true });
   };
 
   GetNotifs(notifData: GetNotifications) {
  
-    return this.http.get<AllNotifications>(`${this.URL}/notifs/${notifData._id}`);
+    return this.http.get<AllNotifications>(`${this.URL}/notifs/${notifData._id}`, { withCredentials: true });
   };
 
 }

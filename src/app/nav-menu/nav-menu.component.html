@@ -8,7 +8,7 @@
 
     <!--mobile menu button-->
     <button class="navbar-toggler" type="button" aria-controls="navbarContent navbarContent2 navbarContent3"
-    [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+   aria-label="Toggle navigation" >
     <span class="navbar-toggler-icon"></span>
 </button>
 
@@ -21,7 +21,7 @@
 
 <app-title></app-title>
 
-    <div class="navbar-collapse collapse w-30 order-1 order-md-0 dual-collapse2" [class.collapse]="collapsed" id="navbarContent">
+    <div class="navbar-collapse collapse w-30 order-1 order-md-0 dual-collapse2" id="navbarContent">
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item" ngbDropdown>
@@ -54,7 +54,7 @@
 
       </ul>
     </div>
-    <div class="navbar-collapse collapse w-35 order-2 order-md-0 dual-collapse2" [class.collapse]="collapsed" id="navbarContent2">
+    <div class="navbar-collapse collapse w-35 order-2 order-md-0 dual-collapse2"  id="navbarContent2">
       <ul class="navbar-nav mr-auto">
     <li class="h-50 d-inline-block ">
       <app-google-search></app-google-search>
@@ -63,7 +63,7 @@
     </div>
 
 
-    <div class="navbar-collapse collapse w-25 order-3 dual-collapse2" [class.collapse]="collapsed" id="navbarContent3">
+    <div class="navbar-collapse collapse w-25 order-3 dual-collapse2" id="navbarContent3">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <app-spotify></app-spotify>
@@ -92,7 +92,7 @@
 
           <!--mobile menu button-->
     <button class="navbar-toggler" type="button" aria-controls="navbarContent4"
-    [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+     aria-label="Toggle navigation" >
     <span class="navbar-toggler-icon"></span>
 </button>
 
@@ -101,7 +101,7 @@
    
         
     
-    <div class="navbar-collapse collapse w-50 order-3 order-md-0 dual-collapse2" [class.collapse]="collapsed" id="navbarContent4">
+    <div class="navbar-collapse collapse w-50 order-3 order-md-0 dual-collapse2"  id="navbarContent4">
       <ul class="navbar-nav ml-auto">
         <a class="nav-link" routerLink="/login">Login</a>
         <a class="nav-link" routerLink="/signup">Sign up</a>

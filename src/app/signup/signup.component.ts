@@ -6,6 +6,7 @@ import { SignupUserAction } from '../store/actions/user.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
 import { SignUpUser } from '../store/models/sign-up-user.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -18,6 +19,8 @@ export class SignupComponent implements OnInit {
   error$: Observable<Error>;
   loading$: Observable<Boolean>;
   signupUser: SignUpUser = {email: null, password: null, firstname: null, lastname: null};
+  facebookURL = environment.url + '/auth/facebook'
+  googleURL = environment.url + '/auth/google'
 
 
   constructor(private store: Store<AppState>, private fb: FormBuilder) { }

@@ -57,7 +57,9 @@ var j = schedule.scheduleJob(date, function(){
   });
 }); */
 const isAuthenticated = function(req, res, next) {
-  if (!req.session.userid) return res.status(401).json({ msgs: ["You Are Not Logged In"] });
+  if (!req.session.userid){
+    return res.status(401).json({ msgs: ["You Are Not Logged In"] });
+  } 
   next();
 };
 
@@ -94,7 +96,6 @@ router.post("/login", [
       return res.status(401).json({ msgs: ["Password is not correct"] }); // invalid password
     // start a session
     req.session.userid = user._id;
-
     return res.status(200).json({
       msg: "Success",
       _id: user._id,
@@ -169,12 +170,12 @@ router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }))
 
 
 router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/' }),
+  passport.authenticate('facebook', { failureRedirect: process.env.CLIENT_URL +'/' }),
   function (req, res) {
 
     req.session.userid = req.user._id;
 
-    res.redirect("/#/social-redirect/" + req.user._id);
+    res.redirect(process.env.CLIENT_URL + "/#/social-redirect/?state=" + req.user._id);
 
   });
 
@@ -185,11 +186,12 @@ router.get('/google',
 
 
 router.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/'}),
+  passport.authenticate('google', { failureRedirect: process.env.CLIENT_URL +'/'}),
   function (req, res) {
-    req.session.userid = req._id
-    //res.redirect("/#/social-redirect/" + req.user._id);
-    res.redirect("https://localhost:4200/");
+    req.session.userid = req.user._id;
+    res.header()
+    req.stat
+    res.redirect(process.env.CLIENT_URL + "/#/social-redirect/?state=" + req.user._id);
   });
 
 

@@ -25,8 +25,8 @@ export class SocialRedirectComponent implements OnInit {
 
   constructor(private store: Store<AppState>, private activatedroute: ActivatedRoute) { 
     
-    this.activatedroute.paramMap.pipe(take(1)).subscribe(params => {
-      this.id = params.get("id")
+    this.activatedroute.queryParamMap.pipe(take(1)).subscribe(params => {
+      this.id = params.get("state")
     })
 
     this.user._id = this.id;

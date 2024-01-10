@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatTableDataSource, MatTable, MatPaginator, MatSort } from '@angular/material';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/models/app-state.model';
@@ -7,9 +6,14 @@ import * as moment from 'moment';
 import { Error } from '../store/models/error.model';
 import { UpdateDocAction, DeleteDocAction, GetDocsAction } from '../store/actions/docs.actions';
 import { ReturnedMetaDocs, Doc } from '../store/models/docs.model';
-import { NotesDocsDialogBoxComponent } from '../notes-docs-dialog-box/notes-docs-dialog-box.component';
+// import { NotesDocsDialogBoxComponent } from '../notes-docs-dialog-box/notes-docs-dialog-box.component';
 import { take } from 'rxjs/operators';
 import { GetSpaceLeftAction } from '../store/actions/user.actions';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { NotesDocsDialogBoxComponent } from '../notes-docs-dialog-box/notes-docs-dialog-box.component';
 
 @Component({
   selector: 'app-manage-docs',

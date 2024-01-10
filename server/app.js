@@ -16,13 +16,10 @@ const app = express();
 
 var cors = require('cors');
 var corsOptions = {
-    origin: 'https://localhost:4200',
+    origin: [process.env.CLIENT_URL],
     credentials: true };
 
 app.use(cors(corsOptions));
-
-
-
 
 
 const mongoDB = process.env.MONGODBCONNECTION;
@@ -36,7 +33,7 @@ let defaultconnection = mongoose.connection;
 defaultconnection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Set port
-const port = 4200;
+const port = process.env.PORT || 3001;
 
 app.use(bodyParser.json()); // support json encoded bodies
 //support parsing of application/x-www-form-urlencoded post data
@@ -47,13 +44,17 @@ const dist = '../dist/CSHubProject';
 app.use(express.static(dist));
 
 // Create server to listen for connections
+
+//local host
 //const server = http.createServer(app);
-https.createServer({
-  key: fs.readFileSync('localhost.key'),
-  cert: fs.readFileSync('localhost.crt')
-}, app).listen(port, () => {
-  console.log('Listening...')
+// https.createServer(app).listen(port, () => {
+//   console.log('Listening...')
+// })
+
+http.createServer(app).listen(port, process.env.HOST, () => {
+  console.log(`Listening on port ${port}...`)
 })
+
 //server.listen(port, () => console.log("listening on port " + port));
 
 
@@ -72,8 +73,10 @@ app.use(
       //ttl: 14 * 24 * 60 * 60 // = 14 days. Default
     }),
     resave: false,
-    saveUninitialized: true,
-    cookie: { httpOnly: true, sameSite: true, secure: true }
+    saveUninitialized: false,
+    name: 'CSHUBCookie',
+    proxy: true,
+    cookie: { httpOnly: false,  secure: true, sameSite: 'none'}
   })
 );
 

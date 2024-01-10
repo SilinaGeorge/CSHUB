@@ -15,19 +15,22 @@
         <!--forum-->
         <form [formGroup]="signupFormGroup" (ngSubmit)="onSubmit()">
             <mat-form-field style="margin-right:25%">
-                <input matInput type="text" placeholder="First Name" formControlName="firstname" maxlength="50">
+                <input matInput type="text" formControlName="firstname" maxlength="50">
+                <mat-label>First Name</mat-label>
                 <mat-error>Please enter first name (alphabet only)</mat-error>
             </mat-form-field>
 
 
             <mat-form-field>
-                <input matInput type="text" placeholder="Last Name" formControlName="lastname" maxlength="50">
+                <input matInput type="text" formControlName="lastname" maxlength="50">
+                <mat-label>Last Name</mat-label>
                 <mat-error>Please enter last name (alphabet only)</mat-error>
             </mat-form-field>
 
 
             <mat-form-field style="margin-right:25%">
-                <input matInput placeholder="Email" formControlName="email" maxlength="50">
+                <input matInput formControlName="email" maxlength="50">
+                <mat-label>Email</mat-label>
                 <mat-error>Please enter a valid email</mat-error>
             </mat-form-field>
 
@@ -37,6 +40,7 @@
                 <input matInput type='password' placeholder="Password" minlength="6" maxlength="18"
                     formControlName="password" (input)="onPasswordInput()">
                 <mat-error>Please enter a valid password</mat-error>
+                <mat-label>Password</mat-label>
                 <mat-hint>6-18 characters</mat-hint>
             </mat-form-field>
 
@@ -60,9 +64,15 @@
             </div>
 
         </form>
-        <div><input type="image" style="width: 220px; height:68px" src="../../assets/images/fb_login.png"></div>
-        <div><input type="image" style="width: 200px; height:40px; margin-left:8px"
-                src="../../assets/images/google_signin.png"></div>
+        
+        <a class="nav-link" href='{{facebookURL}}' style="width: 220px;" >
+            <img src='../../assets/images/fb_login.png' style="width: 220px;" >
+        </a>
+
+
+        <a class="nav-link" href='{{googleURL}}' style="width: 200px;">
+            <img src='../../assets/images/google_signin.png' style="width: 200px; margin-left:8px" >
+        </a>
 
     </div>
 </div>

@@ -5,7 +5,6 @@ import { Auth, SocialMediaAuth } from "../models/auth.model";
 import { SignUpUser } from "../models/sign-up-user.model";
 import { Notification, GetNotifications, AllNotifications, DeleteNotifs } from "../models/notification.model";
 import { UserActionTypes, UserAction } from '../actions/user.actions';
-import { findStaticQueryIds } from '@angular/compiler';
 
 export interface UserState {
     user: User,

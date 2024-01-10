@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms'
-import { MatTableDataSource } from '@angular/material';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
@@ -10,7 +10,6 @@ import { AppState } from '../store/models/app-state.model';
 import { AddNotifAction, DeleteNotifsAction, GetNotifsAction } from '../store/actions/user.actions';
 import { Error } from '../store/models/error.model';
 import { take } from 'rxjs/operators';
-import { GetNotesAction } from '../store/actions/notes.actions';
 
 @Component({
   selector: 'app-notif-dialog-popup',
