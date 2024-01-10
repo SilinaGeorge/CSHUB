@@ -168,7 +168,7 @@ router.put("/notif/:id",isAuthenticated, isAuthorized, [
                 `
 
         let mailOptions = {
-          from: process.env.CLIENT_URL,
+          from: process.env.CSHUB_EMAIL,
           to: user.email,
           subject: 'CSHUB: Time to Get Crackng',
           //text: 'Visit --insert prod link-- and start studying. /n This is an automated email,please do not reply back'
