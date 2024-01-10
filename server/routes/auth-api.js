@@ -170,12 +170,12 @@ router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }))
 
 
 router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/' }),
+  passport.authenticate('facebook', { failureRedirect: process.env.CLIENT_URL +'/' }),
   function (req, res) {
 
     req.session.userid = req.user._id;
 
-    res.redirect("/#/social-redirect/?state=" + req.user._id);
+    res.redirect(process.env.CLIENT_URL + "/#/social-redirect/?state=" + req.user._id);
 
   });
 
@@ -186,12 +186,12 @@ router.get('/google',
 
 
 router.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/'}),
+  passport.authenticate('google', { failureRedirect: process.env.CLIENT_URL +'/'}),
   function (req, res) {
     req.session.userid = req.user._id;
     res.header()
     req.stat
-    res.redirect("/#/social-redirect/?state=" + req.user._id);
+    res.redirect(process.env.CLIENT_URL + "/#/social-redirect/?state=" + req.user._id);
   });
 
 
