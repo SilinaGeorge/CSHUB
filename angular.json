@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/CSHubProject",
+            "outputPath": "src/dist/CSHubProject",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -27,7 +27,9 @@
               "src/assets/css/bootstrap.min.css",
               "src/custom-theme.scss",
               "src/styles.css",
-              "node_modules/summernote/dist/summernote-lite.css"
+              "node_modules/summernote/dist/summernote-lite.css",
+              "src/assets/landingpage/sass/libs/_vendor.scss"
+
               
             ],
             "scripts": [
@@ -105,9 +107,11 @@
               "src/assets/css/bootstrap.min.css",
               "src/styles.css",
               "node_modules/summernote/dist/summernote-lite.css",
-              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/assets/landingpage/sass/libs/_vendor.scss"
+
               
-           
+  
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
