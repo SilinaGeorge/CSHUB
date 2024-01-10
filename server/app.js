@@ -51,7 +51,7 @@ app.use(express.static(dist));
 //   console.log('Listening...')
 // })
 
-http.createServer(app).listen(port, '0.0.0.0', () => {
+http.createServer(app).listen(port, process.env.SERVER_URL, () => {
   console.log(`Listening on port ${port}...`)
 })
 
@@ -74,7 +74,7 @@ app.use(
     }),
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false , maxAge:86400000, httpOnly: false}
+    cookie: { httpOnly: true,  secure: true }
   })
 );
 
