@@ -53,6 +53,7 @@ app.use(express.static(dist));
 
 https.createServer(app).listen(port, () => {
   console.log(`Listening on port ${port}...`)
+})
 
 //server.listen(port, () => console.log("listening on port " + port));
 
