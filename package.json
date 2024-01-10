@@ -63,7 +63,9 @@
     "summernote": "^0.8.20",
     "tslib": "^2.6.2",
     "validator": "^13.11.0",
-    "zone.js": "^0.14.2"
+    "zone.js": "^0.14.2",
+    "@angular/cli": "^17.0.9",
+    "@angular/compiler-cli": "^17.0.8"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.9",
